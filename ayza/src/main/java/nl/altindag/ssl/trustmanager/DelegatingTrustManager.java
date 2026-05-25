@@ -22,7 +22,6 @@ import java.net.Socket;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
-
 import static nl.altindag.laleler.ValidationUtils.GENERIC_EXCEPTION_MESSAGE;
 import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 
@@ -42,12 +41,12 @@ abstract class DelegatingTrustManager<T extends X509TrustManager> extends X509Ex
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-        trustManager.checkClientTrusted(chain, authType);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-        trustManager.checkServerTrusted(chain, authType);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
@@ -64,12 +63,10 @@ abstract class DelegatingTrustManager<T extends X509TrustManager> extends X509Ex
 
     @Override
     public X509Certificate[] getAcceptedIssuers() {
-        X509Certificate[] acceptedIssuers = trustManager.getAcceptedIssuers();
-        return Arrays.copyOf(acceptedIssuers, acceptedIssuers.length);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public T getInnerTrustManager() {
-        return trustManager;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

@@ -18,7 +18,6 @@ package nl.altindag.ssl.pem.decryptor;
 import nl.altindag.ssl.pem.util.PemUtils;
 import org.bouncycastle.openssl.PEMDecryptorProvider;
 import org.bouncycastle.openssl.jcajce.JcePEMDecryptorProviderBuilder;
-
 import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 
 /**
@@ -32,18 +31,18 @@ import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 public final class PemDecryptor implements BouncyFunction<char[], PEMDecryptorProvider> {
 
     private static final PemDecryptor INSTANCE = new PemDecryptor();
+
     private static final JcePEMDecryptorProviderBuilder PEM_DECRYPTOR_PROVIDER_BUILDER = new JcePEMDecryptorProviderBuilder();
 
-    private PemDecryptor() {}
+    private PemDecryptor() {
+    }
 
     @Override
     public PEMDecryptorProvider apply(char[] password) {
-        requireNotNull(password, "A password is mandatory with an encrypted key");
-        return PEM_DECRYPTOR_PROVIDER_BUILDER.build(password);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static BouncyFunction<char[], PEMDecryptorProvider> getInstance() {
-        return INSTANCE;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

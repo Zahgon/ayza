@@ -24,7 +24,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Supplier;
-
 import static nl.altindag.laleler.ValidationUtils.GENERIC_EXCEPTION_MESSAGE;
 import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 
@@ -39,7 +38,9 @@ import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 public class HotSwappableX509ExtendedTrustManager extends DelegatingX509ExtendedTrustManager {
 
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+
     protected final Lock readLock = readWriteLock.readLock();
+
     protected final Lock writeLock = readWriteLock.writeLock();
 
     public HotSwappableX509ExtendedTrustManager(X509ExtendedTrustManager trustManager) {
@@ -47,43 +48,37 @@ public class HotSwappableX509ExtendedTrustManager extends DelegatingX509Extended
     }
 
     public void setTrustManager(X509ExtendedTrustManager trustManager) {
-        writeLock.lock();
-
-        try {
-            this.trustManager = requireNotNull(trustManager, GENERIC_EXCEPTION_MESSAGE.apply("TrustManager"));
-        } finally {
-            writeLock.unlock();
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-        checkTrusted(() -> super.checkServerTrusted(chain, authType));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {
-        checkTrusted(() -> super.checkServerTrusted(chain, authType, socket));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType, SSLEngine sslEngine) throws CertificateException {
-        checkTrusted(() -> super.checkServerTrusted(chain, authType, sslEngine));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-        checkTrusted(() -> super.checkClientTrusted(chain, authType));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {
-        checkTrusted(() -> super.checkClientTrusted(chain, authType, socket));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType, SSLEngine sslEngine) throws CertificateException {
-        checkTrusted(() -> super.checkClientTrusted(chain, authType, sslEngine));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private void checkTrusted(TrustManagerRunnable trustManagerRunnable) throws CertificateException {
@@ -97,12 +92,12 @@ public class HotSwappableX509ExtendedTrustManager extends DelegatingX509Extended
 
     @Override
     public X509Certificate[] getAcceptedIssuers() {
-        return getObjectSafely(super::getAcceptedIssuers);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public X509ExtendedTrustManager getInnerTrustManager() {
-        return getObjectSafely(super::getInnerTrustManager);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private <T> T getObjectSafely(Supplier<T> supplier) {

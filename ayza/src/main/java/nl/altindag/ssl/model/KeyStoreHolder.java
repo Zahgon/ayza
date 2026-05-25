@@ -23,6 +23,7 @@ import java.security.KeyStore;
 public final class KeyStoreHolder {
 
     private final KeyStore keyStore;
+
     private final char[] keyPassword;
 
     public KeyStoreHolder(KeyStore keyStore, char[] keyPassword) {
@@ -31,11 +32,10 @@ public final class KeyStoreHolder {
     }
 
     public KeyStore getKeyStore() {
-        return keyStore;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public char[] getKeyPassword() {
-        return keyPassword;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

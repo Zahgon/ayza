@@ -31,15 +31,15 @@ public final class BasicHostnameVerifier implements HostnameVerifier {
 
     private static final HostnameVerifier INSTANCE = new BasicHostnameVerifier();
 
-    private BasicHostnameVerifier() {}
+    private BasicHostnameVerifier() {
+    }
 
     @Override
     public boolean verify(String host, SSLSession sslSession) {
-        return host.equalsIgnoreCase(sslSession.getPeerHost());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static HostnameVerifier getInstance() {
-        return INSTANCE;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

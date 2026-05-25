@@ -16,7 +16,6 @@
 package nl.altindag.ssl.util;
 
 import nl.altindag.ssl.exception.GenericSSLContextException;
-
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.X509ExtendedKeyManager;
 import javax.net.ssl.X509ExtendedTrustManager;
@@ -28,7 +27,6 @@ import java.security.NoSuchProviderException;
 import java.security.Provider;
 import java.security.SecureRandom;
 import java.util.List;
-
 import static java.util.Objects.nonNull;
 
 /**
@@ -42,73 +40,26 @@ public final class SSLContextUtils {
     }
 
     public static SSLContext createSslContext(List<? extends X509KeyManager> keyManagers, List<? extends X509TrustManager> trustManagers) {
-        return createSslContext(keyManagers, trustManagers, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static SSLContext createSslContext(List<? extends X509KeyManager> keyManagers, List<? extends X509TrustManager> trustManagers, SecureRandom secureRandom) {
-        return createSslContext(keyManagers, trustManagers, secureRandom, DEFAULT_SSL_CONTEXT_ALGORITHM, (Provider) null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-    public static SSLContext createSslContext(
-            List<? extends X509KeyManager> keyManagers,
-            List<? extends X509TrustManager> trustManagers,
-            SecureRandom secureRandom,
-            String sslContextAlgorithm,
-            Provider securityProvider) {
-
-        return createSslContext(
-                !keyManagers.isEmpty() ? KeyManagerUtils.combine(keyManagers) : null,
-                !trustManagers.isEmpty() ? TrustManagerUtils.combine(trustManagers) : null,
-                secureRandom,
-                sslContextAlgorithm,
-                null,
-                securityProvider
-        );
+    public static SSLContext createSslContext(List<? extends X509KeyManager> keyManagers, List<? extends X509TrustManager> trustManagers, SecureRandom secureRandom, String sslContextAlgorithm, Provider securityProvider) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-    public static SSLContext createSslContext(
-            List<? extends X509KeyManager> keyManagers,
-            List<? extends X509TrustManager> trustManagers,
-            SecureRandom secureRandom,
-            String sslContextAlgorithm,
-            String securityProviderName) {
-
-        return createSslContext(
-                !keyManagers.isEmpty() ? KeyManagerUtils.combine(keyManagers) : null,
-                !trustManagers.isEmpty() ? TrustManagerUtils.combine(trustManagers) : null,
-                secureRandom,
-                sslContextAlgorithm,
-                securityProviderName,
-                null
-        );
+    public static SSLContext createSslContext(List<? extends X509KeyManager> keyManagers, List<? extends X509TrustManager> trustManagers, SecureRandom secureRandom, String sslContextAlgorithm, String securityProviderName) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-    public static SSLContext createSslContext(
-            X509KeyManager keyManager,
-            X509TrustManager trustManager,
-            SecureRandom secureRandom,
-            String sslContextAlgorithm,
-            String securityProviderName,
-            Provider securityProvider) {
-
-        return createSslContext(
-                keyManager != null ? KeyManagerUtils.toArray(keyManager) : null,
-                trustManager != null ? TrustManagerUtils.toArray(trustManager) : null,
-                secureRandom,
-                sslContextAlgorithm,
-                securityProviderName,
-                securityProvider
-        );
+    public static SSLContext createSslContext(X509KeyManager keyManager, X509TrustManager trustManager, SecureRandom secureRandom, String sslContextAlgorithm, String securityProviderName, Provider securityProvider) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-    private static SSLContext createSslContext(
-            X509ExtendedKeyManager[] keyManagers,
-            X509ExtendedTrustManager[] trustManagers,
-            SecureRandom secureRandom,
-            String sslContextAlgorithm,
-            String securityProviderName,
-            Provider securityProvider) {
-
+    private static SSLContext createSslContext(X509ExtendedKeyManager[] keyManagers, X509ExtendedTrustManager[] trustManagers, SecureRandom secureRandom, String sslContextAlgorithm, String securityProviderName, Provider securityProvider) {
         try {
             SSLContext sslContext;
             if (nonNull(securityProvider)) {
@@ -118,12 +69,10 @@ public final class SSLContextUtils {
             } else {
                 sslContext = SSLContext.getInstance(sslContextAlgorithm);
             }
-
             sslContext.init(keyManagers, trustManagers, secureRandom);
             return sslContext;
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException e) {
             throw new GenericSSLContextException(e);
         }
     }
-
 }

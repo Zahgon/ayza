@@ -22,15 +22,12 @@ import org.bouncycastle.openssl.PEMEncryptedKeyPair;
 import org.bouncycastle.openssl.PEMKeyPair;
 import org.bouncycastle.openssl.X509TrustedCertificateBlock;
 import org.bouncycastle.pkcs.PKCS8EncryptedPrivateKeyInfo;
-
 import java.util.List;
-
 import static nl.altindag.laleler.CollectionUtils.toUnmodifiableList;
 
 enum PemType {
 
-    CERTIFICATE(X509CertificateHolder.class, X509TrustedCertificateBlock.class),
-    KEY(PrivateKeyInfo.class, PKCS8EncryptedPrivateKeyInfo.class, PEMKeyPair.class, PEMEncryptedKeyPair.class);
+    CERTIFICATE(X509CertificateHolder.class, X509TrustedCertificateBlock.class), KEY(PrivateKeyInfo.class, PKCS8EncryptedPrivateKeyInfo.class, PEMKeyPair.class, PEMEncryptedKeyPair.class);
 
     private final List<Class<?>> supportedTypes;
 
@@ -39,15 +36,6 @@ enum PemType {
     }
 
     static PemType from(Object object) {
-        for (PemType pemType : values()) {
-            for (Class<?> supportedType : pemType.supportedTypes) {
-                if (supportedType.isInstance(object)) {
-                    return pemType;
-                }
-            }
-        }
-
-        throw new PemParseException(String.format("The provided [%s] pem type is not (yet) supported", object.getClass().getName()));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

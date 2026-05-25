@@ -23,7 +23,6 @@ import nl.altindag.ssl.exception.GenericIOException;
 import nl.altindag.ssl.exception.GenericKeyStoreException;
 import nl.altindag.sude.Logger;
 import nl.altindag.sude.LoggerFactory;
-
 import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,7 +47,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
-
 import static nl.altindag.laleler.ValidationUtils.requireNotEmpty;
 import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 
@@ -60,28 +58,34 @@ public final class KeyStoreUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(KeyStoreUtils.class);
 
     public static final String DUMMY_PASSWORD = "dummy-password";
+
     private static final String KEYSTORE_TYPE = "PKCS12";
+
     private static final String EMPTY_INPUT_STREAM_EXCEPTION_MESSAGE = "Failed to load the keystore from the provided InputStream because it is null";
+
     private static final UnaryOperator<String> KEYSTORE_NOT_FOUND_EXCEPTION_MESSAGE = certificatePath -> String.format("Failed to load the keystore from the classpath for the given path: [%s]", certificatePath);
+
     private static final String EMPTY_TRUST_MANAGER_FOR_TRUSTSTORE_EXCEPTION = "Could not create TrustStore because the provided TrustManager does not contain any trusted certificates";
+
     private static final String EMPTY_CERTIFICATES_EXCEPTION = "Could not create TrustStore because certificate is absent";
 
-    private KeyStoreUtils() {}
+    private KeyStoreUtils() {
+    }
 
     public static KeyStore loadKeyStore(String keystorePath, char[] keystorePassword) {
-        return loadKeyStore(keystorePath, keystorePassword, KeyStore.getDefaultType());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore loadKeyStore(String keystorePath, char[] keystorePassword, String keystoreType) {
-        return loadKeyStore(keystorePath, keystorePassword, keystoreType, (String) null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore loadKeyStore(String keystorePath, char[] keystorePassword, String keystoreType, String providerName) {
-        return loadKeyStore(keystorePath, keystoreInputStream -> loadKeyStore(keystoreInputStream, keystorePassword, keystoreType, providerName));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore loadKeyStore(String keystorePath, char[] keystorePassword, String keystoreType, Provider provider) {
-        return loadKeyStore(keystorePath, keystoreInputStream -> loadKeyStore(keystoreInputStream, keystorePassword, keystoreType, provider));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static KeyStore loadKeyStore(String keystorePath, KeyStoreFunction<InputStream, KeyStore> keyStoreKeyStoreFunction) {
@@ -94,19 +98,19 @@ public final class KeyStoreUtils {
     }
 
     public static KeyStore loadKeyStore(Path keystorePath, char[] keystorePassword) {
-        return loadKeyStore(keystorePath, keystorePassword, KeyStore.getDefaultType());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore loadKeyStore(Path keystorePath, char[] keystorePassword, String keystoreType) {
-        return loadKeyStore(keystorePath, keystorePassword, keystoreType, (String) null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore loadKeyStore(Path keystorePath, char[] keystorePassword, String keystoreType, String providerName) {
-        return loadKeyStore(keystorePath, keystoreInputStream -> loadKeyStore(keystoreInputStream, keystorePassword, keystoreType, providerName));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore loadKeyStore(Path keystorePath, char[] keystorePassword, String keystoreType, Provider provider) {
-        return loadKeyStore(keystorePath, keystoreInputStream -> loadKeyStore(keystoreInputStream, keystorePassword, keystoreType, provider));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static KeyStore loadKeyStore(Path keystorePath, KeyStoreFunction<InputStream, KeyStore> mapper) {
@@ -118,23 +122,19 @@ public final class KeyStoreUtils {
     }
 
     public static KeyStore loadKeyStore(InputStream keystoreInputStream, char[] keystorePassword) {
-        return loadKeyStore(
-                requireNotNull(keystoreInputStream, EMPTY_INPUT_STREAM_EXCEPTION_MESSAGE),
-                keystorePassword,
-                KeyStore.getDefaultType()
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore loadKeyStore(InputStream keystoreInputStream, char[] keystorePassword, String keystoreType) {
-        return loadKeyStore(keystoreInputStream, keystorePassword, keystoreType, (String) null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore loadKeyStore(InputStream keystoreInputStream, char[] keystorePassword, String keystoreType, String providerName) {
-        return loadKeyStore(keystoreInputStream, keystorePassword, () -> StringUtils.isBlank(providerName) ? KeyStore.getInstance(keystoreType) : KeyStore.getInstance(keystoreType, providerName));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore loadKeyStore(InputStream keystoreInputStream, char[] keystorePassword, String keystoreType, Provider provider) {
-        return loadKeyStore(keystoreInputStream, keystorePassword, () -> provider == null ? KeyStore.getInstance(keystoreType) : KeyStore.getInstance(keystoreType, provider));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static KeyStore loadKeyStore(InputStream keystoreInputStream, char[] keystorePassword, KeyStoreSupplier keyStoreSupplier) {
@@ -148,209 +148,91 @@ public final class KeyStoreUtils {
     }
 
     public static KeyStore createIdentityStore(Key privateKey, char[] privateKeyPassword, String alias, List<? extends Certificate> certificateChain) {
-        return createIdentityStore(privateKey, privateKeyPassword, alias, certificateChain.toArray(new Certificate[]{}));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore createIdentityStore(Key privateKey, char[] privateKeyPassword, List<? extends Certificate> certificateChain) {
-        return createIdentityStore(privateKey, privateKeyPassword, null, certificateChain.toArray(new Certificate[]{}));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @SafeVarargs
     public static <T extends Certificate> KeyStore createIdentityStore(Key privateKey, char[] privateKeyPassword, T... certificateChain) {
-        return createIdentityStore(privateKey, privateKeyPassword, null, certificateChain);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @SafeVarargs
     public static <T extends Certificate> KeyStore createIdentityStore(Key privateKey, char[] privateKeyPassword, String alias, T... certificateChain) {
-        try {
-            KeyStore keyStore = createKeyStore();
-            String privateKeyAlias = StringUtils.isBlank(alias) ? CertificateUtils.generateAlias(certificateChain[0]) : alias;
-            keyStore.setKeyEntry(privateKeyAlias, privateKey, privateKeyPassword, certificateChain);
-            return keyStore;
-        } catch (KeyStoreException e) {
-            throw new GenericKeyStoreException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore createKeyStore() {
-        return createKeyStore(DUMMY_PASSWORD.toCharArray());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore createKeyStore(char[] keyStorePassword) {
-        return createKeyStore(KEYSTORE_TYPE, keyStorePassword);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore createKeyStore(String keyStoreType, char[] keyStorePassword) {
-        try {
-            KeyStore keyStore = KeyStore.getInstance(keyStoreType);
-            keyStore.load(null, keyStorePassword);
-            return keyStore;
-        } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException e) {
-            throw new GenericKeyStoreException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @SafeVarargs
     public static <T extends X509TrustManager> KeyStore createTrustStore(T... trustManagers) {
-        List<X509Certificate> certificates = new ArrayList<>();
-        for (T trustManager : trustManagers) {
-            certificates.addAll(Arrays.asList(trustManager.getAcceptedIssuers()));
-        }
-
-        return createTrustStore(
-                requireNotEmpty(certificates, EMPTY_TRUST_MANAGER_FOR_TRUSTSTORE_EXCEPTION)
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @SafeVarargs
     public static <T extends Certificate> KeyStore createTrustStore(T... certificates) {
-        return createTrustStore(Arrays.asList(certificates));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static <T extends Certificate> KeyStore createTrustStore(List<T> certificates) {
-        try {
-            KeyStore trustStore = createKeyStore();
-            for (T certificate : requireNotEmpty(certificates, EMPTY_CERTIFICATES_EXCEPTION)) {
-                String alias = CertificateUtils.generateAlias(certificate);
-                boolean shouldAddCertificate = true;
-
-                if (trustStore.containsAlias(alias)) {
-                    for (int number = 0; number <= 1000; number++) {
-                        String mayBeUniqueAlias = alias + "-" + number;
-                        if (!trustStore.containsAlias(mayBeUniqueAlias)) {
-                            alias = mayBeUniqueAlias;
-                            shouldAddCertificate = true;
-                            break;
-                        } else {
-                            shouldAddCertificate = false;
-                        }
-                    }
-                }
-
-                if (shouldAddCertificate) {
-                    trustStore.setCertificateEntry(alias, certificate);
-                }
-            }
-            return trustStore;
-        } catch (KeyStoreException e) {
-            throw new GenericKeyStoreException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore loadJdkKeyStore() {
-        List<X509Certificate> certificates = CertificateUtils.getJdkTrustedCertificates();
-        return createTrustStore(certificates);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<KeyStore> loadSystemKeyStores() {
-        List<KeyStore> keyStores = OperatingSystem.get().getTrustStores();
-        if (LOGGER.isDebugEnabled()) {
-            int totalTrustedCertificates = keyStores.stream()
-                    .mapToInt(KeyStoreUtils::countAmountOfTrustMaterial)
-                    .sum();
-
-            LOGGER.debug(String.format("Loaded [%d] system trusted certificates", totalTrustedCertificates));
-        }
-
-        return Collections.unmodifiableList(keyStores);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore loadSystemPropertyDerivedKeyStore() {
-        return loadSystemPropertyDerivedKeyStore(
-                "javax.net.ssl.keyStore",
-                "javax.net.ssl.keyStorePassword",
-                "javax.net.ssl.keyStoreType",
-                "javax.net.ssl.keyStoreProvider"
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyStore loadSystemPropertyDerivedTrustStore() {
-        return loadSystemPropertyDerivedKeyStore(
-                "javax.net.ssl.trustStore",
-                "javax.net.ssl.trustStorePassword",
-                "javax.net.ssl.trustStoreType",
-                "javax.net.ssl.trustStoreProvider"
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-    private static KeyStore loadSystemPropertyDerivedKeyStore(String keyStorePathProperty,
-                                                              String keyStorePasswordProperty,
-                                                              String keyStoreTypeProperty,
-                                                              String keyStoreProviderProperty) {
-
-        Path keyStorePath = Optional.ofNullable(System.getProperty(keyStorePathProperty))
-                .map(String::trim)
-                .filter(StringUtils::isNotBlank)
-                .map(Paths::get)
-                .orElseThrow(() -> new GenericKeyStoreException(String.format("The value for the system property [%s] is absent", keyStorePathProperty)));
-
-        char[] keystorePassword = Optional.ofNullable(System.getProperty(keyStorePasswordProperty))
-                .map(String::trim)
-                .filter(StringUtils::isNotBlank)
-                .map(String::toCharArray)
-                .orElse(null);
-
-        String keystoreType = Optional.ofNullable(System.getProperty(keyStoreTypeProperty))
-                .map(String::trim)
-                .filter(StringUtils::isNotBlank)
-                .orElseGet(KeyStore::getDefaultType);
-
-        String keyStoreProvider = Optional.ofNullable(System.getProperty(keyStoreProviderProperty))
-                .map(String::trim)
-                .filter(StringUtils::isNotBlank)
-                .orElse(null);
-
+    private static KeyStore loadSystemPropertyDerivedKeyStore(String keyStorePathProperty, String keyStorePasswordProperty, String keyStoreTypeProperty, String keyStoreProviderProperty) {
+        Path keyStorePath = Optional.ofNullable(System.getProperty(keyStorePathProperty)).map(String::trim).filter(StringUtils::isNotBlank).map(Paths::get).orElseThrow(() -> new GenericKeyStoreException(String.format("The value for the system property [%s] is absent", keyStorePathProperty)));
+        char[] keystorePassword = Optional.ofNullable(System.getProperty(keyStorePasswordProperty)).map(String::trim).filter(StringUtils::isNotBlank).map(String::toCharArray).orElse(null);
+        String keystoreType = Optional.ofNullable(System.getProperty(keyStoreTypeProperty)).map(String::trim).filter(StringUtils::isNotBlank).orElseGet(KeyStore::getDefaultType);
+        String keyStoreProvider = Optional.ofNullable(System.getProperty(keyStoreProviderProperty)).map(String::trim).filter(StringUtils::isNotBlank).orElse(null);
         return KeyStoreUtils.loadKeyStore(keyStorePath, keystorePassword, keystoreType, keyStoreProvider);
     }
 
     public static List<Certificate> getCertificates(KeyStore keyStore) {
-        return getAliasToCertificate(keyStore).values().stream()
-                .collect(CollectorsUtils.toUnmodifiableList());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Map<String, Certificate> getAliasToCertificate(KeyStore keyStore) {
-        try {
-            Map<String, Certificate> aliasToCertificate = new HashMap<>();
-
-            List<String> aliases = getAliases(keyStore);
-            for (String alias : aliases) {
-                if (keyStore.isCertificateEntry(alias)) {
-                    Certificate certificate = keyStore.getCertificate(alias);
-                    aliasToCertificate.put(alias, certificate);
-                }
-            }
-
-            return Collections.unmodifiableMap(aliasToCertificate);
-        } catch (KeyStoreException e) {
-            throw new GenericKeyStoreException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<String> getAliases(KeyStore keyStore) {
-        try {
-            List<String> destinationAliases = new ArrayList<>();
-            Enumeration<String> sourceAliases = keyStore.aliases();
-            while (sourceAliases.hasMoreElements()) {
-                String alias = sourceAliases.nextElement();
-                destinationAliases.add(alias);
-            }
-
-            return Collections.unmodifiableList(destinationAliases);
-        } catch (KeyStoreException e) {
-            throw new GenericKeyStoreException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static <T extends Certificate> boolean containsCertificate(KeyStore keyStore, T certificate) {
-        try {
-            return keyStore.getCertificateAlias(certificate) != null;
-        } catch (KeyStoreException e) {
-            throw new GenericKeyStoreException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void write(Path destination, KeyStore keyStore, char[] password) {
-        IOUtils.write(destination, outputStream -> keyStore.store(outputStream, password), GenericIOException::new);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -358,59 +240,32 @@ public final class KeyStoreUtils {
      * If the keystore is absent it will create it with the given password and also add the certificates.
      */
     public static <T extends Certificate> void add(Path keystorePath, char[] password, String keystoreType, List<T> certificates) {
-        KeyStore keyStore = Files.exists(keystorePath) ? loadKeyStore(keystorePath, password, keystoreType) : createKeyStore(keystoreType, password);
-        int initialAmountOfTrustMaterial = countAmountOfTrustMaterial(keyStore);
-
-        add(keyStore, certificates);
-
-        int amountOfTrustMaterial = countAmountOfTrustMaterial(keyStore);
-        if (amountOfTrustMaterial > initialAmountOfTrustMaterial) {
-            write(keystorePath, keyStore, password);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static <T extends Certificate> void add(KeyStore keyStore, List<T> certificates) {
-        List<Certificate> existingCertificates = getCertificates(keyStore);
-        Map<String, T> aliasToCertificate = certificates.stream()
-                .distinct()
-                .filter(certificate -> !existingCertificates.contains(certificate))
-                .collect(CollectorsUtils.toListAndThen(CertificateUtils::generateAliases));
-
-        String alias = "";
-        try {
-            for (Map.Entry<String, T> entry : aliasToCertificate.entrySet()) {
-                alias = entry.getKey();
-
-                keyStore.setCertificateEntry(alias, entry.getValue());
-            }
-        } catch (KeyStoreException e) {
-            LOGGER.debug(String.format("Failed to add a certificate tagged with the alias [%s] to the keystore", alias), e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static int countAmountOfTrustMaterial(KeyStore keyStore) {
-        return amountOfSpecifiedMaterial(keyStore, KeyStore::isCertificateEntry, Integer.MAX_VALUE);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static int countAmountOfIdentityMaterial(KeyStore keyStore) {
-        return amountOfSpecifiedMaterial(keyStore, KeyStore::isKeyEntry, Integer.MAX_VALUE);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static boolean containsTrustMaterial(KeyStore keyStore) {
-        return amountOfSpecifiedMaterial(keyStore, KeyStore::isCertificateEntry, 1) > 0;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static boolean containsIdentityMaterial(KeyStore keyStore) {
-        return amountOfSpecifiedMaterial(keyStore, KeyStore::isKeyEntry, 1) > 0;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-    private static int amountOfSpecifiedMaterial(KeyStore keyStore,
-                                                 KeyStoreBiPredicate<KeyStore, String> predicate,
-                                                 int upperBoundaryForMaterialCounter) {
-
+    private static int amountOfSpecifiedMaterial(KeyStore keyStore, KeyStoreBiPredicate<KeyStore, String> predicate, int upperBoundaryForMaterialCounter) {
         try {
             int materialCounter = 0;
-
             List<String> aliases = getAliases(keyStore);
             for (String alias : aliases) {
                 if (materialCounter < upperBoundaryForMaterialCounter && predicate.test(keyStore, alias)) {
@@ -424,15 +279,17 @@ public final class KeyStoreUtils {
     }
 
     private interface KeyStoreBiPredicate<T extends KeyStore, U> {
+
         boolean test(T t, U u) throws KeyStoreException;
     }
 
     private interface KeyStoreFunction<T, R extends KeyStore> {
+
         R apply(T t) throws Exception;
     }
 
     private interface KeyStoreSupplier {
+
         KeyStore get() throws KeyStoreException, NoSuchProviderException;
     }
-
 }

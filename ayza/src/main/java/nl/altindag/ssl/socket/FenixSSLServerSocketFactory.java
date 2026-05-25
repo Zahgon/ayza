@@ -17,14 +17,12 @@ package nl.altindag.ssl.socket;
 
 import nl.altindag.ssl.sslparameters.HotSwappableSSLParameters;
 import nl.altindag.ssl.util.SSLParametersUtils;
-
 import javax.net.ssl.SSLParameters;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
-
 import static nl.altindag.laleler.ValidationUtils.GENERIC_EXCEPTION_MESSAGE;
 import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 
@@ -39,6 +37,7 @@ import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 public final class FenixSSLServerSocketFactory extends SSLServerSocketFactory {
 
     private final SSLServerSocketFactory sslServerSocketFactory;
+
     private final SSLParameters sslParameters;
 
     public FenixSSLServerSocketFactory(SSLServerSocketFactory sslServerSocketFactory, SSLParameters sslParameters) {
@@ -48,48 +47,42 @@ public final class FenixSSLServerSocketFactory extends SSLServerSocketFactory {
 
     @Override
     public String[] getDefaultCipherSuites() {
-        return sslParameters.getCipherSuites();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getSupportedCipherSuites() {
-        return sslParameters.getCipherSuites();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public ServerSocket createServerSocket() throws IOException {
-        ServerSocket serverSocket = sslServerSocketFactory.createServerSocket();
-        return withSslParameters(serverSocket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public ServerSocket createServerSocket(int port) throws IOException {
-        ServerSocket serverSocket = sslServerSocketFactory.createServerSocket(port);
-        return withSslParameters(serverSocket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public ServerSocket createServerSocket(int port, int backlog) throws IOException {
-        ServerSocket serverSocket = sslServerSocketFactory.createServerSocket(port, backlog);
-        return withSslParameters(serverSocket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public ServerSocket createServerSocket(int port, int backlog, InetAddress ifAddress) throws IOException {
-        ServerSocket serverSocket = sslServerSocketFactory.createServerSocket(port, backlog, ifAddress);
-        return withSslParameters(serverSocket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private ServerSocket withSslParameters(ServerSocket socket) throws IOException {
         if (socket instanceof SSLServerSocket) {
             SSLServerSocket sslSocket = (SSLServerSocket) socket;
             sslSocket.setSSLParameters(SSLParametersUtils.copy(sslParameters));
-
             if (sslParameters instanceof HotSwappableSSLParameters) {
                 return new FenixSSLServerSocket(sslSocket, sslParameters);
             }
         }
         return socket;
     }
-
 }

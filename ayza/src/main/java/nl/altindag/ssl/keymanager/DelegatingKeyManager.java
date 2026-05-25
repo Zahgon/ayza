@@ -22,7 +22,6 @@ import java.net.Socket;
 import java.security.Principal;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
-
 import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 
 /**
@@ -43,32 +42,32 @@ abstract class DelegatingKeyManager<T extends X509KeyManager> extends X509Extend
 
     @Override
     public String chooseClientAlias(String[] keyType, Principal[] issuers, Socket socket) {
-        return keyManager.chooseClientAlias(keyType, issuers, socket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String chooseServerAlias(String keyType, Principal[] issuers, Socket socket) {
-        return keyManager.chooseServerAlias(keyType, issuers, socket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public PrivateKey getPrivateKey(String alias) {
-        return keyManager.getPrivateKey(alias);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public X509Certificate[] getCertificateChain(String alias) {
-        return keyManager.getCertificateChain(alias);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getClientAliases(String keyType, Principal[] issuers) {
-        return keyManager.getClientAliases(keyType, issuers);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getServerAliases(String keyType, Principal[] issuers) {
-        return keyManager.getServerAliases(keyType, issuers);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
@@ -78,7 +77,6 @@ abstract class DelegatingKeyManager<T extends X509KeyManager> extends X509Extend
     public abstract String chooseEngineServerAlias(String keyType, Principal[] issuers, SSLEngine engine);
 
     public T getInnerKeyManager() {
-        return keyManager;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

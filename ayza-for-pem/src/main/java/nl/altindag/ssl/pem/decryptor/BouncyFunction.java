@@ -18,7 +18,6 @@ package nl.altindag.ssl.pem.decryptor;
 import nl.altindag.ssl.pem.util.PemUtils;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.pkcs.PKCSException;
-
 import java.io.IOException;
 
 /**
@@ -35,7 +34,6 @@ public interface BouncyFunction<T, R> {
     R apply(T t) throws OperatorCreationException, PKCSException, IOException;
 
     default <V> BouncyFunction<T, V> andThen(BouncyFunction<? super R, ? extends V> after) {
-        return (T t) -> after.apply(apply(t));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

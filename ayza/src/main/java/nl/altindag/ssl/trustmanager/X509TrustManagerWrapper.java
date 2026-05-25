@@ -37,22 +37,21 @@ public final class X509TrustManagerWrapper extends DelegatingTrustManager<X509Tr
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {
-        trustManager.checkClientTrusted(chain, authType);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType, SSLEngine sslEngine) throws CertificateException {
-        trustManager.checkClientTrusted(chain, authType);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {
-        trustManager.checkServerTrusted(chain, authType);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType, SSLEngine sslEngine) throws CertificateException {
-        trustManager.checkServerTrusted(chain, authType);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

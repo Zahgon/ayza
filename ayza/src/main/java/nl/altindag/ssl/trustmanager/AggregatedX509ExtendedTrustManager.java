@@ -63,45 +63,41 @@ public final class AggregatedX509ExtendedTrustManager extends X509ExtendedTrustM
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-        checkTrusted(trustManager -> trustManager.checkClientTrusted(chain, authType));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {
-        checkTrusted(trustManager -> trustManager.checkClientTrusted(chain, authType, socket));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType, SSLEngine sslEngine) throws CertificateException {
-        checkTrusted(trustManager -> trustManager.checkClientTrusted(chain, authType, sslEngine));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-        checkTrusted(trustManager -> trustManager.checkServerTrusted(chain, authType));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {
-        checkTrusted(trustManager -> trustManager.checkServerTrusted(chain, authType, socket));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType, SSLEngine sslEngine) throws CertificateException {
-        checkTrusted(trustManager -> trustManager.checkServerTrusted(chain, authType, sslEngine));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public X509Certificate[] getAcceptedIssuers() {
-        return trustManagers.stream()
-                .map(X509ExtendedTrustManager::getAcceptedIssuers)
-                .flatMap(Arrays::stream)
-                .toArray(X509Certificate[]::new);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public List<X509ExtendedTrustManager> getInnerTrustManagers() {
-        return trustManagers;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

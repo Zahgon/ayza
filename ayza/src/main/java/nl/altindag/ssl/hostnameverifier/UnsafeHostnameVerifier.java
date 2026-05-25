@@ -31,15 +31,15 @@ public final class UnsafeHostnameVerifier implements HostnameVerifier {
 
     private static final HostnameVerifier INSTANCE = new UnsafeHostnameVerifier();
 
-    private UnsafeHostnameVerifier() {}
+    private UnsafeHostnameVerifier() {
+    }
 
     @Override
     public boolean verify(String host, SSLSession sslSession) {
-        return true;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static HostnameVerifier getInstance() {
-        return INSTANCE;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

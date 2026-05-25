@@ -37,6 +37,7 @@ import java.util.function.Function;
 public class CertificateCapturingX509ExtendedTrustManager extends DelegatingX509ExtendedTrustManager {
 
     private static final Function<X509Certificate[], List<X509Certificate>> COLLECTION_MAPPER = chain -> new ArrayList<>(Arrays.asList(chain));
+
     private static final BiFunction<List<X509Certificate>, X509Certificate[], List<X509Certificate>> COLLECTION_MERGER = (list, array) -> {
         List<X509Certificate> result = new ArrayList<>(list);
         result.addAll(list);
@@ -53,38 +54,31 @@ public class CertificateCapturingX509ExtendedTrustManager extends DelegatingX509
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-        certificatesCollector.compute("no-host", (k, v) -> v == null ? COLLECTION_MAPPER.apply(chain) : COLLECTION_MERGER.apply(v, chain));
-        super.checkClientTrusted(chain, authType);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-        certificatesCollector.compute("no-host", (k, v) -> v == null ? COLLECTION_MAPPER.apply(chain) : COLLECTION_MERGER.apply(v, chain));
-        super.checkServerTrusted(chain, authType);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {
-        certificatesCollector.put(((InetSocketAddress) socket.getRemoteSocketAddress()).getHostName(), COLLECTION_MAPPER.apply(chain));
-        super.checkClientTrusted(chain, authType, socket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType, SSLEngine sslEngine) throws CertificateException {
-        certificatesCollector.put(sslEngine.getPeerHost(), COLLECTION_MAPPER.apply(chain));
-        super.checkClientTrusted(chain, authType, sslEngine);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {
-        certificatesCollector.put(((InetSocketAddress) socket.getRemoteSocketAddress()).getHostName(), COLLECTION_MAPPER.apply(chain));
-        super.checkServerTrusted(chain, authType, socket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType, SSLEngine sslEngine) throws CertificateException {
-        certificatesCollector.put(sslEngine.getPeerHost(), COLLECTION_MAPPER.apply(chain));
-        super.checkServerTrusted(chain, authType, sslEngine);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

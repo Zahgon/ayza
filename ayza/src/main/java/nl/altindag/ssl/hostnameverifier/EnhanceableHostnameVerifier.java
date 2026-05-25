@@ -16,7 +16,6 @@
 package nl.altindag.ssl.hostnameverifier;
 
 import nl.altindag.ssl.model.HostnameVerifierParameters;
-
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
 import java.util.function.Predicate;
@@ -33,6 +32,7 @@ import java.util.function.Predicate;
 public final class EnhanceableHostnameVerifier implements HostnameVerifier {
 
     private final HostnameVerifier baseHostnameVerifier;
+
     private final Predicate<HostnameVerifierParameters> hostnameVerifierParametersValidator;
 
     public EnhanceableHostnameVerifier(HostnameVerifier baseHostnameVerifier, Predicate<HostnameVerifierParameters> hostnameVerifierParametersValidator) {
@@ -42,11 +42,6 @@ public final class EnhanceableHostnameVerifier implements HostnameVerifier {
 
     @Override
     public boolean verify(String hostname, SSLSession session) {
-        HostnameVerifierParameters hostnameVerifierParameters = new HostnameVerifierParameters(hostname, session);
-        if (hostnameVerifierParametersValidator.test(hostnameVerifierParameters)) {
-            return true;
-        }
-
-        return baseHostnameVerifier.verify(hostname, session);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

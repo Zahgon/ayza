@@ -17,7 +17,6 @@ package nl.altindag.ssl.socket;
 
 import nl.altindag.ssl.sslparameters.HotSwappableSSLParameters;
 import nl.altindag.ssl.util.SSLParametersUtils;
-
 import javax.net.ssl.SSLParameters;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
@@ -26,7 +25,6 @@ import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
 import static nl.altindag.laleler.ValidationUtils.GENERIC_EXCEPTION_MESSAGE;
 import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 
@@ -41,6 +39,7 @@ import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 public final class FenixSSLSocketFactory extends SSLSocketFactory {
 
     private final SSLSocketFactory sslSocketFactory;
+
     private final SSLParameters sslParameters;
 
     public FenixSSLSocketFactory(SSLSocketFactory sslSocketFactory, SSLParameters sslParameters) {
@@ -50,66 +49,57 @@ public final class FenixSSLSocketFactory extends SSLSocketFactory {
 
     @Override
     public String[] getDefaultCipherSuites() {
-        return sslParameters.getCipherSuites();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getSupportedCipherSuites() {
-        return sslParameters.getCipherSuites();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Socket createSocket() throws IOException {
-        Socket socket = sslSocketFactory.createSocket();
-        return withSslParameters(socket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Socket createSocket(Socket socket, InputStream inputStream, boolean autoClosable) throws IOException {
-        Socket newSocket = sslSocketFactory.createSocket(socket, inputStream, autoClosable);
-        return withSslParameters(newSocket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Socket createSocket(Socket socket, String host, int port, boolean autoClosable) throws IOException {
-        Socket newSocket = sslSocketFactory.createSocket(socket, host, port, autoClosable);
-        return withSslParameters(newSocket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Socket createSocket(String host, int port) throws IOException, UnknownHostException {
-        Socket socket = sslSocketFactory.createSocket(host, port);
-        return withSslParameters(socket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Socket createSocket(String host, int port, InetAddress localAddress, int localPort) throws IOException, UnknownHostException {
-        Socket socket = sslSocketFactory.createSocket(host, port, localAddress, localPort);
-        return withSslParameters(socket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Socket createSocket(InetAddress address, int port) throws IOException {
-        Socket socket = sslSocketFactory.createSocket(address, port);
-        return withSslParameters(socket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Socket createSocket(InetAddress address, int port, InetAddress localAddress, int localPort) throws IOException {
-        Socket socket = sslSocketFactory.createSocket(address, port, localAddress, localPort);
-        return withSslParameters(socket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private Socket withSslParameters(Socket socket) {
         if (socket instanceof SSLSocket) {
             SSLSocket sslSocket = (SSLSocket) socket;
             sslSocket.setSSLParameters(SSLParametersUtils.copy(sslParameters));
-
             if (sslParameters instanceof HotSwappableSSLParameters) {
                 return new FenixSSLSocket(sslSocket, sslParameters);
             }
         }
         return socket;
     }
-
 }

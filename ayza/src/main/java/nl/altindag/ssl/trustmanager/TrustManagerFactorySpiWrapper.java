@@ -17,12 +17,10 @@ package nl.altindag.ssl.trustmanager;
 
 import nl.altindag.sude.Logger;
 import nl.altindag.sude.LoggerFactory;
-
 import javax.net.ssl.ManagerFactoryParameters;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactorySpi;
 import java.security.KeyStore;
-
 import static nl.altindag.laleler.ValidationUtils.GENERIC_EXCEPTION_MESSAGE;
 import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 
@@ -40,22 +38,21 @@ class TrustManagerFactorySpiWrapper extends TrustManagerFactorySpi {
 
     TrustManagerFactorySpiWrapper(TrustManager trustManager) {
         requireNotNull(trustManager, GENERIC_EXCEPTION_MESSAGE.apply("TrustManager"));
-        this.trustManagers = new TrustManager[]{trustManager};
+        this.trustManagers = new TrustManager[] { trustManager };
     }
 
     @Override
     protected void engineInit(KeyStore keyStore) {
-        LOGGER.info("Ignoring provided KeyStore");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected void engineInit(ManagerFactoryParameters managerFactoryParameters) {
-        LOGGER.info("Ignoring provided ManagerFactoryParameters");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected TrustManager[] engineGetTrustManagers() {
-        return trustManagers;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

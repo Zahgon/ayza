@@ -34,7 +34,6 @@ import nl.altindag.ssl.trustmanager.UnsafeX509ExtendedTrustManager;
 import nl.altindag.ssl.trustmanager.X509TrustManagerWrapper;
 import nl.altindag.sude.Logger;
 import nl.altindag.sude.LoggerFactory;
-
 import javax.net.ssl.ManagerFactoryParameters;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
@@ -58,7 +57,6 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
-
 import static nl.altindag.laleler.CollectorsUtils.toListAndThen;
 import static nl.altindag.laleler.ValidationUtils.requireNotEmpty;
 
@@ -67,183 +65,119 @@ import static nl.altindag.laleler.ValidationUtils.requireNotEmpty;
  */
 public final class TrustManagerUtils {
 
-    private TrustManagerUtils() {}
+    private TrustManagerUtils() {
+    }
 
     public static X509ExtendedTrustManager combine(X509TrustManager... trustManagers) {
-        return combine(Arrays.asList(trustManagers));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager combine(List<? extends X509TrustManager> trustManagers) {
-        return TrustManagerUtils.trustManagerBuilder()
-                .withTrustManagers(trustManagers)
-                .build();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static <T extends X509TrustManager> X509ExtendedTrustManager[] toArray(T trustManager) {
-        return new X509ExtendedTrustManager[]{TrustManagerUtils.wrapIfNeeded(trustManager)};
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createTrustManagerWithJdkTrustedCertificates() {
-        return new JdkX509ExtendedTrustManager(createTrustManager((KeyStore) null));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Optional<X509ExtendedTrustManager> createTrustManagerWithSystemTrustedCertificates() {
-        List<KeyStore> trustStores = KeyStoreUtils.loadSystemKeyStores();
-        if (trustStores.isEmpty()) {
-            return Optional.empty();
-        }
-
-        X509ExtendedTrustManager trustManager = createTrustManager(trustStores.toArray(new KeyStore[]{}));
-        return Optional.of(new SystemX509ExtendedTrustManager(trustManager, OperatingSystem.get().name().toLowerCase()));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-
     public static X509ExtendedTrustManager createTrustManager(List<X509Certificate> certificates) {
-        KeyStore trustStore = KeyStoreUtils.createTrustStore(certificates);
-        return TrustManagerUtils.createTrustManager(trustStore);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createTrustManager(KeyStore... trustStores) {
-        return Arrays.stream(trustStores)
-                .map(TrustManagerUtils::createTrustManager)
-                .collect(toListAndThen(TrustManagerUtils::combine));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createTrustManager(KeyStore trustStore) {
-        return createTrustManager(trustStore, TrustManagerFactory.getDefaultAlgorithm());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createTrustManager(KeyStore trustStore, String trustManagerFactoryAlgorithm) {
-        try {
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(trustManagerFactoryAlgorithm);
-            return createTrustManager(trustStore, trustManagerFactory);
-        } catch (NoSuchAlgorithmException e) {
-            throw new GenericTrustManagerException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createTrustManager(KeyStore trustStore, String trustManagerFactoryAlgorithm, String securityProviderName) {
-        try {
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(trustManagerFactoryAlgorithm, securityProviderName);
-            return createTrustManager(trustStore, trustManagerFactory);
-        } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
-            throw new GenericTrustManagerException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createTrustManager(KeyStore trustStore, String trustManagerFactoryAlgorithm, Provider securityProvider) {
-        try {
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(trustManagerFactoryAlgorithm, securityProvider);
-            return createTrustManager(trustStore, trustManagerFactory);
-        } catch (NoSuchAlgorithmException e) {
-            throw new GenericTrustManagerException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createTrustManager(KeyStore trustStore, TrustManagerFactory trustManagerFactory) {
-        try {
-            trustManagerFactory.init(trustStore);
-            return TrustManagerUtils.getTrustManager(trustManagerFactory);
-        } catch (KeyStoreException e) {
-            throw new GenericTrustManagerException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createTrustManager(ManagerFactoryParameters... managerFactoryParameters) {
-        return Arrays.stream(managerFactoryParameters)
-                .map(TrustManagerUtils::createTrustManager)
-                .collect(toListAndThen(TrustManagerUtils::combine));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createTrustManager(ManagerFactoryParameters managerFactoryParameters) {
-        return createTrustManager(managerFactoryParameters, TrustManagerFactory.getDefaultAlgorithm());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createTrustManager(ManagerFactoryParameters managerFactoryParameters, String trustManagerFactoryAlgorithm) {
-        try {
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(trustManagerFactoryAlgorithm);
-            return createTrustManager(managerFactoryParameters, trustManagerFactory);
-        } catch (NoSuchAlgorithmException e) {
-            throw new GenericTrustManagerException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createTrustManager(ManagerFactoryParameters managerFactoryParameters, String trustManagerFactoryAlgorithm, String securityProviderName) {
-        try {
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(trustManagerFactoryAlgorithm, securityProviderName);
-            return createTrustManager(managerFactoryParameters, trustManagerFactory);
-        } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
-            throw new GenericTrustManagerException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createTrustManager(ManagerFactoryParameters managerFactoryParameters, String trustManagerFactoryAlgorithm, Provider securityProvider) {
-        try {
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(trustManagerFactoryAlgorithm, securityProvider);
-            return createTrustManager(managerFactoryParameters, trustManagerFactory);
-        } catch (NoSuchAlgorithmException e) {
-            throw new GenericTrustManagerException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createTrustManager(ManagerFactoryParameters managerFactoryParameters, TrustManagerFactory trustManagerFactory) {
-        try {
-            trustManagerFactory.init(managerFactoryParameters);
-            return TrustManagerUtils.getTrustManager(trustManagerFactory);
-        } catch (InvalidAlgorithmParameterException e) {
-            throw new GenericTrustManagerException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createUnsafeTrustManager() {
-        return UnsafeX509ExtendedTrustManager.getInstance();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createDummyTrustManager() {
-        return DummyX509ExtendedTrustManager.getInstance();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createLoggingTrustManager(X509TrustManager baseTrustManager) {
-        return new LoggingX509ExtendedTrustManager(wrapIfNeeded(baseTrustManager));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createCertificateCapturingTrustManager(Map<String, List<X509Certificate>> certificatesCollector) {
-        return createCertificateCapturingTrustManager(TrustManagerUtils.createUnsafeTrustManager(), certificatesCollector);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createCertificateCapturingTrustManager(X509TrustManager baseTrustManager, Map<String, List<X509Certificate>> certificatesCollector) {
-        return new CertificateCapturingX509ExtendedTrustManager(wrapIfNeeded(baseTrustManager), certificatesCollector);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager wrapIfNeeded(X509TrustManager trustManager) {
-        if (trustManager instanceof X509ExtendedTrustManager) {
-            return (X509ExtendedTrustManager) trustManager;
-        } else {
-            return new X509TrustManagerWrapper(trustManager);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static TrustManagerFactory createTrustManagerFactory(TrustManager trustManager) {
-        return new TrustManagerFactoryWrapper(trustManager);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static <T extends TrustManagerFactory> X509ExtendedTrustManager getTrustManager(T trustManagerFactory) {
-        return Arrays.stream(trustManagerFactory.getTrustManagers())
-                .filter(X509TrustManager.class::isInstance)
-                .map(X509TrustManager.class::cast)
-                .map(TrustManagerUtils::wrapIfNeeded)
-                .collect(Collectors.collectingAndThen(Collectors.toList(), TrustManagerUtils::combine));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedTrustManager createInflatableTrustManager() {
-        return new InflatableX509ExtendedTrustManager();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-    public static X509ExtendedTrustManager createInflatableTrustManager(Path trustStorePath,
-                                                                        char[] trustStorePassword,
-                                                                        String trustStoreType,
-                                                                        Predicate<TrustManagerParameters> trustManagerParametersPredicate) {
-        return new InflatableX509ExtendedTrustManager(trustStorePath, trustStorePassword, trustStoreType, trustManagerParametersPredicate);
+    public static X509ExtendedTrustManager createInflatableTrustManager(Path trustStorePath, char[] trustStorePassword, String trustStoreType, Predicate<TrustManagerParameters> trustManagerParametersPredicate) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -252,7 +186,7 @@ public final class TrustManagerUtils {
      * and it is allowed that it is wrapped in a {@link AggregatedX509ExtendedTrustManager}
      */
     public static void addCertificate(X509ExtendedTrustManager trustManager, X509Certificate certificate) {
-        addCertificate(trustManager, Collections.singletonList(certificate));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -261,14 +195,7 @@ public final class TrustManagerUtils {
      * and it is allowed that it is wrapped in a {@link AggregatedX509ExtendedTrustManager}
      */
     public static void addCertificate(X509ExtendedTrustManager trustManager, List<X509Certificate> certificates) {
-        boolean certificateAdded = addCertificateIfPossible(trustManager, certificates);
-        if (certificateAdded) {
-            return;
-        }
-
-        throw new GenericTrustManagerException(
-                String.format("The provided trustManager should be an instance of [%s]", InflatableX509ExtendedTrustManager.class.getName())
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static boolean addCertificateIfPossible(X509ExtendedTrustManager trustManager, List<X509Certificate> certificates) {
@@ -276,25 +203,17 @@ public final class TrustManagerUtils {
             ((InflatableX509ExtendedTrustManager) trustManager).addCertificates(certificates);
             return true;
         }
-
         if (trustManager instanceof DelegatingX509ExtendedTrustManager) {
             X509ExtendedTrustManager innerTrustManager = ((DelegatingX509ExtendedTrustManager) trustManager).getInnerTrustManager();
             return addCertificateIfPossible(innerTrustManager, certificates);
         }
-
         if (trustManager instanceof AggregatedX509ExtendedTrustManager) {
             List<X509ExtendedTrustManager> innerTrustManagers = ((AggregatedX509ExtendedTrustManager) trustManager).getInnerTrustManagers();
-
-            Optional<InflatableX509ExtendedTrustManager> inflatableX509ExtendedTrustManager = innerTrustManagers.stream()
-                    .filter(InflatableX509ExtendedTrustManager.class::isInstance)
-                    .map(InflatableX509ExtendedTrustManager.class::cast)
-                    .findFirst();
-
+            Optional<InflatableX509ExtendedTrustManager> inflatableX509ExtendedTrustManager = innerTrustManagers.stream().filter(InflatableX509ExtendedTrustManager.class::isInstance).map(InflatableX509ExtendedTrustManager.class::cast).findFirst();
             if (inflatableX509ExtendedTrustManager.isPresent()) {
                 return addCertificateIfPossible(inflatableX509ExtendedTrustManager.get(), certificates);
             }
         }
-
         return false;
     }
 
@@ -306,7 +225,7 @@ public final class TrustManagerUtils {
      * @return Swappable TrustManager
      */
     public static X509ExtendedTrustManager createSwappableTrustManager(X509TrustManager trustManager) {
-        return new HotSwappableX509ExtendedTrustManager(TrustManagerUtils.wrapIfNeeded(trustManager));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -319,42 +238,7 @@ public final class TrustManagerUtils {
      * @throws GenericTrustManagerException if {@code baseTrustManager} is not instance of {@link HotSwappableX509ExtendedTrustManager}
      */
     public static void swapTrustManager(X509TrustManager baseTrustManager, X509TrustManager newTrustManager) {
-        if (baseTrustManager instanceof InflatableX509ExtendedTrustManager) {
-            throw new GenericTrustManagerException(
-                    String.format("The baseTrustManager is from the instance of [%s] and should be an instance of [%s].",
-                            baseTrustManager.getClass().getName(),
-                            HotSwappableX509ExtendedTrustManager.class.getName())
-            );
-        }
-
-        if (!(baseTrustManager instanceof HotSwappableX509ExtendedTrustManager)) {
-            throw new GenericTrustManagerException(
-                    String.format("The baseTrustManager is from the instance of [%s] and should be an instance of [%s].",
-                            baseTrustManager.getClass().getName(),
-                            HotSwappableX509ExtendedTrustManager.class.getName())
-            );
-        }
-
-        if (newTrustManager instanceof HotSwappableX509ExtendedTrustManager
-                && !(newTrustManager instanceof InflatableX509ExtendedTrustManager)) {
-            throw new GenericTrustManagerException(
-                    String.format("The newTrustManager should not be an instance of [%s]", HotSwappableX509ExtendedTrustManager.class.getName())
-            );
-        }
-
-        HotSwappableX509ExtendedTrustManager swappableTrustManager = (HotSwappableX509ExtendedTrustManager) baseTrustManager;
-        X509ExtendedTrustManager innerTrustManager = swappableTrustManager.getInnerTrustManager();
-
-        List<UnaryOperator<X509ExtendedTrustManager>> mappers = new ArrayList<>();
-        computeMappersForNewTrustManager(innerTrustManager, mappers);
-        Collections.reverse(mappers);
-
-        X509ExtendedTrustManager resolvedNewTrustManager = TrustManagerUtils.wrapIfNeeded(newTrustManager);
-        for (UnaryOperator<X509ExtendedTrustManager> mapper : mappers) {
-            resolvedNewTrustManager = mapper.apply(resolvedNewTrustManager);
-        }
-
-        swappableTrustManager.setTrustManager(resolvedNewTrustManager);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static void computeMappersForNewTrustManager(X509ExtendedTrustManager trustManager, List<UnaryOperator<X509ExtendedTrustManager>> mappers) {
@@ -363,33 +247,19 @@ public final class TrustManagerUtils {
             mappers.add(LoggingX509ExtendedTrustManager::new);
             computeMappersForNewTrustManager(loggingTrustManager.getInnerTrustManager(), mappers);
         }
-
         if (trustManager instanceof EnhanceableX509ExtendedTrustManager) {
             EnhanceableX509ExtendedTrustManager existingEnhanceableTrustManager = (EnhanceableX509ExtendedTrustManager) trustManager;
-            mappers.add(newTrustManager ->
-                    new EnhanceableX509ExtendedTrustManager(
-                            TrustManagerUtils.wrapIfNeeded(newTrustManager),
-                            existingEnhanceableTrustManager.getTrustManagerParametersValidator(),
-                            existingEnhanceableTrustManager.isTrustedCertificatesConcealed()
-                    )
-            );
+            mappers.add(newTrustManager -> new EnhanceableX509ExtendedTrustManager(TrustManagerUtils.wrapIfNeeded(newTrustManager), existingEnhanceableTrustManager.getTrustManagerParametersValidator(), existingEnhanceableTrustManager.isTrustedCertificatesConcealed()));
             computeMappersForNewTrustManager(existingEnhanceableTrustManager.getInnerTrustManager(), mappers);
         }
     }
 
-    public static X509ExtendedTrustManager createEnhanceableTrustManager(
-            X509ExtendedTrustManager trustManager,
-            Predicate<TrustManagerParameters> trustManagerParametersValidator) {
-
-        return createEnhanceableTrustManager(trustManager, trustManagerParametersValidator, false);
+    public static X509ExtendedTrustManager createEnhanceableTrustManager(X509ExtendedTrustManager trustManager, Predicate<TrustManagerParameters> trustManagerParametersValidator) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-    public static X509ExtendedTrustManager createEnhanceableTrustManager(
-            X509ExtendedTrustManager trustManager,
-            Predicate<TrustManagerParameters> trustManagerParametersValidator,
-            boolean shouldTrustedCertificatesBeConcealed) {
-
-        return new EnhanceableX509ExtendedTrustManager(trustManager, trustManagerParametersValidator, shouldTrustedCertificatesBeConcealed);
+    public static X509ExtendedTrustManager createEnhanceableTrustManager(X509ExtendedTrustManager trustManager, Predicate<TrustManagerParameters> trustManagerParametersValidator, boolean shouldTrustedCertificatesBeConcealed) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static List<X509ExtendedTrustManager> unwrapIfPossible(X509ExtendedTrustManager trustManager) {
@@ -406,133 +276,91 @@ public final class TrustManagerUtils {
     }
 
     public static TrustManagerBuilder trustManagerBuilder() {
-        return new TrustManagerBuilder();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static final class TrustManagerBuilder {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(TrustManagerBuilder.class);
+
         private static final String EMPTY_TRUST_MANAGER_EXCEPTION = "Input does not contain TrustManager";
 
         private TrustManagerBuilder() {
         }
 
         private final List<X509ExtendedTrustManager> trustManagers = new ArrayList<>();
+
         private boolean swappableTrustManagerEnabled = false;
+
         private boolean loggingTrustManagerEnabled = false;
 
         private Predicate<TrustManagerParameters> trustManagerParametersValidator;
+
         private boolean shouldTrustedCertificatesBeConcealed;
 
         public <T extends X509TrustManager> TrustManagerBuilder withTrustManagers(T... trustManagers) {
-            for (T trustManager : trustManagers) {
-                withTrustManager(trustManager);
-            }
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends X509TrustManager> TrustManagerBuilder withTrustManagers(List<T> trustManagers) {
-            for (X509TrustManager trustManager : trustManagers) {
-                withTrustManager(trustManager);
-            }
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends X509TrustManager> TrustManagerBuilder withTrustManager(T trustManager) {
-            this.trustManagers.add(TrustManagerUtils.wrapIfNeeded(trustManager));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends KeyStore> TrustManagerBuilder withTrustStores(T... trustStores) {
-            return withTrustStores(Arrays.asList(trustStores));
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public TrustManagerBuilder withTrustStores(List<? extends KeyStore> trustStores) {
-            for (KeyStore trustStore : trustStores) {
-                this.trustManagers.add(TrustManagerUtils.createTrustManager(trustStore));
-            }
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends KeyStore> TrustManagerBuilder withTrustStore(T trustStore) {
-            this.trustManagers.add(TrustManagerUtils.createTrustManager(trustStore));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends KeyStore> TrustManagerBuilder withTrustStore(T trustStore, String trustManagerAlgorithm) {
-            this.trustManagers.add(TrustManagerUtils.createTrustManager(trustStore, trustManagerAlgorithm));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public TrustManagerBuilder withSwappableTrustManager(boolean swappableTrustManagerEnabled) {
-            this.swappableTrustManagerEnabled = swappableTrustManagerEnabled;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public TrustManagerBuilder withLoggingTrustManager(boolean loggingTrustManagerEnabled) {
-            this.loggingTrustManagerEnabled = loggingTrustManagerEnabled;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public TrustManagerBuilder withTrustEnhancer(Predicate<TrustManagerParameters> trustManagerParametersValidator) {
-            this.trustManagerParametersValidator = trustManagerParametersValidator;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public TrustManagerBuilder withTrustEnhancer(boolean shouldTrustedCertificatesBeConcealed) {
-            this.shouldTrustedCertificatesBeConcealed = shouldTrustedCertificatesBeConcealed;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public X509ExtendedTrustManager build() {
-            requireNotEmpty(trustManagers, () -> new GenericTrustManagerException(EMPTY_TRUST_MANAGER_EXCEPTION));
-
-            X509ExtendedTrustManager baseTrustManager;
-            Optional<X509ExtendedTrustManager> unsafeOrDummyTrustManager = getUnsafeOrDummyTrustManagerIfConfigured(trustManagers);
-            if (unsafeOrDummyTrustManager.isPresent()) {
-                baseTrustManager = unsafeOrDummyTrustManager.get();
-            } else {
-                baseTrustManager = combine(trustManagers);
-                baseTrustManager = createEnhanceableTrustManagerIfEnabled(baseTrustManager)
-                        .orElse(baseTrustManager);
-            }
-
-            if (loggingTrustManagerEnabled) {
-                baseTrustManager = TrustManagerUtils.createLoggingTrustManager(baseTrustManager);
-            }
-
-            if (swappableTrustManagerEnabled) {
-                baseTrustManager = TrustManagerUtils.createSwappableTrustManager(baseTrustManager);
-            }
-
-            return baseTrustManager;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         private Optional<X509ExtendedTrustManager> getUnsafeOrDummyTrustManagerIfConfigured(List<X509ExtendedTrustManager> trustManagers) {
-            Optional<X509ExtendedTrustManager> maybeUnsafeTrustManager = trustManagers.stream()
-                    .filter(UnsafeX509ExtendedTrustManager.class::isInstance)
-                    .findAny();
-
+            Optional<X509ExtendedTrustManager> maybeUnsafeTrustManager = trustManagers.stream().filter(UnsafeX509ExtendedTrustManager.class::isInstance).findAny();
             if (maybeUnsafeTrustManager.isPresent()) {
                 if (trustManagers.size() > 1) {
                     LOGGER.debug("Unsafe TrustManager is being used therefore other trust managers will not be included for constructing the base trust manager");
                 }
-
                 return maybeUnsafeTrustManager;
             }
-
-            Optional<X509ExtendedTrustManager> maybeDummyTrustManager = trustManagers.stream()
-                    .filter(DummyX509ExtendedTrustManager.class::isInstance)
-                    .findAny();
-
+            Optional<X509ExtendedTrustManager> maybeDummyTrustManager = trustManagers.stream().filter(DummyX509ExtendedTrustManager.class::isInstance).findAny();
             if (maybeDummyTrustManager.isPresent()) {
                 if (trustManagers.size() > 1) {
                     LOGGER.debug("Dummy TrustManager is being used therefore other trust managers will not be included for constructing the base trust manager");
                 }
-
                 return maybeDummyTrustManager;
             }
-
             return Optional.empty();
         }
 
@@ -540,29 +368,21 @@ public final class TrustManagerUtils {
             if (trustManagers.size() == 1) {
                 return trustManagers.get(0);
             }
-
-            return trustManagers.stream()
-                    .map(TrustManagerUtils::unwrapIfPossible)
-                    .flatMap(Collection::stream)
-                    .collect(CollectorsUtils.toListAndThen(AggregatedX509ExtendedTrustManager::new));
+            return trustManagers.stream().map(TrustManagerUtils::unwrapIfPossible).flatMap(Collection::stream).collect(CollectorsUtils.toListAndThen(AggregatedX509ExtendedTrustManager::new));
         }
 
         private Optional<X509ExtendedTrustManager> createEnhanceableTrustManagerIfEnabled(X509ExtendedTrustManager baseTrustManager) {
             if (trustManagerParametersValidator == null && !shouldTrustedCertificatesBeConcealed) {
                 return Optional.empty();
             }
-
             Predicate<TrustManagerParameters> aTrustManagerParametersValidator;
             if (trustManagerParametersValidator != null) {
                 aTrustManagerParametersValidator = trustManagerParametersValidator;
             } else {
                 aTrustManagerParametersValidator = trustManagerParameters -> false;
             }
-
             X509ExtendedTrustManager enhanceableTrustManager = TrustManagerUtils.createEnhanceableTrustManager(baseTrustManager, aTrustManagerParametersValidator, shouldTrustedCertificatesBeConcealed);
             return Optional.of(enhanceableTrustManager);
         }
-
     }
-
 }

@@ -35,33 +35,6 @@ interface CombinableX509TrustManager extends X509TrustManager {
     List<X509ExtendedTrustManager> getInnerTrustManagers();
 
     default void checkTrusted(TrustManagerConsumer callBackConsumer) throws CertificateException {
-        List<CertificateException> certificateExceptions = new ArrayList<>();
-        for (X509ExtendedTrustManager trustManager : getInnerTrustManagers()) {
-            try {
-                callBackConsumer.checkTrusted(trustManager);
-                return;
-            } catch (CertificateException e) {
-                certificateExceptions.add(e);
-            } catch (RuntimeException e) {
-                Throwable cause = e.getCause();
-                if (cause instanceof InvalidAlgorithmParameterException) {
-                    // Handling of [InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty]
-                    //
-                    // This is most likely a result of using a TrustManager created from an empty KeyStore.
-                    // The exception will be thrown during the SSL Handshake. It is safe to suppress
-                    // and can be bundle with the other exceptions to proceed validating the counterparty with
-                    // the remaining TrustManagers.
-                    certificateExceptions.add(new CertificateException(cause));
-                } else {
-                    throw e;
-                }
-            }
-        }
-
-        CertificateException certificateException = new CertificateException(CERTIFICATE_EXCEPTION_MESSAGE);
-        certificateExceptions.forEach(certificateException::addSuppressed);
-
-        throw certificateException;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

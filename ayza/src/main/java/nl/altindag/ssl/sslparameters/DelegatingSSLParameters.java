@@ -27,71 +27,70 @@ public class DelegatingSSLParameters extends SSLParameters {
     }
 
     public SSLParameters getInnerSslParameters() {
-        return sslParameters;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getCipherSuites() {
-        return sslParameters.getCipherSuites();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getProtocols() {
-        return sslParameters.getProtocols();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getWantClientAuth() {
-        return sslParameters.getWantClientAuth();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getNeedClientAuth() {
-        return sslParameters.getNeedClientAuth();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public AlgorithmConstraints getAlgorithmConstraints() {
-        return sslParameters.getAlgorithmConstraints();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String getEndpointIdentificationAlgorithm() {
-        return sslParameters.getEndpointIdentificationAlgorithm();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setCipherSuites(String[] cipherSuites) {
-        sslParameters.setCipherSuites(cipherSuites);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setProtocols(String[] protocols) {
-        sslParameters.setProtocols(protocols);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setWantClientAuth(boolean wantClientAuth) {
-        sslParameters.setWantClientAuth(wantClientAuth);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setNeedClientAuth(boolean needClientAuth) {
-        sslParameters.setNeedClientAuth(needClientAuth);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setAlgorithmConstraints(AlgorithmConstraints constraints) {
-        sslParameters.setAlgorithmConstraints(constraints);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setEndpointIdentificationAlgorithm(String algorithm) {
-        sslParameters.setEndpointIdentificationAlgorithm(algorithm);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public void setSslParameters(SSLParameters sslParameters) {
-        this.sslParameters = sslParameters;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

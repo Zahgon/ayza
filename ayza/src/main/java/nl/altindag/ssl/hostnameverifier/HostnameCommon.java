@@ -25,10 +25,11 @@ final class HostnameCommon {
 
     private static final Pattern VERIFY_AS_IP_ADDRESS = Pattern.compile("([0-9a-fA-F]*:[0-9a-fA-F:.]*)|([\\d.]+)");
 
-    private HostnameCommon() {}
+    private HostnameCommon() {
+    }
 
     static boolean canParseAsIpAddress(String value) {
-        return VERIFY_AS_IP_ADDRESS.matcher(value).matches();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -36,50 +37,10 @@ final class HostnameCommon {
      * label is longer than 63 characters. Trailing dots are okay.
      */
     static boolean containsInvalidLabelLengths(String hostname) {
-        if (hostname.length() < 1 || hostname.length() > 253) {
-            return true;
-        }
-
-        int labelStart = 0;
-        while (true) {
-            int dot = hostname.indexOf('.', labelStart);
-            int labelLength;
-            if (dot == -1) {
-                labelLength = hostname.length() - labelStart;
-            } else {
-                labelLength = dot - labelStart;
-            }
-            if (labelLength < 1 || labelLength > 63) {
-                return true;
-            }
-            if (dot == -1 || dot == hostname.length() - 1 ) {
-                break;
-            }
-            labelStart = dot + 1;
-        }
-
-        return false;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static boolean containsInvalidHostnameAsciiCodes(String hostname) {
-        for (int i = 0; i < hostname.length(); i++) {
-            char c = hostname.charAt(i);
-
-            // The WHATWG Host parsing rules accepts some character codes which are invalid by
-            // definition for OkHttp's host header checks (and the WHATWG Host syntax definition). Here
-            // we rule out characters that would cause problems in host headers.
-            if (c <= '\u001f' || c >= '\u007f') {
-                return true;
-            }
-
-            // Check for the characters mentioned in the WHATWG Host parsing spec:
-            // U+0000, U+0009, U+000A, U+000D, U+0020, "#", "%", "/", ":", "?", "@", "[", "\", and "]"
-            // (excluding the characters covered above).
-            if (" #%/:?@[\\]".indexOf(c) != -1) {
-                return true;
-            }
-        }
-        return false;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

@@ -17,7 +17,6 @@ package nl.altindag.ssl.sslengine;
 
 import nl.altindag.sude.Logger;
 import nl.altindag.sude.LoggerFactory;
-
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLParameters;
 import java.util.function.Supplier;
@@ -41,57 +40,56 @@ public class FenixSSLEngine extends DelegatingSSLEngine {
 
     @Override
     public void setSSLParameters(SSLParameters params) {
-        LOGGER.debug("Ignoring provided ssl parameters");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setEnabledCipherSuites(String[] suites) {
-        LOGGER.debug("Ignoring provided ciphers");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setEnabledProtocols(String[] protocols) {
-        LOGGER.debug("Ignoring provided protocols");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setNeedClientAuth(boolean need) {
-        LOGGER.debug("Ignoring provided indicator for need client auth");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setWantClientAuth(boolean want) {
-        LOGGER.debug("Ignoring provided indicator for want client auth");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getEnabledCipherSuites() {
-        return updateAndGet(super::getEnabledCipherSuites);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getEnabledProtocols() {
-        return updateAndGet(super::getEnabledProtocols);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getNeedClientAuth() {
-        return updateAndGet(super::getNeedClientAuth);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getWantClientAuth() {
-        return updateAndGet(super::getWantClientAuth);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public SSLParameters getSSLParameters() {
-        return updateAndGet(super::getSSLParameters);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private <T> T updateAndGet(Supplier<T> supplier) {
         sslEngine.setSSLParameters(sslParameters);
         return supplier.get();
     }
-
 }

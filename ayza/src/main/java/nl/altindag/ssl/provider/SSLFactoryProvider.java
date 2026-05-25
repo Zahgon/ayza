@@ -16,7 +16,6 @@
 package nl.altindag.ssl.provider;
 
 import nl.altindag.ssl.SSLFactory;
-
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -33,35 +32,22 @@ public final class SSLFactoryProvider {
     private static SSLFactoryProvider INSTANCE;
 
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+
     private final Lock readLock = readWriteLock.readLock();
+
     private final Lock writeLock = readWriteLock.writeLock();
+
     private SSLFactory sslFactory;
 
-
     private SSLFactoryProvider() {
-
     }
 
     public static void set(SSLFactory sslFactory) {
-        SSLFactoryProvider instance = getInstance();
-        instance.writeLock.lock();
-
-        try {
-            instance.sslFactory = sslFactory;
-        } finally {
-            instance.writeLock.unlock();
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Optional<SSLFactory> get() {
-        SSLFactoryProvider instance = getInstance();
-        instance.readLock.lock();
-
-        try {
-            return Optional.ofNullable(instance.sslFactory);
-        } finally {
-            instance.readLock.unlock();
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static SSLFactoryProvider getInstance() {
@@ -70,5 +56,4 @@ public final class SSLFactoryProvider {
         }
         return INSTANCE;
     }
-
 }

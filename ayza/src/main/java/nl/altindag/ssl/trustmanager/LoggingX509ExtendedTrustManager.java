@@ -18,7 +18,6 @@ package nl.altindag.ssl.trustmanager;
 import nl.altindag.laleler.HostUtils;
 import nl.altindag.sude.Logger;
 import nl.altindag.sude.LoggerFactory;
-
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.X509ExtendedTrustManager;
 import java.net.Socket;
@@ -37,11 +36,15 @@ import java.util.Optional;
 public final class LoggingX509ExtendedTrustManager extends DelegatingX509ExtendedTrustManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingX509ExtendedTrustManager.class);
+
     private static final Logger SUCCESS_LOGGER = LoggerFactory.getLogger(LoggingX509ExtendedTrustManager.class.getName() + ".success");
+
     private static final Logger EXCEPTION_LOGGER = LoggerFactory.getLogger(LoggingX509ExtendedTrustManager.class.getName() + ".exception");
 
     private static final String LOG_MESSAGE_TEMPLATE = "Validating the certificate chain of the %s%s with authentication type %s%s. See below for the full chain of the %s:\n%s";
+
     private static final String VALIDATION_PASSED_LOG_MESSAGE_TEMPLATE = "Successfully validated the %s%s with authentication type %s%s.";
+
     private static final String VALIDATION_FAILED_LOG_MESSAGE_TEMPLATE = "Failed validating the %s%s with authentication type %s%s.";
 
     public LoggingX509ExtendedTrustManager(X509ExtendedTrustManager trustManager) {
@@ -50,51 +53,40 @@ public final class LoggingX509ExtendedTrustManager extends DelegatingX509Extende
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-        checkTrusted(() -> super.checkClientTrusted(chain, authType), CounterParty.CLIENT, chain, authType, null, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {
-        checkTrusted(() -> super.checkClientTrusted(chain, authType, socket), CounterParty.CLIENT, chain, authType, socket, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType, SSLEngine sslEngine) throws CertificateException {
-        checkTrusted(() -> super.checkClientTrusted(chain, authType, sslEngine), CounterParty.CLIENT, chain, authType, null, sslEngine);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-        checkTrusted(() -> super.checkServerTrusted(chain, authType), CounterParty.SERVER, chain, authType, null, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {
-        checkTrusted(() -> super.checkServerTrusted(chain, authType, socket), CounterParty.SERVER, chain, authType, socket, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType, SSLEngine sslEngine) throws CertificateException {
-        checkTrusted(() -> super.checkServerTrusted(chain, authType, sslEngine), CounterParty.SERVER, chain, authType, null, sslEngine);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-    private static void checkTrusted(TrustManagerRunnable runnable,
-                                     CounterParty counterParty,
-                                     X509Certificate[] chain,
-                                     String authType,
-                                     Socket socket,
-                                     SSLEngine sslEngine) throws CertificateException {
-
+    private static void checkTrusted(TrustManagerRunnable runnable, CounterParty counterParty, X509Certificate[] chain, String authType, Socket socket, SSLEngine sslEngine) throws CertificateException {
         String certificateChain = Arrays.toString(chain);
-
-        Optional<String> classNameLogMessage = getClassnameOfEitherOrOther(socket, sslEngine)
-                .map(className -> ", while also using the " + className);
-        Optional<String> hostAndPortLogMessage = getHostAndPortOfEitherOrOther(socket, sslEngine)
-                .map(hostAndPort -> "[" + hostAndPort + "]");
-
+        Optional<String> classNameLogMessage = getClassnameOfEitherOrOther(socket, sslEngine).map(className -> ", while also using the " + className);
+        Optional<String> hostAndPortLogMessage = getHostAndPortOfEitherOrOther(socket, sslEngine).map(hostAndPort -> "[" + hostAndPort + "]");
         String logMessage = String.format(LOG_MESSAGE_TEMPLATE, counterParty, hostAndPortLogMessage.orElse(""), authType, classNameLogMessage.orElse(""), counterParty, certificateChain);
         LOGGER.debug(logMessage);
-
         try {
             runnable.run();
             String okMessage = String.format(VALIDATION_PASSED_LOG_MESSAGE_TEMPLATE, counterParty, hostAndPortLogMessage.orElse(""), authType, classNameLogMessage.orElse(""));
@@ -107,41 +99,20 @@ public final class LoggingX509ExtendedTrustManager extends DelegatingX509Extende
     }
 
     static Optional<String> getClassnameOfEitherOrOther(Socket socket, SSLEngine sslEngine) {
-        if (socket != null) {
-            return Optional.of(Socket.class.getSimpleName());
-        }
-
-        if (sslEngine != null) {
-            return Optional.of(SSLEngine.class.getSimpleName());
-        }
-
-        return Optional.empty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static Optional<String> getHostAndPortOfEitherOrOther(Socket socket, SSLEngine sslEngine) {
-        Map.Entry<String, Integer> hostToPort = null;
-        if (socket != null) {
-            hostToPort = HostUtils.extractHostAndPort(socket);
-        }
-
-        if (sslEngine != null) {
-            hostToPort = HostUtils.extractHostAndPort(sslEngine);
-        }
-
-        if (hostToPort != null) {
-            return Optional.of(String.join(":", hostToPort.getKey(), hostToPort.getValue().toString()));
-        }
-
-        return Optional.empty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private enum CounterParty {
+
         SERVER, CLIENT;
 
         @Override
         public String toString() {
-            return this.name().toLowerCase();
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
     }
-
 }

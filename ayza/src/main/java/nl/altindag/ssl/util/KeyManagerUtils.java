@@ -28,7 +28,6 @@ import nl.altindag.ssl.keymanager.KeyManagerFactoryWrapper;
 import nl.altindag.ssl.keymanager.LoggingX509ExtendedKeyManager;
 import nl.altindag.ssl.keymanager.X509KeyManagerWrapper;
 import nl.altindag.ssl.model.KeyStoreHolder;
-
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.X509ExtendedKeyManager;
@@ -57,7 +56,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-
 import static nl.altindag.laleler.CollectionUtils.toUnmodifiableList;
 import static nl.altindag.laleler.CollectorsUtils.toListAndThen;
 import static nl.altindag.laleler.CollectorsUtils.toMapAndThen;
@@ -72,126 +70,70 @@ import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 public final class KeyManagerUtils {
 
     private static final char[] DUMMY_PASSWORD = KeyStoreUtils.DUMMY_PASSWORD.toCharArray();
-    private static final BiFunction<Class<?>, Class<?>, GenericKeyManagerException> KEY_MANAGER_TYPE_MISMATCH_EXCEPTION_PROVIDER = (expectedKeyManagerType, actualKeyManagerType) -> new GenericKeyManagerException(
-            String.format(
-                    "KeyManager should be an instance of: [%s], but received: [%s]",
-                    expectedKeyManagerType.getName(),
-                    actualKeyManagerType.getName())
-    );
 
-    private KeyManagerUtils() {}
+    private static final BiFunction<Class<?>, Class<?>, GenericKeyManagerException> KEY_MANAGER_TYPE_MISMATCH_EXCEPTION_PROVIDER = (expectedKeyManagerType, actualKeyManagerType) -> new GenericKeyManagerException(String.format("KeyManager should be an instance of: [%s], but received: [%s]", expectedKeyManagerType.getName(), actualKeyManagerType.getName()));
+
+    private KeyManagerUtils() {
+    }
 
     public static X509ExtendedKeyManager combine(X509KeyManager... keyManagers) {
-        return combine(Arrays.asList(keyManagers));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager combine(List<? extends X509KeyManager> keyManagers) {
-        return KeyManagerUtils.keyManagerBuilder()
-                .withKeyManagers(keyManagers)
-                .build();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static <T extends X509KeyManager> X509ExtendedKeyManager[] toArray(T keyManager) {
-        return new X509ExtendedKeyManager[]{KeyManagerUtils.wrapIfNeeded(keyManager)};
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager createKeyManager(KeyStoreHolder... keyStoreHolders) {
-        return Arrays.stream(keyStoreHolders)
-                .map(keyStoreHolder -> createKeyManager(keyStoreHolder.getKeyStore(), keyStoreHolder.getKeyPassword()))
-                .collect(toListAndThen(KeyManagerUtils::combine));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager createKeyManager(KeyStore keyStore, char[] keyPassword) {
-        return createKeyManager(keyStore, keyPassword, KeyManagerFactory.getDefaultAlgorithm());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager createKeyManager(KeyStore keyStore, char[] keyPassword, String keyManagerFactoryAlgorithm) {
-        try {
-            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(keyManagerFactoryAlgorithm);
-            return createKeyManager(keyStore, keyPassword, keyManagerFactory);
-        } catch (NoSuchAlgorithmException e) {
-            throw new GenericKeyManagerException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager createKeyManager(KeyStore keyStore, char[] keyPassword, String keyManagerFactoryAlgorithm, String securityProviderName) {
-        try {
-            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(keyManagerFactoryAlgorithm, securityProviderName);
-            return createKeyManager(keyStore, keyPassword, keyManagerFactory);
-        } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
-            throw new GenericKeyManagerException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager createKeyManager(KeyStore keyStore, char[] keyPassword, String keyManagerFactoryAlgorithm, Provider securityProvider) {
-        try {
-            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(keyManagerFactoryAlgorithm, securityProvider);
-            return createKeyManager(keyStore, keyPassword, keyManagerFactory);
-        } catch (NoSuchAlgorithmException e) {
-            throw new GenericKeyManagerException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager createKeyManager(KeyStore keyStore, char[] keyPassword, KeyManagerFactory keyManagerFactory) {
-        try {
-            keyManagerFactory.init(keyStore, keyPassword);
-            return KeyManagerUtils.getKeyManager(keyManagerFactory);
-        } catch (KeyStoreException | NoSuchAlgorithmException | UnrecoverableKeyException e) {
-            throw new GenericKeyManagerException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager createKeyManager(KeyStore keyStore, Map<String, char[]> aliasToPassword) {
-        List<X509ExtendedKeyManager> keyManagers = new ArrayList<>();
-
-        for (Entry<String, char[]> entry : aliasToPassword.entrySet()) {
-            try {
-                String alias = entry.getKey();
-                char[] password = entry.getValue();
-
-                if (keyStore.isKeyEntry(alias)) {
-                    Key key = keyStore.getKey(alias, password);
-                    Certificate[] certificateChain = keyStore.getCertificateChain(alias);
-
-                    KeyStore identityStore = KeyStoreUtils.createIdentityStore(key, password, certificateChain);
-                    X509ExtendedKeyManager keyManager = KeyManagerUtils.createKeyManager(identityStore, password);
-                    keyManagers.add(keyManager);
-                }
-            } catch (KeyStoreException | NoSuchAlgorithmException | UnrecoverableKeyException e) {
-                throw new GenericKeyManagerException(e);
-            }
-        }
-
-        requireNotEmpty(keyManagers, () -> new GenericKeyManagerException("Could not create any KeyManager from the given KeyStore, Alias and Password"));
-        return KeyManagerUtils.combine(keyManagers);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager wrapIfNeeded(X509KeyManager keyManager) {
-        if (keyManager instanceof X509ExtendedKeyManager) {
-            return (X509ExtendedKeyManager) keyManager;
-        } else {
-            return new X509KeyManagerWrapper(keyManager);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static KeyManagerFactory createKeyManagerFactory(KeyManager keyManager) {
-        return new KeyManagerFactoryWrapper(keyManager);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static <T extends KeyManagerFactory> X509ExtendedKeyManager getKeyManager(T keyManagerFactory) {
-        return Arrays.stream(keyManagerFactory.getKeyManagers())
-                .filter(X509KeyManager.class::isInstance)
-                .map(X509KeyManager.class::cast)
-                .map(KeyManagerUtils::wrapIfNeeded)
-                .collect(toListAndThen(KeyManagerUtils::combine));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager createDummyKeyManager() {
-        return DummyX509ExtendedKeyManager.getInstance();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager createLoggingKeyManager(X509KeyManager keyManager) {
-        return new LoggingX509ExtendedKeyManager(KeyManagerUtils.wrapIfNeeded(keyManager));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -202,7 +144,7 @@ public final class KeyManagerUtils {
      * @return              Swappable KeyManager
      */
     public static X509ExtendedKeyManager createSwappableKeyManager(X509KeyManager keyManager) {
-        return new HotSwappableX509ExtendedKeyManager(KeyManagerUtils.wrapIfNeeded(keyManager));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -215,65 +157,35 @@ public final class KeyManagerUtils {
      * @throws GenericKeyManagerException   if {@code baseKeyManager} is not instance of {@link HotSwappableX509ExtendedKeyManager}
      */
     public static void swapKeyManager(X509KeyManager baseKeyManager, X509KeyManager newKeyManager) {
-        if (newKeyManager instanceof HotSwappableX509ExtendedKeyManager) {
-            throw new GenericKeyManagerException(
-                    String.format("The newKeyManager should not be an instance of [%s]", HotSwappableX509ExtendedKeyManager.class.getName())
-            );
-        }
-
-        if (baseKeyManager instanceof HotSwappableX509ExtendedKeyManager
-                && ((HotSwappableX509ExtendedKeyManager) baseKeyManager).getInnerKeyManager() instanceof LoggingX509ExtendedKeyManager) {
-            ((HotSwappableX509ExtendedKeyManager) baseKeyManager).setKeyManager(
-                    new LoggingX509ExtendedKeyManager(
-                            KeyManagerUtils.wrapIfNeeded(newKeyManager)
-                    )
-            );
-        } else if (baseKeyManager instanceof HotSwappableX509ExtendedKeyManager) {
-            ((HotSwappableX509ExtendedKeyManager) baseKeyManager).setKeyManager(KeyManagerUtils.wrapIfNeeded(newKeyManager));
-        } else {
-            throw new GenericKeyManagerException(
-                    String.format("The baseKeyManager is from the instance of [%s] and should be an instance of [%s].",
-                            baseKeyManager.getClass().getName(),
-                            HotSwappableX509ExtendedKeyManager.class.getName())
-            );
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void addIdentityRoute(X509ExtendedKeyManager keyManager, String alias, String... hosts) {
-        computeIdentityRoute(keyManager, alias, hosts, false, false);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void overrideIdentityRoute(X509ExtendedKeyManager keyManager, String alias, String... hosts) {
-        computeIdentityRoute(keyManager, alias, hosts, true, false);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void removeIdentityRoute(X509ExtendedKeyManager keyManager, String alias) {
-        computeIdentityRoute(keyManager, alias, null, false, true);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-    private static void computeIdentityRoute(X509ExtendedKeyManager keyManager,
-                                             String alias,
-                                             String[] hosts,
-                                             boolean overrideExistingRouteEnabled,
-                                             boolean removeExistingRouteEnabled) {
-
+    private static void computeIdentityRoute(X509ExtendedKeyManager keyManager, String alias, String[] hosts, boolean overrideExistingRouteEnabled, boolean removeExistingRouteEnabled) {
         requireNotNull(keyManager, GENERIC_EXCEPTION_MESSAGE.apply("KeyManager"));
         requireNotNull(alias, GENERIC_EXCEPTION_MESSAGE.apply("Alias"));
-
         if (keyManager instanceof DelegatingX509ExtendedKeyManager) {
             computeIdentityRoute(((DelegatingX509ExtendedKeyManager) keyManager).getInnerKeyManager(), alias, hosts, overrideExistingRouteEnabled, removeExistingRouteEnabled);
             return;
         }
-
         if (keyManager instanceof AggregatedX509ExtendedKeyManager) {
             AggregatedX509ExtendedKeyManager aggregatedX509ExtendedKeyManager = (AggregatedX509ExtendedKeyManager) keyManager;
             Map<String, List<URI>> aliasToHosts = aggregatedX509ExtendedKeyManager.getIdentityRoute();
-
             if (removeExistingRouteEnabled) {
                 aliasToHosts.remove(alias);
                 return;
             }
-
             requireNotNull(hosts, GENERIC_EXCEPTION_MESSAGE.apply("Host"));
             List<URI> uris = new ArrayList<>();
             for (String host : hosts) {
@@ -281,11 +193,9 @@ public final class KeyManagerUtils {
                 UriUtils.validate(uri);
                 uris.add(uri);
             }
-
             if (overrideExistingRouteEnabled && aliasToHosts.containsKey(alias)) {
                 aliasToHosts.get(alias).clear();
             }
-
             for (URI uri : uris) {
                 if (aliasToHosts.containsKey(alias)) {
                     aliasToHosts.get(alias).add(uri);
@@ -299,27 +209,7 @@ public final class KeyManagerUtils {
     }
 
     public static Map<String, List<String>> getIdentityRoute(X509ExtendedKeyManager keyManager) {
-        requireNotNull(keyManager, GENERIC_EXCEPTION_MESSAGE.apply("KeyManager"));
-
-        if (keyManager instanceof DelegatingX509ExtendedKeyManager) {
-            return getIdentityRoute(((DelegatingX509ExtendedKeyManager) keyManager).getInnerKeyManager());
-        }
-
-        if (keyManager instanceof AggregatedX509ExtendedKeyManager) {
-            return ((AggregatedX509ExtendedKeyManager) keyManager)
-                    .getIdentityRoute()
-                    .entrySet().stream()
-                    .collect(Collectors.collectingAndThen(
-                            Collectors.toMap(
-                                    Entry::getKey,
-                                    hosts -> hosts.getValue().stream()
-                                            .map(URI::toString)
-                                            .collect(toUnmodifiableList())),
-                            Collections::unmodifiableMap)
-                    );
-        } else {
-            throw KEY_MANAGER_TYPE_MISMATCH_EXCEPTION_PROVIDER.apply(AggregatedX509ExtendedKeyManager.class, keyManager.getClass());
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static List<X509ExtendedKeyManager> unwrapIfPossible(X509ExtendedKeyManager keyManager) {
@@ -336,30 +226,23 @@ public final class KeyManagerUtils {
     }
 
     public static KeyManagerBuilder keyManagerBuilder() {
-        return new KeyManagerBuilder();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager createKeyManager(PrivateKey privateKey, Certificate[] certificatesChain) {
-        String alias = CertificateUtils.generateAlias(certificatesChain[0]);
-        return createKeyManager(alias, privateKey, certificatesChain);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager createKeyManager(String alias, PrivateKey privateKey, Certificate[] certificatesChain) {
-        try {
-            KeyStore keyStore = KeyStoreUtils.createKeyStore();
-            keyStore.setKeyEntry(alias, privateKey, DUMMY_PASSWORD, certificatesChain);
-            return KeyManagerUtils.createKeyManager(keyStore, DUMMY_PASSWORD);
-        } catch (KeyStoreException e) {
-            throw new GenericKeyStoreException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager createInflatableKeyManager() {
-        return new InflatableX509ExtendedKeyManager();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static X509ExtendedKeyManager createInflatableKeyManager(String alias, X509ExtendedKeyManager keyManager) {
-        return new InflatableX509ExtendedKeyManager(alias, keyManager);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -367,8 +250,7 @@ public final class KeyManagerUtils {
      * If the provided keyManager is not of the type {@link InflatableX509ExtendedKeyManager} it will throw an exception
      */
     public static void addIdentityMaterial(X509ExtendedKeyManager keyManager, String alias, KeyStore keyStore, char[] keyPassword) {
-        X509ExtendedKeyManager keyManagerToBeAdded = createKeyManager(keyStore, keyPassword);
-        addIdentityMaterial(keyManager, alias, keyManagerToBeAdded);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -376,19 +258,14 @@ public final class KeyManagerUtils {
      * If the provided baseKeyManager is not of the type {@link InflatableX509ExtendedKeyManager} it will throw an exception
      */
     public static void addIdentityMaterial(X509ExtendedKeyManager baseKeyManager, String alias, X509ExtendedKeyManager keyManagerToBeAdded) {
-        boolean identityAdded = computeIdentityMaterialIfPossible(baseKeyManager, km -> km.addIdentity(alias, keyManagerToBeAdded));
-        if (identityAdded) {
-            return;
-        }
-
-        throw KEY_MANAGER_TYPE_MISMATCH_EXCEPTION_PROVIDER.apply(InflatableX509ExtendedKeyManager.class, baseKeyManager.getClass());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Removes identity material from a {@link InflatableX509ExtendedKeyManager}
      */
     public static void removeIdentityMaterial(X509ExtendedKeyManager baseKeyManager, String alias) {
-        computeIdentityMaterialIfPossible(baseKeyManager, km -> km.removeIdentity(alias));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -396,29 +273,20 @@ public final class KeyManagerUtils {
      */
     private static boolean computeIdentityMaterialIfPossible(X509ExtendedKeyManager baseKeyManager, Consumer<InflatableX509ExtendedKeyManager> consumer) {
         if (baseKeyManager instanceof InflatableX509ExtendedKeyManager) {
-
             consumer.accept((InflatableX509ExtendedKeyManager) baseKeyManager);
             return true;
         }
-
         if (baseKeyManager instanceof DelegatingX509ExtendedKeyManager) {
             X509ExtendedKeyManager innerKeyManager = ((DelegatingX509ExtendedKeyManager) baseKeyManager).getInnerKeyManager();
             return computeIdentityMaterialIfPossible(innerKeyManager, consumer);
         }
-
         if (baseKeyManager instanceof AggregatedX509ExtendedKeyManager) {
             Map<String, X509ExtendedKeyManager> innerKeyManagers = ((AggregatedX509ExtendedKeyManager) baseKeyManager).getInnerKeyManagers();
-
-            Optional<InflatableX509ExtendedKeyManager> inflatableKeyManager = innerKeyManagers.values().stream()
-                    .filter(InflatableX509ExtendedKeyManager.class::isInstance)
-                    .map(InflatableX509ExtendedKeyManager.class::cast)
-                    .findFirst();
-
+            Optional<InflatableX509ExtendedKeyManager> inflatableKeyManager = innerKeyManagers.values().stream().filter(InflatableX509ExtendedKeyManager.class::isInstance).map(InflatableX509ExtendedKeyManager.class::cast).findFirst();
             if (inflatableKeyManager.isPresent()) {
                 return computeIdentityMaterialIfPossible(inflatableKeyManager.get(), consumer);
             }
         }
-
         return false;
     }
 
@@ -426,30 +294,7 @@ public final class KeyManagerUtils {
      * Returns a list of aliases associated with the KeyManagers within a {@link CombinableX509KeyManager}
      */
     public static List<String> getAliases(X509ExtendedKeyManager keyManager) {
-        if (keyManager instanceof InflatableX509ExtendedKeyManager) {
-            return toUnmodifiableList(((InflatableX509ExtendedKeyManager) keyManager).getAliasToIdentity().keySet());
-        }
-
-        if (keyManager instanceof DelegatingX509ExtendedKeyManager) {
-            return getAliases(((DelegatingX509ExtendedKeyManager) keyManager).getInnerKeyManager());
-        }
-
-        if (keyManager instanceof AggregatedX509ExtendedKeyManager) {
-            Map<String, X509ExtendedKeyManager> innerKeyManagers = ((AggregatedX509ExtendedKeyManager) keyManager).getInnerKeyManagers();
-
-            Optional<InflatableX509ExtendedKeyManager> inflatableKeyManager = innerKeyManagers.values().stream()
-                    .filter(InflatableX509ExtendedKeyManager.class::isInstance)
-                    .map(InflatableX509ExtendedKeyManager.class::cast)
-                    .findFirst();
-
-            if (inflatableKeyManager.isPresent()) {
-                return getAliases(inflatableKeyManager.get());
-            } else {
-                return toUnmodifiableList(((AggregatedX509ExtendedKeyManager) keyManager).getInnerKeyManagers().keySet());
-            }
-        }
-
-        return Collections.emptyList();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static final class KeyManagerBuilder {
@@ -457,99 +302,61 @@ public final class KeyManagerUtils {
         private static final String EMPTY_KEY_MANAGER_EXCEPTION = "Input does not contain KeyManagers";
 
         private final List<X509ExtendedKeyManager> keyManagers = new ArrayList<>();
+
         private final Map<String, List<URI>> aliasToHost = new HashMap<>();
+
         private boolean swappableKeyManagerEnabled = false;
+
         private boolean loggingKeyManagerEnabled = false;
+
         private boolean inflatableKeyManagerEnabled = false;
 
-        private KeyManagerBuilder() {}
+        private KeyManagerBuilder() {
+        }
 
         @SafeVarargs
         public final <T extends X509KeyManager> KeyManagerBuilder withKeyManagers(T... keyManagers) {
-            for (X509KeyManager keyManager : keyManagers) {
-                withKeyManager(keyManager);
-            }
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends X509KeyManager> KeyManagerBuilder withKeyManagers(List<T> keyManagers) {
-            for (X509KeyManager keyManager : keyManagers) {
-                withKeyManager(keyManager);
-            }
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends X509KeyManager> KeyManagerBuilder withKeyManager(T keyManager) {
-            this.keyManagers.add(KeyManagerUtils.wrapIfNeeded(keyManager));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public KeyManagerBuilder withIdentities(KeyStoreHolder... identities) {
-            return withIdentities(Arrays.asList(identities));
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public KeyManagerBuilder withIdentities(List<KeyStoreHolder> identities) {
-            for (KeyStoreHolder identity : identities) {
-                this.keyManagers.add(KeyManagerUtils.createKeyManager(identity.getKeyStore(), identity.getKeyPassword()));
-            }
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends KeyStore> KeyManagerBuilder withIdentity(T identity, char[] identityPassword, String keyManagerAlgorithm) {
-            this.keyManagers.add(KeyManagerUtils.createKeyManager(identity, identityPassword, keyManagerAlgorithm));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public KeyManagerBuilder withSwappableKeyManager(boolean swappableKeyManagerEnabled) {
-            this.swappableKeyManagerEnabled = swappableKeyManagerEnabled;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public KeyManagerBuilder withLoggingKeyManager(boolean loggingKeyManagerEnabled) {
-            this.loggingKeyManagerEnabled = loggingKeyManagerEnabled;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public KeyManagerBuilder withInflatableKeyManager(boolean inflatableKeyManagerEnabled) {
-            this.inflatableKeyManagerEnabled = inflatableKeyManagerEnabled;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public KeyManagerBuilder withIdentityRoute(Map<String, List<URI>> aliasToHost) {
-            this.aliasToHost.putAll(aliasToHost);
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public X509ExtendedKeyManager build() {
-            requireNotEmpty(keyManagers, () -> new GenericKeyManagerException(EMPTY_KEY_MANAGER_EXCEPTION));
-
-            X509ExtendedKeyManager baseKeyManager;
-            if (keyManagers.size() == 1) {
-                baseKeyManager = keyManagers.get(0);
-            } else {
-                AtomicInteger index = new AtomicInteger(0);
-                baseKeyManager = keyManagers.stream()
-                        .map(KeyManagerUtils::unwrapIfPossible)
-                        .flatMap(Collection::stream)
-                        .map(keyManager -> new SimpleImmutableEntry<>(String.valueOf(index.incrementAndGet()), keyManager))
-                        .collect(toMapAndThen(extendedKeyManagers -> new AggregatedX509ExtendedKeyManager(extendedKeyManagers, aliasToHost)));
-            }
-
-            if (inflatableKeyManagerEnabled) {
-                baseKeyManager = KeyManagerUtils.createInflatableKeyManager("initial-key-manager", baseKeyManager);
-            }
-
-            if (loggingKeyManagerEnabled) {
-                baseKeyManager = KeyManagerUtils.createLoggingKeyManager(baseKeyManager);
-            }
-
-            if (swappableKeyManagerEnabled) {
-                baseKeyManager = KeyManagerUtils.createSwappableKeyManager(baseKeyManager);
-            }
-
-            return baseKeyManager;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
-
     }
-
 }

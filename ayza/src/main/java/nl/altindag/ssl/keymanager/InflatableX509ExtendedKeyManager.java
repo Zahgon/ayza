@@ -16,7 +16,6 @@
 package nl.altindag.ssl.keymanager;
 
 import nl.altindag.ssl.util.KeyManagerUtils;
-
 import javax.net.ssl.X509ExtendedKeyManager;
 import java.security.KeyStore;
 import java.util.Collections;
@@ -45,35 +44,14 @@ public class InflatableX509ExtendedKeyManager extends HotSwappableX509ExtendedKe
     }
 
     public void addIdentity(String alias, X509ExtendedKeyManager keyManager) {
-        writeLock.lock();
-
-        try {
-            AggregatedX509ExtendedKeyManager aggregatedKeyManager = (AggregatedX509ExtendedKeyManager) getInnerKeyManager();
-            aggregatedKeyManager.keyManagers.remove("dummy");
-            aggregatedKeyManager.keyManagers.put(alias, keyManager);
-        } finally {
-            writeLock.unlock();
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public void removeIdentity(String alias) {
-        writeLock.lock();
-
-        try {
-            ((AggregatedX509ExtendedKeyManager) getInnerKeyManager()).keyManagers.remove(alias);
-        } finally {
-            writeLock.unlock();
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public Map<String, X509ExtendedKeyManager> getAliasToIdentity() {
-        readLock.lock();
-
-        try {
-            return Collections.unmodifiableMap(((AggregatedX509ExtendedKeyManager) getInnerKeyManager()).keyManagers);
-        } finally {
-            readLock.unlock();
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

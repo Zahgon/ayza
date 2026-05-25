@@ -16,7 +16,6 @@
 package nl.altindag.ssl.util;
 
 import nl.altindag.ssl.SSLFactory;
-
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSessionContext;
@@ -28,7 +27,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.LongFunction;
 import java.util.function.Predicate;
-
 import static nl.altindag.laleler.CollectorsUtils.toUnmodifiableList;
 
 /**
@@ -38,145 +36,118 @@ public final class SSLSessionUtils {
 
     private static final LongFunction<ZonedDateTime> EPOCH_TIME_MAPPER = epochTime -> ZonedDateTime.ofInstant(Instant.ofEpochMilli(epochTime), ZoneOffset.UTC);
 
-    private SSLSessionUtils() {}
+    private SSLSessionUtils() {
+    }
 
     public static void invalidateCaches(SSLFactory sslFactory) {
-        invalidateServerCaches(sslFactory);
-        invalidateClientCaches(sslFactory);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateServerCaches(SSLFactory sslFactory) {
-        invalidateServerCaches(sslFactory.getSslContext());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateClientCaches(SSLFactory sslFactory) {
-        invalidateClientCaches(sslFactory.getSslContext());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateCaches(SSLContext sslContext) {
-        invalidateServerCaches(sslContext);
-        invalidateClientCaches(sslContext);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateServerCaches(SSLContext sslContext) {
-        invalidateCaches(sslContext.getServerSessionContext());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateClientCaches(SSLContext sslContext) {
-        invalidateCaches(sslContext.getClientSessionContext());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateCaches(SSLSessionContext sslSessionContext) {
-        SSLSessionUtils.getSslSessions(sslSessionContext).forEach(SSLSession::invalidate);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateCachesBefore(SSLFactory sslFactory, ZonedDateTime upperBoundary) {
-        invalidateCachesBefore(sslFactory.getSslContext(), upperBoundary);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateCachesBefore(SSLContext sslContext, ZonedDateTime upperBoundary) {
-        invalidateCachesBefore(sslContext.getServerSessionContext(), upperBoundary);
-        invalidateCachesBefore(sslContext.getClientSessionContext(), upperBoundary);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateCachesBefore(SSLSessionContext sslSessionContext, ZonedDateTime upperBoundary) {
-        invalidateCachesWithTimeStamp(sslSessionContext, sslSessionCreationTime -> sslSessionCreationTime.isBefore(upperBoundary));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateCachesAfter(SSLFactory sslFactory, ZonedDateTime lowerBoundary) {
-        invalidateCachesAfter(sslFactory.getSslContext(), lowerBoundary);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateCachesAfter(SSLContext sslContext, ZonedDateTime lowerBoundary) {
-        invalidateCachesAfter(sslContext.getServerSessionContext(), lowerBoundary);
-        invalidateCachesAfter(sslContext.getClientSessionContext(), lowerBoundary);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateCachesAfter(SSLSessionContext sslSessionContext, ZonedDateTime lowerBoundary) {
-        invalidateCachesWithTimeStamp(sslSessionContext, sslSessionCreationTime -> sslSessionCreationTime.isAfter(lowerBoundary));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateCachesBetween(SSLFactory sslFactory, ZonedDateTime lowerBoundary, ZonedDateTime upperBoundary) {
-        invalidateCachesBetween(sslFactory.getSslContext(), lowerBoundary, upperBoundary);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateCachesBetween(SSLContext sslContext, ZonedDateTime lowerBoundary, ZonedDateTime upperBoundary) {
-        invalidateCachesBetween(sslContext.getServerSessionContext(), lowerBoundary, upperBoundary);
-        invalidateCachesBetween(sslContext.getClientSessionContext(), lowerBoundary, upperBoundary);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void invalidateCachesBetween(SSLSessionContext sslSessionContext, ZonedDateTime lowerBoundary, ZonedDateTime upperBoundary) {
-        Predicate<ZonedDateTime> isAfterLowerBoundary = sslSessionCreationTime -> sslSessionCreationTime.isAfter(lowerBoundary);
-        Predicate<ZonedDateTime> isBeforeUpperBoundary = sslSessionCreationTime -> sslSessionCreationTime.isBefore(upperBoundary);
-
-        invalidateCachesWithTimeStamp(sslSessionContext, isAfterLowerBoundary.and(isBeforeUpperBoundary));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static void invalidateCachesWithTimeStamp(SSLSessionContext sslSessionContext, Predicate<ZonedDateTime> timeStampPredicate) {
-        SSLSessionUtils.getSslSessions(sslSessionContext).stream()
-                .filter(sslSession -> timeStampPredicate.test(EPOCH_TIME_MAPPER.apply(sslSession.getCreationTime())))
-                .forEach(SSLSession::invalidate);
+        SSLSessionUtils.getSslSessions(sslSessionContext).stream().filter(sslSession -> timeStampPredicate.test(EPOCH_TIME_MAPPER.apply(sslSession.getCreationTime()))).forEach(SSLSession::invalidate);
     }
 
     public static void updateSessionTimeout(SSLFactory sslFactory, int timeoutInSeconds) {
-        updateSessionTimeout(sslFactory.getSslContext(), timeoutInSeconds);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void updateSessionTimeout(SSLContext sslContext, int timeoutInSeconds) {
-        validateSessionTimeout(timeoutInSeconds);
-
-        sslContext.getClientSessionContext().setSessionTimeout(timeoutInSeconds);
-        sslContext.getServerSessionContext().setSessionTimeout(timeoutInSeconds);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void updateSessionCacheSize(SSLFactory sslFactory, int cacheSizeInBytes) {
-        updateSessionCacheSize(sslFactory.getSslContext(), cacheSizeInBytes);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void updateSessionCacheSize(SSLContext sslContext, int cacheSizeInBytes) {
-        validateSessionCacheSize(cacheSizeInBytes);
-
-        sslContext.getClientSessionContext().setSessionCacheSize(cacheSizeInBytes);
-        sslContext.getServerSessionContext().setSessionCacheSize(cacheSizeInBytes);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void validateSessionTimeout(int timeoutInSeconds) {
-        if (timeoutInSeconds < 0) {
-            throw new IllegalArgumentException(String.format(
-                    "Unsupported timeout has been provided. Timeout should be equal or greater than [%d], but received [%d]",
-                    0, timeoutInSeconds));
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void validateSessionCacheSize(int cacheSizeInBytes) {
-        if (cacheSizeInBytes < 0) {
-            throw new IllegalArgumentException(String.format(
-                    "Unsupported cache size has been provided. Cache size should be equal or greater than [%d], but received [%d]",
-                    0, cacheSizeInBytes));
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<SSLSession> getServerSslSessions(SSLFactory sslFactory) {
-        return getServerSslSessions(sslFactory.getSslContext());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<SSLSession> getServerSslSessions(SSLContext sslContext) {
-        return getSslSessions(sslContext.getServerSessionContext());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<SSLSession> getClientSslSessions(SSLFactory sslFactory) {
-        return getClientSslSessions(sslFactory.getSslContext());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<SSLSession> getClientSslSessions(SSLContext sslContext) {
-        return getSslSessions(sslContext.getClientSessionContext());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<SSLSession> getSslSessions(SSLSessionContext sslSessionContext) {
-        return Collections.list(sslSessionContext.getIds()).stream()
-                .map(sslSessionContext::getSession)
-                .filter(Objects::nonNull)
-                .collect(toUnmodifiableList());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

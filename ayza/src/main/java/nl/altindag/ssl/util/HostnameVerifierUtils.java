@@ -20,7 +20,6 @@ import nl.altindag.ssl.hostnameverifier.EnhanceableHostnameVerifier;
 import nl.altindag.ssl.hostnameverifier.FenixHostnameVerifier;
 import nl.altindag.ssl.hostnameverifier.UnsafeHostnameVerifier;
 import nl.altindag.ssl.model.HostnameVerifierParameters;
-
 import javax.net.ssl.HostnameVerifier;
 import java.util.function.Predicate;
 
@@ -29,14 +28,15 @@ import java.util.function.Predicate;
  */
 public final class HostnameVerifierUtils {
 
-    private HostnameVerifierUtils() {}
+    private HostnameVerifierUtils() {
+    }
 
     /**
      * Creates a basic hostname verifier which validates the hostname against the peer host from the ssl session.
      * This basic hostname verifier provides minimal security. It is recommended to use {@link HostnameVerifierUtils#createDefault()}
      */
     public static HostnameVerifier createBasic() {
-        return BasicHostnameVerifier.getInstance();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -44,18 +44,17 @@ public final class HostnameVerifierUtils {
      * This hostname verifier is unsafe and should be avoided
      */
     public static HostnameVerifier createUnsafe() {
-        return UnsafeHostnameVerifier.getInstance();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Creates the default hostname verifier which is able to validate the hostname against the SAN field of the peer certificate.
      */
     public static HostnameVerifier createDefault() {
-        return FenixHostnameVerifier.getInstance();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static HostnameVerifier createEnhanceable(HostnameVerifier baseHostnameVerifier, Predicate<HostnameVerifierParameters> hostnameVerifierParametersValidator) {
-        return new EnhanceableHostnameVerifier(baseHostnameVerifier, hostnameVerifierParametersValidator);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

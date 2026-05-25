@@ -17,7 +17,6 @@
 package nl.altindag.ssl.hostnameverifier;
 
 import nl.altindag.laleler.StringUtils;
-
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLPeerUnverifiedException;
 import javax.net.ssl.SSLSession;
@@ -32,7 +31,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import static nl.altindag.ssl.hostnameverifier.HostnameCommon.canParseAsIpAddress;
 import static nl.altindag.ssl.hostnameverifier.Hostnames.toCanonicalHost;
 
@@ -53,23 +51,21 @@ import static nl.altindag.ssl.hostnameverifier.Hostnames.toCanonicalHost;
 public final class FenixHostnameVerifier implements HostnameVerifier {
 
     private static final HostnameVerifier INSTANCE = new FenixHostnameVerifier();
+
     private static final int ALT_DNS_NAME = 2;
+
     private static final int ALT_IPA_NAME = 7;
 
-    private FenixHostnameVerifier() {}
+    private FenixHostnameVerifier() {
+    }
 
     public static HostnameVerifier getInstance() {
-        return INSTANCE;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean verify(String host, SSLSession sslSession) {
-        if (!isAscii(host)) {
-            return false;
-        }
-
-        Optional<X509Certificate> peerCertificate = getPeerCertificate(sslSession);
-        return peerCertificate.isPresent() && verify(host, peerCertificate.get());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -84,11 +80,7 @@ public final class FenixHostnameVerifier implements HostnameVerifier {
      */
     private Optional<X509Certificate> getPeerCertificate(SSLSession sslSession) {
         try {
-            return Arrays.stream(sslSession.getPeerCertificates())
-                    .filter(Objects::nonNull)
-                    .filter(X509Certificate.class::isInstance)
-                    .map(X509Certificate.class::cast)
-                    .findFirst();
+            return Arrays.stream(sslSession.getPeerCertificates()).filter(Objects::nonNull).filter(X509Certificate.class::isInstance).map(X509Certificate.class::cast).findFirst();
         } catch (SSLPeerUnverifiedException e) {
             return Optional.empty();
         }
@@ -110,25 +102,14 @@ public final class FenixHostnameVerifier implements HostnameVerifier {
         if (canonicalIpAddress == null) {
             return false;
         }
-
         List<String> subjectAltNames = getSubjectAltNames(certificate, ALT_IPA_NAME);
         return subjectAltNames.stream().anyMatch(subjectAltName -> canonicalIpAddress.equals(toCanonicalHost(subjectAltName)));
     }
 
     private List<String> getSubjectAltNames(X509Certificate certificate, int type) {
         try {
-            Collection<List<?>> subjectAlternativeNames = Optional.ofNullable(certificate.getSubjectAlternativeNames())
-                    .orElseGet(Collections::emptyList);
-
-            return subjectAlternativeNames.stream()
-                    .filter(Objects::nonNull)
-                    .filter(subjectAlternativeName -> subjectAlternativeName.size() == 2)
-                    .filter(subjectAlternativeName -> subjectAlternativeName.get(0) instanceof Integer && ((Integer) subjectAlternativeName.get(0)) == type)
-                    .map(subjectAlternativeName -> subjectAlternativeName.get(1))
-                    .filter(String.class::isInstance)
-                    .map(String.class::cast)
-                    .collect(Collectors.toList());
-
+            Collection<List<?>> subjectAlternativeNames = Optional.ofNullable(certificate.getSubjectAlternativeNames()).orElseGet(Collections::emptyList);
+            return subjectAlternativeNames.stream().filter(Objects::nonNull).filter(subjectAlternativeName -> subjectAlternativeName.size() == 2).filter(subjectAlternativeName -> subjectAlternativeName.get(0) instanceof Integer && ((Integer) subjectAlternativeName.get(0)) == type).map(subjectAlternativeName -> subjectAlternativeName.get(1)).filter(String.class::isInstance).map(String.class::cast).collect(Collectors.toList());
         } catch (CertificateParsingException exception) {
             return Collections.emptyList();
         }
@@ -150,20 +131,16 @@ public final class FenixHostnameVerifier implements HostnameVerifier {
         if (isHostnameInValid(hostname) || isHostnameInValid(domainNamePattern)) {
             return false;
         }
-
         String resultingHostname = toAbsolute(hostname);
         String resultingDomainNamePattern = toAbsolute(domainNamePattern);
         // Hostname and pattern are now absolute domain names.
-
         resultingHostname = asciiToLowercase(resultingHostname);
         resultingDomainNamePattern = asciiToLowercase(resultingDomainNamePattern);
         // Hostname and pattern are now in lower case -- domain names are case-insensitive.
-
         if (!resultingDomainNamePattern.contains("*")) {
             // Not a wildcard pattern -- hostname and pattern must match exactly.
             return resultingHostname.equals(resultingDomainNamePattern);
         }
-
         // Wildcard pattern
         return verifyWildcardPattern(resultingHostname, resultingDomainNamePattern);
     }
@@ -184,11 +161,7 @@ public final class FenixHostnameVerifier implements HostnameVerifier {
      *   www.android.com. matches www.android.com
      */
     String toAbsolute(String hostname) {
-        String absoluteHostname = hostname;
-        if (!absoluteHostname.endsWith(".")) {
-            absoluteHostname += ".";
-        }
-        return absoluteHostname;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -218,32 +191,30 @@ public final class FenixHostnameVerifier implements HostnameVerifier {
             // character in that label
             return false;
         }
-
         // Optimization: check whether hostname is too short to match the pattern. hostName must be at
         // least as long as the pattern because asterisk must match the whole left-most label and
         // hostname starts with a non-empty label. Thus, asterisk has to match one or more characters.
         if (hostname.length() < domainNamePattern.length()) {
-            return false; // Hostname too short to match the pattern.
+            // Hostname too short to match the pattern.
+            return false;
         }
-
         if ("*.".equals(domainNamePattern)) {
-            return false; // Wildcard pattern for single-label domain name -- not permitted.
+            // Wildcard pattern for single-label domain name -- not permitted.
+            return false;
         }
-
         // Hostname must end with the region of pattern following the asterisk.
         String suffix = domainNamePattern.substring(1);
         if (!hostname.endsWith(suffix)) {
-            return false; // Hostname does not end with the suffix.
+            // Hostname does not end with the suffix.
+            return false;
         }
-
         // Check that asterisk did not match across domain name labels.
         int suffixStartIndexInHostname = hostname.length() - domainNamePattern.length();
         if (suffixStartIndexInHostname > 0 && hostname.lastIndexOf(".", suffixStartIndexInHostname - 1) != -1) {
-            return false; // Asterisk is matching across domain name labels -- not permitted.
+            // Asterisk is matching across domain name labels -- not permitted.
+            return false;
         }
-
         // Hostname matches pattern.
         return true;
     }
-
 }

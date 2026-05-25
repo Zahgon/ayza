@@ -40,172 +40,171 @@ class DelegatingSSLServerSocket extends SSLServerSocket {
 
     @Override
     public String[] getEnabledCipherSuites() {
-        return socket.getEnabledCipherSuites();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setEnabledCipherSuites(String[] suites) {
-        socket.setEnabledCipherSuites(suites);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getSupportedCipherSuites() {
-        return socket.getSupportedCipherSuites();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getSupportedProtocols() {
-        return socket.getSupportedProtocols();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getEnabledProtocols() {
-        return socket.getEnabledProtocols();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setEnabledProtocols(String[] protocols) {
-        socket.setEnabledProtocols(protocols);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setNeedClientAuth(boolean need) {
-        socket.setNeedClientAuth(need);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getNeedClientAuth() {
-        return socket.getNeedClientAuth();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setWantClientAuth(boolean want) {
-        socket.setWantClientAuth(want);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getWantClientAuth() {
-        return socket.getWantClientAuth();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setUseClientMode(boolean mode) {
-        socket.setUseClientMode(mode);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getUseClientMode() {
-        return socket.getUseClientMode();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setEnableSessionCreation(boolean flag) {
-        socket.setEnableSessionCreation(flag);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getEnableSessionCreation() {
-        return socket.getEnableSessionCreation();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public SSLParameters getSSLParameters() {
-        return socket.getSSLParameters();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setSSLParameters(SSLParameters params) {
-        socket.setSSLParameters(params);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void bind(SocketAddress endpoint) throws IOException {
-        socket.bind(endpoint);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void bind(SocketAddress endpoint, int backlog) throws IOException {
-        socket.bind(endpoint, backlog);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public InetAddress getInetAddress() {
-        return socket.getInetAddress();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public int getLocalPort() {
-        return socket.getLocalPort();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public SocketAddress getLocalSocketAddress() {
-        return socket.getLocalSocketAddress();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Socket accept() throws IOException {
-        return socket.accept();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void close() throws IOException {
-        socket.close();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public ServerSocketChannel getChannel() {
-        return socket.getChannel();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isBound() {
-        return socket.isBound();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isClosed() {
-        return socket.isClosed();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public synchronized void setSoTimeout(int timeout) throws SocketException {
-        socket.setSoTimeout(timeout);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public synchronized int getSoTimeout() throws IOException {
-        return socket.getSoTimeout();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setReuseAddress(boolean on) throws SocketException {
-        socket.setReuseAddress(on);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getReuseAddress() throws SocketException {
-        return socket.getReuseAddress();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return socket.toString();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public synchronized void setReceiveBufferSize(int size) throws SocketException {
-        socket.setReceiveBufferSize(size);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public synchronized int getReceiveBufferSize() throws SocketException {
-        return socket.getReceiveBufferSize();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setPerformancePreferences(int connectionTime, int latency, int bandwidth) {
-        socket.setPerformancePreferences(connectionTime, latency, bandwidth);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

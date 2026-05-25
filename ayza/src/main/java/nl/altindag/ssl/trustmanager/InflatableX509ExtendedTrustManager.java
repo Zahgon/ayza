@@ -23,7 +23,6 @@ import nl.altindag.ssl.util.KeyStoreUtils;
 import nl.altindag.ssl.util.TrustManagerUtils;
 import nl.altindag.sude.Logger;
 import nl.altindag.sude.LoggerFactory;
-
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.X509ExtendedTrustManager;
 import java.net.Socket;
@@ -39,7 +38,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
-
 import static nl.altindag.laleler.CollectionUtils.isEmpty;
 
 /**
@@ -60,33 +58,28 @@ import static nl.altindag.laleler.CollectionUtils.isEmpty;
 public class InflatableX509ExtendedTrustManager extends HotSwappableX509ExtendedTrustManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InflatableX509ExtendedTrustManager.class);
+
     private static final BiPredicate<KeyStore, X509Certificate> IGNORE_DUPLICATE_CHECKER = (t, c) -> false;
 
     private final KeyStore trustStore;
+
     private final Path trustStorePath;
+
     private final char[] trustStorePassword;
+
     private final Predicate<TrustManagerParameters> trustManagerParametersPredicate;
 
     public InflatableX509ExtendedTrustManager() {
         this(null, null, null, null);
     }
 
-    public InflatableX509ExtendedTrustManager(Path trustStorePath,
-                                              char[] trustStorePassword,
-                                              String trustStoreType,
-                                              Predicate<TrustManagerParameters> trustManagerParametersPredicate) {
-
+    public InflatableX509ExtendedTrustManager(Path trustStorePath, char[] trustStorePassword, String trustStoreType, Predicate<TrustManagerParameters> trustManagerParametersPredicate) {
         super(TrustManagerUtils.createDummyTrustManager());
-
         writeLock.lock();
-
         try {
             this.trustStorePath = trustStorePath;
             this.trustStorePassword = trustStorePassword;
-
-            this.trustManagerParametersPredicate = Optional.ofNullable(trustManagerParametersPredicate)
-                    .orElse(trustManagerParameters -> false);
-
+            this.trustManagerParametersPredicate = Optional.ofNullable(trustManagerParametersPredicate).orElse(trustManagerParameters -> false);
             if (trustStorePath != null && StringUtils.isNotBlank(trustStoreType)) {
                 if (Files.exists(trustStorePath)) {
                     trustStore = KeyStoreUtils.loadKeyStore(trustStorePath, trustStorePassword, trustStoreType);
@@ -106,32 +99,32 @@ public class InflatableX509ExtendedTrustManager extends HotSwappableX509Extended
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-        checkTrusted(() -> super.checkServerTrusted(chain, authType), chain, authType, null, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {
-        checkTrusted(() -> super.checkServerTrusted(chain, authType, socket), chain, authType, socket, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] chain, String authType, SSLEngine sslEngine) throws CertificateException {
-        checkTrusted(() -> super.checkServerTrusted(chain, authType, sslEngine), chain, authType, null, sslEngine);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-        checkTrusted(() -> super.checkClientTrusted(chain, authType), chain, authType, null, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {
-        checkTrusted(() -> super.checkClientTrusted(chain, authType, socket), chain, authType, socket, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType, SSLEngine sslEngine) throws CertificateException {
-        checkTrusted(() -> super.checkClientTrusted(chain, authType, sslEngine), chain, authType, null, sslEngine);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private void checkTrusted(TrustManagerRunnable trustManagerRunnable, X509Certificate[] chain, String authType, Socket socket, SSLEngine sslEngine) throws CertificateException {
@@ -163,22 +156,19 @@ public class InflatableX509ExtendedTrustManager extends HotSwappableX509Extended
     }
 
     public void addCertificates(List<X509Certificate> certificates) {
-        addCertificates(certificates, KeyStoreUtils::containsCertificate);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private void addCertificates(List<X509Certificate> certificates, BiPredicate<KeyStore, X509Certificate> duplicateChecker) {
         writeLock.lock();
-
         try {
             if (isEmpty(certificates)) {
                 return;
             }
-
             for (X509Certificate certificate : certificates) {
                 if (duplicateChecker.test(trustStore, certificate)) {
                     continue;
                 }
-
                 String alias = generateAlias(certificate);
                 trustStore.setCertificateEntry(alias, certificate);
                 LOGGER.info(String.format("Added certificate for [%s]", alias));
@@ -206,5 +196,4 @@ public class InflatableX509ExtendedTrustManager extends HotSwappableX509Extended
     private Optional<Path> getTrustStorePath() {
         return Optional.ofNullable(trustStorePath);
     }
-
 }

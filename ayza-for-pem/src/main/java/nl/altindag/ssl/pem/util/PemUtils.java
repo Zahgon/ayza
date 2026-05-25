@@ -43,7 +43,6 @@ import org.bouncycastle.pkcs.PKCS8EncryptedPrivateKeyInfo;
 import org.bouncycastle.pkcs.PKCSException;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemWriter;
-
 import javax.net.ssl.X509ExtendedKeyManager;
 import javax.net.ssl.X509ExtendedTrustManager;
 import java.io.IOException;
@@ -68,7 +67,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
-
 import static nl.altindag.ssl.pem.util.PemType.CERTIFICATE;
 import static nl.altindag.ssl.pem.util.PemType.KEY;
 import static nl.altindag.laleler.CollectorsUtils.toListAndThen;
@@ -96,21 +94,18 @@ import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 public final class PemUtils {
 
     private static final String EMPTY_INPUT_STREAM_EXCEPTION_MESSAGE = "Failed to load the certificate from the provided InputStream because it is null";
+
     private static final UnaryOperator<String> CERTIFICATE_NOT_FOUND_EXCEPTION_MESSAGE = certificatePath -> String.format("Failed to load the certificate from the classpath for the given path: [%s]", certificatePath);
+
     private static final char[] NO_PASSWORD = null;
-    private static final PemUtils INSTANCE = new PemUtils(
-            new BouncyCastleProvider(),
-            new JcaPEMKeyConverter(),
-            new JcaX509CertificateConverter()
-    );
+
+    private static final PemUtils INSTANCE = new PemUtils(new BouncyCastleProvider(), new JcaPEMKeyConverter(), new JcaX509CertificateConverter());
 
     private final JcaPEMKeyConverter keyConverter;
+
     private final JcaX509CertificateConverter certificateConverter;
 
-    PemUtils(BouncyCastleProvider bouncyCastleProvider,
-             JcaPEMKeyConverter keyConverter,
-             JcaX509CertificateConverter certificateConverter) {
-
+    PemUtils(BouncyCastleProvider bouncyCastleProvider, JcaPEMKeyConverter keyConverter, JcaX509CertificateConverter certificateConverter) {
         Security.addProvider(bouncyCastleProvider);
         this.keyConverter = keyConverter;
         this.certificateConverter = certificateConverter;
@@ -120,83 +115,56 @@ public final class PemUtils {
      * Loads certificates from the classpath and maps it to an instance of {@link X509ExtendedTrustManager}
      */
     public static X509ExtendedTrustManager loadTrustMaterial(String... certificatePaths) {
-        return TrustManagerUtils.createTrustManager(
-                loadCertificate(certificatePaths)
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Loads certificates from the filesystem and maps it to an instance of {@link X509ExtendedTrustManager}
      */
     public static X509ExtendedTrustManager loadTrustMaterial(Path... certificatePaths) {
-        return TrustManagerUtils.createTrustManager(
-                loadCertificate(certificatePaths)
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Loads certificates from multiple InputStreams and maps it to an instance of {@link X509ExtendedTrustManager}
      */
     public static X509ExtendedTrustManager loadTrustMaterial(InputStream... certificateStreams) {
-        return TrustManagerUtils.createTrustManager(
-                loadCertificate(certificateStreams)
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Loads certificates from the classpath and maps it to a list of {@link X509Certificate}
      */
     public static List<X509Certificate> loadCertificate(String... certificatePaths) {
-        return loadCertificate(
-                certificatePaths,
-                certificatePath -> ValidationUtils.requireNotNull(
-                        IOUtils.getResourceAsStream(certificatePath),
-                        CERTIFICATE_NOT_FOUND_EXCEPTION_MESSAGE.apply(certificatePath)
-                )
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Loads certificates from the filesystem and maps it to a list of {@link X509Certificate}
      */
     public static List<X509Certificate> loadCertificate(Path... certificatePaths) {
-        return loadCertificate(certificatePaths, path -> IOUtils.getFileAsStream(path, GenericIOException::new));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Loads certificates from multiple InputStreams and maps it to a list of {@link X509Certificate}
      */
     public static List<X509Certificate> loadCertificate(InputStream... certificateStreams) {
-        return loadCertificate(
-                certificateStreams,
-                certificateStream -> requireNotNull(certificateStream, EMPTY_INPUT_STREAM_EXCEPTION_MESSAGE)
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static <T> List<X509Certificate> loadCertificate(T[] resources, Function<T, InputStream> resourceMapper) {
-        return Arrays.stream(resources)
-                .map(resourceMapper)
-                .map(inputStream -> IOUtils.getContent(inputStream, GenericIOException::new))
-                .map(PemUtils::parseCertificate)
-                .flatMap(Collection::stream)
-                .collect(toUnmodifiableList());
+        return Arrays.stream(resources).map(resourceMapper).map(inputStream -> IOUtils.getContent(inputStream, GenericIOException::new)).map(PemUtils::parseCertificate).flatMap(Collection::stream).collect(toUnmodifiableList());
     }
 
     public static List<X509Certificate> parseCertificate(String certContent) {
-        List<X509Certificate> certificates = parsePemContent(certContent, CERTIFICATE::equals).stream()
-                .map(PemUtils::extractCertificate)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(toUnmodifiableList());
-
-        return requireNotEmpty(certificates, () -> new CertificateParseException("Received an unsupported certificate type"));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static List<Object> parsePemContent(String pemContent, Predicate<PemType> predicate) {
         String formattedPemContent = PemFormatter.reformatIfNeeded(pemContent);
-        try(Reader stringReader = new StringReader(formattedPemContent);
+        try (Reader stringReader = new StringReader(formattedPemContent);
             PEMParser pemParser = new PEMParser(stringReader)) {
-
             List<Object> objects = new ArrayList<>();
             for (Object object = pemParser.readObject(); object != null; object = pemParser.readObject()) {
                 PemType pemType = PemType.from(object);
@@ -204,7 +172,6 @@ public final class PemUtils {
                     objects.add(object);
                 }
             }
-
             return objects;
         } catch (IOException e) {
             throw new PemParseException(e);
@@ -212,20 +179,7 @@ public final class PemUtils {
     }
 
     static Optional<X509Certificate> extractCertificate(Object object) {
-        try {
-
-            X509Certificate certificate = null;
-            if (object instanceof X509CertificateHolder) {
-                certificate = PemUtils.getInstance().getCertificateConverter().getCertificate((X509CertificateHolder) object);
-            } else if (object instanceof X509TrustedCertificateBlock) {
-                X509CertificateHolder certificateHolder = ((X509TrustedCertificateBlock) object).getCertificateHolder();
-                certificate = PemUtils.getInstance().getCertificateConverter().getCertificate(certificateHolder);
-            }
-
-            return Optional.ofNullable(certificate);
-        } catch (CertificateException e) {
-            throw new CertificateParseException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -233,10 +187,7 @@ public final class PemUtils {
      * and maps it to an instance of {@link X509ExtendedTrustManager}
      */
     public static X509ExtendedTrustManager parseTrustMaterial(String... certificateContents) {
-        return Arrays.stream(certificateContents)
-                .map(PemUtils::parseCertificate)
-                .flatMap(Collection::stream)
-                .collect(toListAndThen(TrustManagerUtils::createTrustManager));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -244,7 +195,7 @@ public final class PemUtils {
      * from the classpath and maps it to an instance of {@link X509ExtendedKeyManager}
      */
     public static X509ExtendedKeyManager loadIdentityMaterial(String certificateChainPath, String privateKeyPath) {
-        return loadIdentityMaterial(certificateChainPath, privateKeyPath, NO_PASSWORD);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -252,15 +203,7 @@ public final class PemUtils {
      * the classpath and maps it to an instance of {@link X509ExtendedKeyManager}
      */
     public static X509ExtendedKeyManager loadIdentityMaterial(String certificateChainPath, String privateKeyPath, char[] keyPassword) {
-        return loadIdentityMaterial(
-                certificateChainPath,
-                privateKeyPath,
-                keyPassword,
-                certificatePath -> requireNotNull(
-                        IOUtils.getResourceAsStream(certificatePath),
-                        CERTIFICATE_NOT_FOUND_EXCEPTION_MESSAGE.apply(certificatePath)
-                )
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -268,7 +211,7 @@ public final class PemUtils {
      * as an InputStream and maps it to an instance of {@link X509ExtendedKeyManager}
      */
     public static X509ExtendedKeyManager loadIdentityMaterial(InputStream certificateChainStream, InputStream privateKeyStream) {
-        return loadIdentityMaterial(certificateChainStream, privateKeyStream, NO_PASSWORD);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -276,12 +219,7 @@ public final class PemUtils {
      * as an InputStream and maps it to an instance of {@link X509ExtendedKeyManager}
      */
     public static X509ExtendedKeyManager loadIdentityMaterial(InputStream certificateChainStream, InputStream privateKeyStream, char[] keyPassword) {
-        return loadIdentityMaterial(
-                certificateChainStream,
-                privateKeyStream,
-                keyPassword,
-                inputStream -> requireNotNull(inputStream, EMPTY_INPUT_STREAM_EXCEPTION_MESSAGE)
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -289,7 +227,7 @@ public final class PemUtils {
      * from the filesystem and maps it to an instance of {@link X509ExtendedKeyManager}
      */
     public static X509ExtendedKeyManager loadIdentityMaterial(Path certificateChainPath, Path privateKeyPath) {
-        return loadIdentityMaterial(certificateChainPath, privateKeyPath, NO_PASSWORD);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -297,7 +235,7 @@ public final class PemUtils {
      * from the filesystem and maps it to an instance of {@link X509ExtendedKeyManager}
      */
     public static X509ExtendedKeyManager loadIdentityMaterial(Path certificateChainPath, Path privateKeyPath, char[] keyPassword) {
-        return loadIdentityMaterial(certificateChainPath, privateKeyPath, keyPassword, path -> IOUtils.getFileAsStream(path, GenericIOException::new));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -305,7 +243,7 @@ public final class PemUtils {
      * from the classpath and maps it to an instance of {@link X509ExtendedKeyManager}
      */
     public static X509ExtendedKeyManager loadIdentityMaterial(String identityPath) {
-        return loadIdentityMaterial(identityPath, NO_PASSWORD);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -313,14 +251,7 @@ public final class PemUtils {
      * from the classpath and maps it to an instance of {@link X509ExtendedKeyManager}
      */
     public static X509ExtendedKeyManager loadIdentityMaterial(String identityPath, char[] keyPassword) {
-        return loadIdentityMaterial(
-                identityPath,
-                keyPassword,
-                certificatePath -> requireNotNull(
-                        IOUtils.getResourceAsStream(certificatePath),
-                        CERTIFICATE_NOT_FOUND_EXCEPTION_MESSAGE.apply(certificatePath)
-                )
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -328,7 +259,7 @@ public final class PemUtils {
      * from the filesystem and maps it to an instance of {@link X509ExtendedKeyManager}
      */
     public static X509ExtendedKeyManager loadIdentityMaterial(Path identityPath) {
-        return loadIdentityMaterial(identityPath, NO_PASSWORD);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -336,7 +267,7 @@ public final class PemUtils {
      * from the filesystem and maps it to an instance of {@link X509ExtendedKeyManager}
      */
     public static X509ExtendedKeyManager loadIdentityMaterial(Path identityPath, char[] keyPassword) {
-        return loadIdentityMaterial(identityPath, keyPassword, path -> IOUtils.getFileAsStream(path, GenericIOException::new));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -344,7 +275,7 @@ public final class PemUtils {
      * from an InputStream and maps it to an instance of {@link X509ExtendedKeyManager}
      */
     public static X509ExtendedKeyManager loadIdentityMaterial(InputStream identityStream) {
-        return loadIdentityMaterial(identityStream, NO_PASSWORD);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -352,20 +283,14 @@ public final class PemUtils {
      * from an InputStream and maps it to an instance of {@link X509ExtendedKeyManager}
      */
     public static X509ExtendedKeyManager loadIdentityMaterial(InputStream identityStream, char[] keyPassword) {
-        return loadIdentityMaterial(
-                identityStream,
-                keyPassword,
-                inputStream -> requireNotNull(inputStream, EMPTY_INPUT_STREAM_EXCEPTION_MESSAGE)
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static <T> X509ExtendedKeyManager loadIdentityMaterial(T certificateChain, T privateKey, char[] keyPassword, Function<T, InputStream> resourceMapper) {
-        try(InputStream certificateChainStream = resourceMapper.apply(certificateChain);
+        try (InputStream certificateChainStream = resourceMapper.apply(certificateChain);
             InputStream privateKeyStream = resourceMapper.apply(privateKey)) {
-
             String certificateChainContent = IOUtils.getContent(certificateChainStream, GenericIOException::new);
             String privateKeyContent = IOUtils.getContent(privateKeyStream, GenericIOException::new);
-
             return parseIdentityMaterial(certificateChainContent, privateKeyContent, keyPassword);
         } catch (IOException exception) {
             throw new GenericIOException(exception);
@@ -373,7 +298,7 @@ public final class PemUtils {
     }
 
     private static <T> X509ExtendedKeyManager loadIdentityMaterial(T identity, char[] keyPassword, Function<T, InputStream> resourceMapper) {
-        try(InputStream identityStream = resourceMapper.apply(identity)) {
+        try (InputStream identityStream = resourceMapper.apply(identity)) {
             String identityContent = IOUtils.getContent(identityStream, GenericIOException::new);
             return parseIdentityMaterial(identityContent, identityContent, keyPassword);
         } catch (IOException exception) {
@@ -386,7 +311,7 @@ public final class PemUtils {
      * and maps it to an instance of {@link X509ExtendedTrustManager}
      */
     public static X509ExtendedKeyManager parseIdentityMaterial(String identityContent) {
-        return parseIdentityMaterial(identityContent, identityContent, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -394,7 +319,7 @@ public final class PemUtils {
      * and maps it to an instance of {@link X509ExtendedTrustManager}
      */
     public static X509ExtendedKeyManager parseIdentityMaterial(String identityContent, char[] keyPassword) {
-        return parseIdentityMaterial(identityContent, identityContent, keyPassword);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -402,68 +327,53 @@ public final class PemUtils {
      * and maps it to an instance of {@link X509ExtendedTrustManager}
      */
     public static X509ExtendedKeyManager parseIdentityMaterial(String certificateChainContent, String privateKeyContent, char[] keyPassword) {
-        PrivateKey privateKey = parsePrivateKey(privateKeyContent, keyPassword);
-        Certificate[] certificateChain = PemUtils.parseCertificate(certificateChainContent)
-                .toArray(new Certificate[]{});
-
-        return KeyManagerUtils.createKeyManager(privateKey, certificateChain);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Loads the private key from the classpath and maps it to an instance of {@link PrivateKey}
      */
     public static PrivateKey loadPrivateKey(String identityPath) {
-        return loadPrivateKey(identityPath, NO_PASSWORD);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Loads the private key from the classpath and maps it to an instance of {@link PrivateKey}
      */
     public static PrivateKey loadPrivateKey(String identityPath, char[] keyPassword) {
-        return loadPrivateKey(
-                identityPath,
-                keyPassword,
-                certificatePath -> requireNotNull(
-                        IOUtils.getResourceAsStream(certificatePath),
-                        CERTIFICATE_NOT_FOUND_EXCEPTION_MESSAGE.apply(certificatePath)
-                )
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Loads the private key from the filesystem and maps it to an instance of {@link PrivateKey}
      */
     public static PrivateKey loadPrivateKey(Path identityPath) {
-        return loadPrivateKey(identityPath, NO_PASSWORD);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Loads the private key from the filesystem and maps it to an instance of {@link PrivateKey}
      */
     public static PrivateKey loadPrivateKey(Path identityPath, char[] keyPassword) {
-        return loadPrivateKey(identityPath, keyPassword, path -> IOUtils.getFileAsStream(path, GenericIOException::new));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Loads the private key from an InputStream and maps it to an instance of {@link PrivateKey}
      */
     public static PrivateKey loadPrivateKey(InputStream identityStream) {
-        return loadPrivateKey(identityStream, NO_PASSWORD);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Loads the private key from an InputStream and maps it to an instance of {@link PrivateKey}
      */
     public static PrivateKey loadPrivateKey(InputStream identityStream, char[] keyPassword) {
-        return loadPrivateKey(
-                identityStream,
-                keyPassword,
-                inputStream -> requireNotNull(inputStream, EMPTY_INPUT_STREAM_EXCEPTION_MESSAGE)
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static <T> PrivateKey loadPrivateKey(T privateKey, char[] keyPassword, Function<T, InputStream> resourceMapper) {
-        try(InputStream privateKeyStream = resourceMapper.apply(privateKey)) {
+        try (InputStream privateKeyStream = resourceMapper.apply(privateKey)) {
             String privateKeyContent = IOUtils.getContent(privateKeyStream);
             return parsePrivateKey(privateKeyContent, keyPassword);
         } catch (IOException exception) {
@@ -476,7 +386,7 @@ public final class PemUtils {
      * and maps it to an instance of {@link PrivateKey}
      */
     public static PrivateKey parsePrivateKey(String identityContent) {
-        return parsePrivateKey(identityContent, NO_PASSWORD);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -485,38 +395,11 @@ public final class PemUtils {
      * contains multiple private keys it will use only the first one.
      */
     public static PrivateKey parsePrivateKey(String identityContent, char[] keyPassword) {
-        return parsePemContent(identityContent, KEY::equals).stream()
-                .map(object -> extractPrivateKeyInfo(object, keyPassword))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .findFirst()
-                .map(PemUtils::extractPrivateKey)
-                .orElseThrow(() -> new PrivateKeyParseException("Received an unsupported private key type"));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static Optional<PrivateKeyInfo> extractPrivateKeyInfo(Object object, char[] keyPassword) {
-        try {
-            PrivateKeyInfo privateKeyInfo = null;
-
-            if (object instanceof PrivateKeyInfo) {
-                privateKeyInfo = (PrivateKeyInfo) object;
-            } else if (object instanceof PKCS8EncryptedPrivateKeyInfo) {
-                privateKeyInfo = Pkcs8Decryptor.getInstance()
-                        .andThen(((PKCS8EncryptedPrivateKeyInfo) object)::decryptPrivateKeyInfo)
-                        .apply(keyPassword);
-            } else if (object instanceof PEMKeyPair) {
-                privateKeyInfo = ((PEMKeyPair) object).getPrivateKeyInfo();
-            } else if (object instanceof PEMEncryptedKeyPair) {
-                privateKeyInfo = PemDecryptor.getInstance()
-                        .andThen(((PEMEncryptedKeyPair) object)::decryptKeyPair)
-                        .andThen(PEMKeyPair::getPrivateKeyInfo)
-                        .apply(keyPassword);
-            }
-
-            return Optional.ofNullable(privateKeyInfo);
-        } catch (IOException | OperatorCreationException | PKCSException e) {
-            throw new PrivateKeyParseException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static PrivateKey extractPrivateKey(PrivateKeyInfo privateKeyInfo) {
@@ -528,34 +411,11 @@ public final class PemUtils {
     }
 
     public static PublicKey extractPublicKey(PrivateKey privateKey) {
-        try(Writer writer = new StringWriter();
-            PemWriter pemWriter = new PemWriter(writer)) {
-
-            JcaMiscPEMGenerator pemGenerator = new JcaMiscPEMGenerator(privateKey, null);
-            PemObject pemObject = pemGenerator.generate();
-            pemWriter.writeObject(pemObject);
-            pemWriter.flush();
-
-            String pemContent = writer.toString();
-
-            try(Reader reader = new StringReader(pemContent);
-                PEMParser pemParser = new PEMParser(reader)) {
-                Object object = pemParser.readObject();
-                if (object instanceof PEMKeyPair) {
-                    PEMKeyPair pemKeyPair = (PEMKeyPair) object;
-                    KeyPair keyPair = getInstance().getKeyConverter().getKeyPair(pemKeyPair);
-                    return keyPair.getPublic();
-                }
-            }
-        } catch (IOException exception) {
-            throw new PublicKeyParseException(exception);
-        }
-
-        throw new PublicKeyParseException("Could not extract public key for the given private key.");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static PemUtils getInstance() {
-        return INSTANCE;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private JcaPEMKeyConverter getKeyConverter() {

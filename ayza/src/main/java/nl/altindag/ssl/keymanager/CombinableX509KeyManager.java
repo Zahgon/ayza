@@ -36,21 +36,10 @@ public interface CombinableX509KeyManager extends X509KeyManager {
     Map<String, X509ExtendedKeyManager> getInnerKeyManagers();
 
     default <T> T extractInnerField(Function<X509ExtendedKeyManager, T> keyManagerMapper, Predicate<T> predicate) {
-        return getInnerKeyManagers().values().stream()
-                .map(keyManagerMapper)
-                .filter(predicate)
-                .findFirst()
-                .orElse(null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     default String[] getAliases(Function<X509ExtendedKeyManager, String[]> aliasExtractor) {
-        List<String> aliases = getInnerKeyManagers().values().stream()
-                .map(aliasExtractor)
-                .filter(Objects::nonNull)
-                .flatMap(Arrays::stream)
-                .collect(Collectors.toList());
-
-        return aliases.isEmpty() ? null : aliases.toArray(new String[]{});
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

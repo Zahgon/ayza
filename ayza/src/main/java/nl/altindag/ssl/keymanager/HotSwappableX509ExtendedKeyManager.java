@@ -25,7 +25,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Supplier;
-
 import static nl.altindag.laleler.ValidationUtils.GENERIC_EXCEPTION_MESSAGE;
 import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 
@@ -40,7 +39,9 @@ import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 public class HotSwappableX509ExtendedKeyManager extends DelegatingX509ExtendedKeyManager {
 
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+
     protected final Lock readLock = readWriteLock.readLock();
+
     protected final Lock writeLock = readWriteLock.writeLock();
 
     public HotSwappableX509ExtendedKeyManager(X509ExtendedKeyManager keyManager) {
@@ -49,52 +50,51 @@ public class HotSwappableX509ExtendedKeyManager extends DelegatingX509ExtendedKe
 
     @Override
     public String chooseClientAlias(String[] keyType, Principal[] issuers, Socket socket) {
-        return getObjectSafely(() -> super.chooseClientAlias(keyType, issuers, socket));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String chooseServerAlias(String keyType, Principal[] issuers, Socket socket) {
-        return getObjectSafely(() -> super.chooseServerAlias(keyType, issuers, socket));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public PrivateKey getPrivateKey(String alias) {
-        return getObjectSafely(() -> super.getPrivateKey(alias));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public X509Certificate[] getCertificateChain(String alias) {
-        return getObjectSafely(() -> super.getCertificateChain(alias));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getClientAliases(String keyType, Principal[] issuers) {
-        return getObjectSafely(() -> super.getClientAliases(keyType, issuers));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getServerAliases(String keyType, Principal[] issuers) {
-        return getObjectSafely(() -> super.getServerAliases(keyType, issuers));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public X509ExtendedKeyManager getInnerKeyManager() {
-        return getObjectSafely(super::getInnerKeyManager);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String chooseEngineClientAlias(String[] keyTypes, Principal[] issuers, SSLEngine sslEngine) {
-        return getObjectSafely(() -> super.chooseEngineClientAlias(keyTypes, issuers, sslEngine));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String chooseEngineServerAlias(String keyType, Principal[] issuers, SSLEngine sslEngine) {
-        return getObjectSafely(() -> super.chooseEngineServerAlias(keyType, issuers, sslEngine));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private <T> T getObjectSafely(Supplier<T> supplier) {
         readLock.lock();
-
         try {
             return supplier.get();
         } finally {
@@ -103,13 +103,6 @@ public class HotSwappableX509ExtendedKeyManager extends DelegatingX509ExtendedKe
     }
 
     public void setKeyManager(X509ExtendedKeyManager keyManager) {
-        writeLock.lock();
-
-        try {
-            this.keyManager = requireNotNull(keyManager, GENERIC_EXCEPTION_MESSAGE.apply("KeyManager"));
-        } finally {
-            writeLock.unlock();
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

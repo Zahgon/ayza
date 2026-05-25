@@ -17,7 +17,6 @@ package nl.altindag.ssl.jetty.util;
 
 import nl.altindag.ssl.SSLFactory;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
-
 import javax.net.ssl.SSLParameters;
 
 /**
@@ -25,7 +24,8 @@ import javax.net.ssl.SSLParameters;
  */
 public final class JettySslUtils {
 
-    private JettySslUtils() {}
+    private JettySslUtils() {
+    }
 
     /**
      * Creates a basic {@link SslContextFactory Client SslContextFactory}
@@ -37,9 +37,7 @@ public final class JettySslUtils {
      * @return {@link SslContextFactory}
      */
     public static SslContextFactory.Client forClient(SSLFactory sslFactory) {
-        SslContextFactory.Client sslContextFactory = createSslContextFactory(sslFactory, new SslContextFactory.Client());
-        sslContextFactory.setHostnameVerifier(sslFactory.getHostnameVerifier());
-        return sslContextFactory;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -52,15 +50,7 @@ public final class JettySslUtils {
      * @return {@link SslContextFactory}
      */
     public static SslContextFactory.Server forServer(SSLFactory sslFactory) {
-        SslContextFactory.Server sslContextFactory = createSslContextFactory(sslFactory, new SslContextFactory.Server());
-        SSLParameters sslParameters = sslFactory.getSslParameters();
-        if (sslParameters.getNeedClientAuth()) {
-            sslContextFactory.setNeedClientAuth(true);
-        }
-        if (sslParameters.getWantClientAuth()) {
-            sslContextFactory.setWantClientAuth(true);
-        }
-        return sslContextFactory;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static <T extends SslContextFactory> T createSslContextFactory(SSLFactory sslFactory, T sslContextFactory) {
@@ -70,5 +60,4 @@ public final class JettySslUtils {
         sslContextFactory.setIncludeCipherSuites(sslParameters.getCipherSuites());
         return sslContextFactory;
     }
-
 }

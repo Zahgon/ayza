@@ -37,7 +37,6 @@ import nl.altindag.ssl.util.SSLSessionUtils;
 import nl.altindag.ssl.util.TrustManagerUtils;
 import nl.altindag.sude.Logger;
 import nl.altindag.sude.LoggerFactory;
-
 import javax.net.ssl.CertPathTrustManagerParameters;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManagerFactory;
@@ -74,7 +73,6 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static nl.altindag.laleler.CollectorsUtils.toStringArray;
@@ -95,67 +93,59 @@ public final class SSLFactory {
     }
 
     public SSLContext getSslContext() {
-        return sslMaterial.getSslContext();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public SSLSocketFactory getSslSocketFactory() {
-        return sslMaterial.getSslContext().getSocketFactory();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public SSLServerSocketFactory getSslServerSocketFactory() {
-        return sslMaterial.getSslContext().getServerSocketFactory();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public Optional<X509ExtendedKeyManager> getKeyManager() {
-        return Optional.ofNullable(sslMaterial.getKeyManager());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public Optional<KeyManagerFactory> getKeyManagerFactory() {
-        return getKeyManager().map(KeyManagerUtils::createKeyManagerFactory);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public Optional<X509ExtendedTrustManager> getTrustManager() {
-        return Optional.ofNullable(sslMaterial.getTrustManager());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public Optional<TrustManagerFactory> getTrustManagerFactory() {
-        return getTrustManager().map(TrustManagerUtils::createTrustManagerFactory);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<X509Certificate> getTrustedCertificates() {
-        return getTrustManager()
-                .map(X509ExtendedTrustManager::getAcceptedIssuers)
-                .map(Arrays::asList)
-                .map(Collections::unmodifiableList)
-                .orElseGet(Collections::emptyList);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public HostnameVerifier getHostnameVerifier() {
-        return sslMaterial.getHostnameVerifier();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<String> getCiphers() {
-        return sslMaterial.getCiphers();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<String> getProtocols() {
-        return sslMaterial.getProtocols();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public SSLParameters getSslParameters() {
-        return SSLParametersUtils.copy(sslMaterial.getSslParameters());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public SSLEngine getSSLEngine() {
-        return getSSLEngine(null, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public SSLEngine getSSLEngine(String peerHost, Integer peerPort) {
-        if (nonNull(peerHost) && nonNull(peerPort)) {
-            return sslMaterial.getSslContext().createSSLEngine(peerHost, peerPort);
-        } else {
-            return sslMaterial.getSslContext().createSSLEngine();
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -164,69 +154,90 @@ public final class SSLFactory {
      * source in a functional way.
      */
     public <T> Box<T> map(Function<SSLFactory, T> mapper) {
-        return Box.of(this).map(mapper);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Builder builder() {
-        return new Builder();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static class Builder {
 
         private static final String TRUST_STORE_VALIDATION_EXCEPTION_MESSAGE = "TrustStore details are empty, which are required to be present when SSL/TLS is enabled";
+
         private static final String IDENTITY_VALIDATION_EXCEPTION_MESSAGE = "Identity details are empty, which are required to be present when SSL/TLS is enabled";
-        private static final String IDENTITY_AND_TRUST_MATERIAL_VALIDATION_EXCEPTION_MESSAGE = "Could not create instance of SSLFactory because Identity " +
-                "and Trust material are not present. Please provide at least a Trust material.";
+
+        private static final String IDENTITY_AND_TRUST_MATERIAL_VALIDATION_EXCEPTION_MESSAGE = "Could not create instance of SSLFactory because Identity " + "and Trust material are not present. Please provide at least a Trust material.";
+
         private static final String CERTIFICATE_VALIDATION_EXCEPTION_MESSAGE = "Failed to load the certificate(s). No certificate has been provided.";
+
         private static final String SYSTEM_PROPERTY_VALIDATION_EXCEPTION_MESSAGE = "Failed to load the System property for [%s] because it does not contain any value";
 
         private String sslContextAlgorithm = "TLS";
+
         private Provider securityProvider = null;
+
         private String securityProviderName = null;
+
         private SecureRandom secureRandom = null;
+
         private HostnameVerifier hostnameVerifier = HostnameVerifierUtils.createDefault();
+
         private Predicate<HostnameVerifierParameters> hostnameVerifierEnhancer = null;
 
         private final List<KeyStoreHolder> identities = new ArrayList<>();
+
         private final List<KeyStore> trustStores = new ArrayList<>();
+
         private final List<X509ExtendedKeyManager> identityManagers = new ArrayList<>();
+
         private final List<X509ExtendedTrustManager> trustManagers = new ArrayList<>();
+
         private final SSLParameters sslParameters = new SSLParameters();
+
         private final Map<String, List<URI>> preferredAliasToHost = new HashMap<>();
+
         private final List<String> protocols = new ArrayList<>();
+
         private final List<String> ciphers = new ArrayList<>();
+
         private final List<String> excludedProtocols = new ArrayList<>();
+
         private final List<String> excludedCiphers = new ArrayList<>();
 
         private boolean swappableKeyManagerEnabled = false;
+
         private boolean swappableTrustManagerEnabled = false;
+
         private boolean swappableSslParametersEnabled = false;
+
         private boolean loggingKeyManagerEnabled = false;
+
         private boolean loggingTrustManagerEnabled = false;
+
         private boolean inflatableKeyManagerEnabled = false;
 
         private int sessionTimeoutInSeconds = -1;
+
         private int sessionCacheSizeInBytes = -1;
 
         private Predicate<TrustManagerParameters> trustManagerParametersValidator = null;
+
         private boolean shouldTrustedCertificatesBeConcealed = false;
 
         private Builder() {
         }
 
         public Builder withSystemTrustMaterial() {
-            TrustManagerUtils.createTrustManagerWithSystemTrustedCertificates().ifPresent(trustManagers::add);
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withDefaultTrustMaterial() {
-            trustManagers.add(TrustManagerUtils.createTrustManagerWithJdkTrustedCertificates());
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withSystemPropertyDerivedTrustMaterial() {
-            KeyStore trustStore = KeyStoreUtils.loadSystemPropertyDerivedTrustStore();
-            return withTrustMaterial(trustStore);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /**
@@ -236,12 +247,11 @@ public final class SSLFactory {
          * @return {@link Builder}
          */
         public Builder withUnsafeTrustMaterial() {
-            return withTrustingAllCertificatesWithoutValidation();
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withDummyTrustMaterial() {
-            trustManagers.add(TrustManagerUtils.createDummyTrustManager());
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /**
@@ -252,444 +262,314 @@ public final class SSLFactory {
          * @return {@link Builder}
          */
         public Builder withSwappableTrustMaterial() {
-            swappableTrustManagerEnabled = true;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withLoggingTrustMaterial() {
-            loggingTrustManagerEnabled = true;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends X509TrustManager> Builder withTrustMaterial(T trustManager) {
-            trustManagers.add(TrustManagerUtils.wrapIfNeeded(trustManager));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends ManagerFactoryParameters> Builder withTrustMaterial(T managerFactoryParameters) {
-            trustManagers.add(TrustManagerUtils.createTrustManager(managerFactoryParameters));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
-        public <T extends X509TrustManager> Builder withTrustMaterial(T trustManager,
-                                                                      TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-
-            KeyStore trustStore = KeyStoreUtils.createTrustStore(trustManager.getAcceptedIssuers());
-            return withTrustMaterial(trustStore, trustOptions);
+        public <T extends X509TrustManager> Builder withTrustMaterial(T trustManager, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends TrustManagerFactory> Builder withTrustMaterial(T trustManagerFactory) {
-            X509ExtendedTrustManager trustManager = TrustManagerUtils.getTrustManager(trustManagerFactory);
-            this.trustManagers.add(trustManager);
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustMaterial(String trustStorePath, char[] trustStorePassword) {
-            return withTrustMaterial(trustStorePath, trustStorePassword, KeyStore.getDefaultType());
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustMaterial(String trustStorePath, char[] trustStorePassword, String trustStoreType) {
-            return withTrustMaterial(trustStorePath, trustStoreType, () -> KeyStoreUtils.loadKeyStore(trustStorePath, trustStorePassword, trustStoreType));
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustMaterial(String trustStorePath, char[] trustStorePassword, String trustStoreType, Provider provider) {
-            return withTrustMaterial(trustStorePath, trustStoreType, () -> KeyStoreUtils.loadKeyStore(trustStorePath, trustStorePassword, trustStoreType, provider));
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustMaterial(String trustStorePath, char[] trustStorePassword, String trustStoreType, String providerName) {
-            return withTrustMaterial(trustStorePath, trustStoreType, () -> KeyStoreUtils.loadKeyStore(trustStorePath, trustStorePassword, trustStoreType, providerName));
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         private Builder withTrustMaterial(String trustStorePath, String trustStoreType, Supplier<KeyStore> trustStoreSupplier) {
-            if (StringUtils.isBlank(trustStorePath)  || StringUtils.isBlank(trustStoreType)) {
-                throw new GenericKeyStoreException(TRUST_STORE_VALIDATION_EXCEPTION_MESSAGE);
-            }
-
-            KeyStore trustStore = trustStoreSupplier.get();
-            trustStores.add(trustStore);
-
-            return this;
-        }
-
-        public Builder withTrustMaterial(String trustStorePath,
-                                         char[] trustStorePassword,
-                                         TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-
-            return withTrustMaterial(trustStorePath, trustStorePassword, KeyStore.getDefaultType(), trustOptions);
-        }
-
-        public Builder withTrustMaterial(String trustStorePath,
-                                         char[] trustStorePassword,
-                                         String trustStoreType,
-                                         TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-            return withTrustMaterial(trustStorePath, trustStoreType, trustOptions, () -> KeyStoreUtils.loadKeyStore(trustStorePath, trustStorePassword, trustStoreType));
-        }
-
-        public Builder withTrustMaterial(String trustStorePath,
-                                         char[] trustStorePassword,
-                                         String trustStoreType,
-                                         Provider provider,
-                                         TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-            return withTrustMaterial(trustStorePath, trustStoreType, trustOptions, () -> KeyStoreUtils.loadKeyStore(trustStorePath, trustStorePassword, trustStoreType, provider));
-        }
-
-        public Builder withTrustMaterial(String trustStorePath,
-                                         char[] trustStorePassword,
-                                         String trustStoreType,
-                                         String providerName,
-                                         TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-            return withTrustMaterial(trustStorePath, trustStoreType, trustOptions, () -> KeyStoreUtils.loadKeyStore(trustStorePath, trustStorePassword, trustStoreType, providerName));
-        }
-
-        private Builder withTrustMaterial(String trustStorePath,
-                                          String trustStoreType,
-                                          TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions,
-                                          Supplier<KeyStore> trustStoreSupplier) {
             if (StringUtils.isBlank(trustStorePath) || StringUtils.isBlank(trustStoreType)) {
                 throw new GenericKeyStoreException(TRUST_STORE_VALIDATION_EXCEPTION_MESSAGE);
             }
+            KeyStore trustStore = trustStoreSupplier.get();
+            trustStores.add(trustStore);
+            return this;
+        }
 
+        public Builder withTrustMaterial(String trustStorePath, char[] trustStorePassword, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
+
+        public Builder withTrustMaterial(String trustStorePath, char[] trustStorePassword, String trustStoreType, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
+
+        public Builder withTrustMaterial(String trustStorePath, char[] trustStorePassword, String trustStoreType, Provider provider, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
+
+        public Builder withTrustMaterial(String trustStorePath, char[] trustStorePassword, String trustStoreType, String providerName, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
+        }
+
+        private Builder withTrustMaterial(String trustStorePath, String trustStoreType, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions, Supplier<KeyStore> trustStoreSupplier) {
+            if (StringUtils.isBlank(trustStorePath) || StringUtils.isBlank(trustStoreType)) {
+                throw new GenericKeyStoreException(TRUST_STORE_VALIDATION_EXCEPTION_MESSAGE);
+            }
             KeyStore trustStore = trustStoreSupplier.get();
             return withTrustMaterial(trustStore, trustOptions);
         }
 
         public Builder withTrustMaterial(Path trustStorePath, char[] trustStorePassword) {
-            return withTrustMaterial(trustStorePath, trustStorePassword, KeyStore.getDefaultType());
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustMaterial(Path trustStorePath, char[] trustStorePassword, String trustStoreType) {
-            return withTrustMaterial(trustStorePath, trustStoreType, () -> KeyStoreUtils.loadKeyStore(trustStorePath, trustStorePassword, trustStoreType));
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustMaterial(Path trustStorePath, char[] trustStorePassword, String trustStoreType, Provider provider) {
-            return withTrustMaterial(trustStorePath, trustStoreType, () -> KeyStoreUtils.loadKeyStore(trustStorePath, trustStorePassword, trustStoreType, provider));
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustMaterial(Path trustStorePath, char[] trustStorePassword, String trustStoreType, String providerName) {
-            return withTrustMaterial(trustStorePath, trustStoreType, () -> KeyStoreUtils.loadKeyStore(trustStorePath, trustStorePassword, trustStoreType, providerName));
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
-        public Builder withTrustMaterial(Path trustStorePath,
-                                         char[] trustStorePassword,
-                                         TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-
-            return withTrustMaterial(trustStorePath, trustStorePassword, KeyStore.getDefaultType(), trustOptions);
+        public Builder withTrustMaterial(Path trustStorePath, char[] trustStorePassword, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
-        public Builder withTrustMaterial(Path trustStorePath,
-                                         char[] trustStorePassword,
-                                         String trustStoreType,
-                                         TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-            return withTrustMaterial(trustStorePath, trustStoreType, trustOptions, () -> KeyStoreUtils.loadKeyStore(trustStorePath, trustStorePassword, trustStoreType));
+        public Builder withTrustMaterial(Path trustStorePath, char[] trustStorePassword, String trustStoreType, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
-        public Builder withTrustMaterial(Path trustStorePath,
-                                         char[] trustStorePassword,
-                                         String trustStoreType,
-                                         Provider provider,
-                                         TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-            return withTrustMaterial(trustStorePath, trustStoreType, trustOptions, () -> KeyStoreUtils.loadKeyStore(trustStorePath, trustStorePassword, trustStoreType, provider));
+        public Builder withTrustMaterial(Path trustStorePath, char[] trustStorePassword, String trustStoreType, Provider provider, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
-        public Builder withTrustMaterial(Path trustStorePath,
-                                         char[] trustStorePassword,
-                                         String trustStoreType,
-                                         String providerName,
-                                         TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-            return withTrustMaterial(trustStorePath, trustStoreType, trustOptions, () -> KeyStoreUtils.loadKeyStore(trustStorePath, trustStorePassword, trustStoreType, providerName));
+        public Builder withTrustMaterial(Path trustStorePath, char[] trustStorePassword, String trustStoreType, String providerName, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustMaterial(InputStream trustStoreStream, char[] trustStorePassword) {
-            return withTrustMaterial(trustStoreStream, trustStorePassword, KeyStore.getDefaultType());
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustMaterial(InputStream trustStoreStream, char[] trustStorePassword, String trustStoreType) {
-            return withTrustMaterial(trustStoreStream, trustStoreType, () -> KeyStoreUtils.loadKeyStore(trustStoreStream, trustStorePassword, trustStoreType));
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustMaterial(InputStream trustStoreStream, char[] trustStorePassword, String trustStoreType, Provider provider) {
-            return withTrustMaterial(trustStoreStream, trustStoreType, () -> KeyStoreUtils.loadKeyStore(trustStoreStream, trustStorePassword, trustStoreType, provider));
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustMaterial(InputStream trustStoreStream, char[] trustStorePassword, String trustStoreType, String providerName) {
-            return withTrustMaterial(trustStoreStream, trustStoreType, () -> KeyStoreUtils.loadKeyStore(trustStoreStream, trustStorePassword, trustStoreType, providerName));
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         private Builder withTrustMaterial(Object trustStoreSource, String trustStoreType, Supplier<KeyStore> trustStoreSupplier) {
             if (isNull(trustStoreSource) || StringUtils.isBlank(trustStoreType)) {
                 throw new GenericKeyStoreException(TRUST_STORE_VALIDATION_EXCEPTION_MESSAGE);
             }
-
             KeyStore trustStore = trustStoreSupplier.get();
             trustStores.add(trustStore);
             return this;
         }
 
-        public Builder withTrustMaterial(InputStream trustStoreStream,
-                                         char[] trustStorePassword,
-                                         TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-
-            return withTrustMaterial(trustStoreStream, trustStorePassword, KeyStore.getDefaultType(), trustOptions);
+        public Builder withTrustMaterial(InputStream trustStoreStream, char[] trustStorePassword, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
-        public Builder withTrustMaterial(InputStream trustStoreStream,
-                                         char[] trustStorePassword,
-                                         String trustStoreType,
-                                         TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-            return withTrustMaterial(trustStoreStream, trustStoreType, trustOptions, () -> KeyStoreUtils.loadKeyStore(trustStoreStream, trustStorePassword, trustStoreType));
+        public Builder withTrustMaterial(InputStream trustStoreStream, char[] trustStorePassword, String trustStoreType, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
-        public Builder withTrustMaterial(InputStream trustStoreStream,
-                                         char[] trustStorePassword,
-                                         String trustStoreType,
-                                         Provider provider,
-                                         TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-            return withTrustMaterial(trustStoreStream, trustStoreType, trustOptions, () -> KeyStoreUtils.loadKeyStore(trustStoreStream, trustStorePassword, trustStoreType, provider));
+        public Builder withTrustMaterial(InputStream trustStoreStream, char[] trustStorePassword, String trustStoreType, Provider provider, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
-        public Builder withTrustMaterial(InputStream trustStoreStream,
-                                         char[] trustStorePassword,
-                                         String trustStoreType,
-                                         String providerName,
-                                         TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-            return withTrustMaterial(trustStoreStream, trustStoreType, trustOptions, () -> KeyStoreUtils.loadKeyStore(trustStoreStream, trustStorePassword, trustStoreType, providerName));
+        public Builder withTrustMaterial(InputStream trustStoreStream, char[] trustStorePassword, String trustStoreType, String providerName, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
-        private Builder withTrustMaterial(Object trustStoreSource,
-                                          String trustStoreType,
-                                          TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions,
-                                          Supplier<KeyStore> trustStoreSupplier) {
+        private Builder withTrustMaterial(Object trustStoreSource, String trustStoreType, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions, Supplier<KeyStore> trustStoreSupplier) {
             if (isNull(trustStoreSource) || StringUtils.isBlank(trustStoreType)) {
                 throw new GenericKeyStoreException(TRUST_STORE_VALIDATION_EXCEPTION_MESSAGE);
             }
-
             KeyStore trustStore = trustStoreSupplier.get();
             return withTrustMaterial(trustStore, trustOptions);
         }
 
         public Builder withTrustMaterial(KeyStore trustStore) {
-            validateKeyStore(trustStore, TRUST_STORE_VALIDATION_EXCEPTION_MESSAGE);
-            trustStores.add(trustStore);
-
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustMaterial(KeyStore trustStore, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-            try {
-                CertPathTrustManagerParameters certPathTrustManagerParameters = trustOptions.apply(trustStore);
-                return withTrustMaterial(certPathTrustManagerParameters);
-            } catch (Exception e) {
-                throw new GenericSecurityException(e);
-            }
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustMaterial(Set<X509Certificate> certificates, TrustAnchorTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-            try {
-                Set<TrustAnchor> trustAnchors = certificates.stream()
-                        .map(certificate -> new TrustAnchor(certificate, null))
-                        .collect(Collectors.toSet());
-
-                CertPathTrustManagerParameters certPathTrustManagerParameters = trustOptions.apply(trustAnchors);
-                return withTrustMaterial(certPathTrustManagerParameters);
-            } catch (Exception e) {
-                throw new GenericSecurityException(e);
-            }
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         @SafeVarargs
         public final <T extends Certificate> Builder withTrustMaterial(T... certificates) {
-            return withTrustMaterial(Arrays.asList(certificates));
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
-        public final <T extends Certificate> Builder withTrustMaterial(T[] certificates,
-                                                                       TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-
-            return withTrustMaterial(Arrays.asList(certificates), trustOptions);
+        public final <T extends Certificate> Builder withTrustMaterial(T[] certificates, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends Certificate> Builder withTrustMaterial(List<T> certificates) {
-            KeyStore trustStore = KeyStoreUtils.createTrustStore(requireNotEmpty(certificates, CERTIFICATE_VALIDATION_EXCEPTION_MESSAGE));
-            trustStores.add(trustStore);
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
-        public <T extends Certificate> Builder withTrustMaterial(List<T> certificates,
-                                                                 TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
-            KeyStore trustStore = KeyStoreUtils.createTrustStore(requireNotEmpty(certificates, CERTIFICATE_VALIDATION_EXCEPTION_MESSAGE));
-            return withTrustMaterial(trustStore, trustOptions);
+        public <T extends Certificate> Builder withTrustMaterial(List<T> certificates, TrustStoreTrustOptions<? extends CertPathTrustManagerParameters> trustOptions) {
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withSystemPropertyDerivedIdentityMaterial() {
-            KeyStore keyStore = KeyStoreUtils.loadSystemPropertyDerivedKeyStore();
-            char[] keystorePassword = Optional.ofNullable(System.getProperty("javax.net.ssl.keyStorePassword"))
-                    .map(String::trim)
-                    .filter(StringUtils::isNotBlank)
-                    .map(String::toCharArray)
-                    .orElse(null);
-
-            return withIdentityMaterial(keyStore, keystorePassword);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(String identityStorePath, char[] identityStorePassword) {
-            return withIdentityMaterial(identityStorePath, identityStorePassword, identityStorePassword, KeyStore.getDefaultType());
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(String identityStorePath, char[] identityStorePassword, char[] identityPassword) {
-            return withIdentityMaterial(identityStorePath, identityStorePassword, identityPassword, KeyStore.getDefaultType());
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(String identityStorePath, char[] identityStorePassword, String identityStoreType) {
-            return withIdentityMaterial(identityStorePath, identityStorePassword, identityStorePassword, identityStoreType);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(String identityStorePath, char[] identityStorePassword, char[] identityPassword, String identityStoreType) {
-            return withIdentityMaterial(identityStorePath, identityStoreType, () -> {
-                KeyStore identity = KeyStoreUtils.loadKeyStore(identityStorePath, identityStorePassword, identityStoreType);
-                return new KeyStoreHolder(identity, identityPassword);
-            });
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(String identityStorePath, char[] identityStorePassword, char[] identityPassword, String identityStoreType, Provider provider) {
-            return withIdentityMaterial(identityStorePath, identityStoreType, () -> {
-                KeyStore identity = KeyStoreUtils.loadKeyStore(identityStorePath, identityStorePassword, identityStoreType, provider);
-                return new KeyStoreHolder(identity, identityPassword);
-            });
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(String identityStorePath, char[] identityStorePassword, char[] identityPassword, String identityStoreType, String providerName) {
-            return withIdentityMaterial(identityStorePath, identityStoreType, () -> {
-                KeyStore identity = KeyStoreUtils.loadKeyStore(identityStorePath, identityStorePassword, identityStoreType, providerName);
-                return new KeyStoreHolder(identity, identityPassword);
-            });
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         private Builder withIdentityMaterial(String identityStorePath, String identityStoreType, Supplier<KeyStoreHolder> keyStoreHolderSupplier) {
             if (StringUtils.isBlank(identityStorePath) || StringUtils.isBlank(identityStoreType)) {
                 throw new GenericKeyStoreException(IDENTITY_VALIDATION_EXCEPTION_MESSAGE);
             }
-
             KeyStoreHolder identityHolder = keyStoreHolderSupplier.get();
             identities.add(identityHolder);
             return this;
         }
 
         public Builder withIdentityMaterial(Path identityStorePath, char[] identityStorePassword) {
-            return withIdentityMaterial(identityStorePath, identityStorePassword, identityStorePassword, KeyStore.getDefaultType());
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(Path identityStorePath, char[] identityStorePassword, char[] identityPassword) {
-            return withIdentityMaterial(identityStorePath, identityStorePassword, identityPassword, KeyStore.getDefaultType());
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(Path identityStorePath, char[] identityStorePassword, String identityStoreType) {
-            return withIdentityMaterial(identityStorePath, identityStorePassword, identityStorePassword, identityStoreType);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(Path identityStorePath, char[] identityStorePassword, char[] identityPassword, String identityStoreType) {
-            return withIdentityMaterial(identityStorePath, identityStoreType, () -> {
-                KeyStore identity = KeyStoreUtils.loadKeyStore(identityStorePath, identityStorePassword, identityStoreType);
-                return new KeyStoreHolder(identity, identityPassword);
-            });
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(Path identityStorePath, char[] identityStorePassword, char[] identityPassword, String identityStoreType, Provider provider) {
-            return withIdentityMaterial(identityStorePath, identityStoreType, () -> {
-                KeyStore identity = KeyStoreUtils.loadKeyStore(identityStorePath, identityStorePassword, identityStoreType, provider);
-                return new KeyStoreHolder(identity, identityPassword);
-            });
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(Path identityStorePath, char[] identityStorePassword, char[] identityPassword, String identityStoreType, String providerName) {
-            return withIdentityMaterial(identityStorePath, identityStoreType, () -> {
-                KeyStore identity = KeyStoreUtils.loadKeyStore(identityStorePath, identityStorePassword, identityStoreType, providerName);
-                return new KeyStoreHolder(identity, identityPassword);
-            });
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(InputStream identityStream, char[] identityStorePassword) {
-            return withIdentityMaterial(identityStream, identityStorePassword, identityStorePassword);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(InputStream identityStream, char[] identityStorePassword, char[] identityPassword) {
-            return withIdentityMaterial(identityStream, identityStorePassword, identityPassword, KeyStore.getDefaultType());
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(InputStream identityStream, char[] identityStorePassword, String identityStoreType) {
-            return withIdentityMaterial(identityStream, identityStorePassword, identityStorePassword, identityStoreType);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(InputStream identityStream, char[] identityStorePassword, char[] identityPassword, String identityStoreType) {
-            return withIdentityMaterial(identityStream, identityStoreType, () -> {
-                KeyStore identity = KeyStoreUtils.loadKeyStore(identityStream, identityStorePassword, identityStoreType);
-                return new KeyStoreHolder(identity, identityPassword);
-            });
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(InputStream identityStream, char[] identityStorePassword, char[] identityPassword, String identityStoreType, Provider provider) {
-            return withIdentityMaterial(identityStream, identityStoreType, () -> {
-                KeyStore identity = KeyStoreUtils.loadKeyStore(identityStream, identityStorePassword, identityStoreType, provider);
-                return new KeyStoreHolder(identity, identityPassword);
-            });
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityMaterial(InputStream identityStream, char[] identityStorePassword, char[] identityPassword, String identityStoreType, String providerName) {
-            return withIdentityMaterial(identityStream, identityStoreType, () -> {
-                KeyStore identity = KeyStoreUtils.loadKeyStore(identityStream, identityStorePassword, identityStoreType, providerName);
-                return new KeyStoreHolder(identity, identityPassword);
-            });
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         private Builder withIdentityMaterial(Object identitySource, String identityStoreType, Supplier<KeyStoreHolder> keyStoreHolderSupplier) {
             if (isNull(identitySource) || StringUtils.isBlank(identityStoreType)) {
                 throw new GenericKeyStoreException(IDENTITY_VALIDATION_EXCEPTION_MESSAGE);
             }
-
             KeyStoreHolder identityHolder = keyStoreHolderSupplier.get();
             identities.add(identityHolder);
             return this;
         }
 
         public Builder withIdentityMaterial(KeyStore identityStore, char[] identityPassword) {
-            validateKeyStore(identityStore, IDENTITY_VALIDATION_EXCEPTION_MESSAGE);
-            KeyStoreHolder identityHolder = new KeyStoreHolder(identityStore, identityPassword);
-            identities.add(identityHolder);
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         @SafeVarargs
         public final <T extends Certificate> Builder withIdentityMaterial(Key privateKey, char[] privateKeyPassword, T... certificateChain) {
-            return withIdentityMaterial(privateKey, privateKeyPassword, null, certificateChain);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         @SafeVarargs
         public final <T extends Certificate> Builder withIdentityMaterial(Key privateKey, char[] privateKeyPassword, String alias, T... certificateChain) {
-            return withIdentityMaterial(privateKey, privateKeyPassword, alias, Arrays.asList(certificateChain));
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public final <T extends Certificate> Builder withIdentityMaterial(Key privateKey, char[] privateKeyPassword, List<T> certificateChain) {
-            return withIdentityMaterial(privateKey, privateKeyPassword, null, certificateChain);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public final <T extends Certificate> Builder withIdentityMaterial(Key privateKey, char[] privateKeyPassword, String alias, List<T> certificateChain) {
-            KeyStore identityStore = KeyStoreUtils.createIdentityStore(privateKey, privateKeyPassword, alias, certificateChain);
-            identities.add(new KeyStoreHolder(identityStore, privateKeyPassword));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends X509KeyManager> Builder withIdentityMaterial(T keyManager) {
-            identityManagers.add(KeyManagerUtils.wrapIfNeeded(keyManager));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends KeyManagerFactory> Builder withIdentityMaterial(T keyManagerFactory) {
-            X509ExtendedKeyManager keyManager = KeyManagerUtils.getKeyManager(keyManagerFactory);
-            this.identityManagers.add(keyManager);
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withDummyIdentityMaterial() {
-            this.identityManagers.add(KeyManagerUtils.createDummyKeyManager());
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /**
@@ -700,31 +580,23 @@ public final class SSLFactory {
          * @return {@link Builder}
          */
         public Builder withSwappableIdentityMaterial() {
-            swappableKeyManagerEnabled = true;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withLoggingIdentityMaterial() {
-            loggingKeyManagerEnabled = true;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withInflatableIdentityMaterial() {
-            inflatableKeyManagerEnabled = true;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withInflatableTrustMaterial() {
-            trustManagers.add(TrustManagerUtils.createInflatableTrustManager());
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
-        public Builder withInflatableTrustMaterial(Path trustStorePath,
-                                                   char[] trustStorePassword,
-                                                   String trustStoreType,
-                                                   Predicate<TrustManagerParameters> trustManagerParametersPredicate) {
-            trustManagers.add(TrustManagerUtils.createInflatableTrustManager(trustStorePath, trustStorePassword, trustStoreType, trustManagerParametersPredicate));
-            return this;
+        public Builder withInflatableTrustMaterial(Path trustStorePath, char[] trustStorePassword, String trustStoreType, Predicate<TrustManagerParameters> trustManagerParametersPredicate) {
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         private void validateKeyStore(KeyStore keyStore, String exceptionMessage) {
@@ -734,35 +606,20 @@ public final class SSLFactory {
         }
 
         public Builder withIdentityRoute(String alias, String... hosts) {
-            return withIdentityRoute(
-                    alias,
-                    Arrays.stream(hosts)
-                            .map(URI::create)
-                            .collect(Collectors.toList())
-            );
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withIdentityRoute(Map<String, List<String>> aliasesToHosts) {
-            aliasesToHosts.entrySet().stream()
-                    .map(aliasToHosts -> new AbstractMap.SimpleEntry<>(
-                            aliasToHosts.getKey(),
-                            aliasToHosts.getValue().stream()
-                                    .map(URI::create)
-                                    .collect(Collectors.toList())))
-                    .forEach(aliasToHosts -> withIdentityRoute(aliasToHosts.getKey(), aliasToHosts.getValue()));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         private Builder withIdentityRoute(String alias, List<URI> hosts) {
             if (StringUtils.isBlank(alias)) {
                 throw new IllegalArgumentException("alias should be present");
             }
-
             requireNotEmpty(hosts, String.format("At least one host should be present. No host(s) found for the given alias: [%s]", alias));
-
             for (URI host : hosts) {
                 UriUtils.validate(host);
-
                 if (preferredAliasToHost.containsKey(alias)) {
                     preferredAliasToHost.get(alias).add(host);
                 } else {
@@ -773,227 +630,133 @@ public final class SSLFactory {
         }
 
         public <T extends HostnameVerifier> Builder withHostnameVerifier(T hostnameVerifier) {
-            this.hostnameVerifier = hostnameVerifier;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withUnsafeHostnameVerifier() {
-            this.hostnameVerifier = HostnameVerifierUtils.createUnsafe();
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withHostnameVerifierEnhancer(Predicate<HostnameVerifierParameters> hostnameVerifierParametersValidator) {
-            this.hostnameVerifierEnhancer = hostnameVerifierParametersValidator;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withCiphers(String... ciphers) {
-            this.ciphers.addAll(Arrays.asList(ciphers));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withExcludedCiphers(String... ciphers) {
-            this.excludedCiphers.addAll(Arrays.asList(ciphers));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withSystemPropertyDerivedCiphers() {
-            ciphers.addAll(extractPropertyValues("https.cipherSuites"));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withProtocols(String... protocols) {
-            this.protocols.addAll(Arrays.asList(protocols));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withExcludedProtocols(String... protocols) {
-            this.excludedProtocols.addAll(Arrays.asList(protocols));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withSystemPropertyDerivedProtocols() {
-            protocols.addAll(extractPropertyValues("https.protocols"));
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         private List<String> extractPropertyValues(String systemProperty) {
             String propertyValue = requireNotBlank(System.getProperty(systemProperty), String.format(SYSTEM_PROPERTY_VALIDATION_EXCEPTION_MESSAGE, systemProperty));
-
-            List<String> propertyValues = Arrays.stream(propertyValue.split(","))
-                    .map(String::trim)
-                    .filter(StringUtils::isNotBlank)
-                    .distinct().collect(Collectors.toList());
-
+            List<String> propertyValues = Arrays.stream(propertyValue.split(",")).map(String::trim).filter(StringUtils::isNotBlank).distinct().collect(Collectors.toList());
             return requireNotEmpty(propertyValues, String.format(SYSTEM_PROPERTY_VALIDATION_EXCEPTION_MESSAGE, systemProperty));
         }
 
         public Builder withNeedClientAuthentication() {
-            return withNeedClientAuthentication(true);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withNeedClientAuthentication(boolean needClientAuthentication) {
-            sslParameters.setNeedClientAuth(needClientAuthentication);
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withWantClientAuthentication() {
-            return withWantClientAuthentication(true);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withWantClientAuthentication(boolean wantClientAuthentication) {
-            sslParameters.setWantClientAuth(wantClientAuthentication);
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withSessionTimeout(int timeoutInSeconds) {
-            this.sessionTimeoutInSeconds = timeoutInSeconds;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withSessionCacheSize(int cacheSizeInBytes) {
-            this.sessionCacheSizeInBytes = cacheSizeInBytes;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withSslContextAlgorithm(String sslContextAlgorithm) {
-            this.sslContextAlgorithm = sslContextAlgorithm;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withSwappableSslParameters() {
-            swappableSslParametersEnabled = true;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends Provider> Builder withSecurityProvider(T securityProvider) {
-            this.securityProvider = securityProvider;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withSecurityProvider(String securityProviderName) {
-            this.securityProviderName = securityProviderName;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public <T extends SecureRandom> Builder withSecureRandom(T secureRandom) {
-            this.secureRandom = secureRandom;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustingAllCertificatesWithoutValidation() {
-            trustManagers.add(TrustManagerUtils.createUnsafeTrustManager());
-            LOGGER.debug("UnsafeTrustManager is being used. Client/Server certificates will be accepted without validation.");
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustEnhancer(Predicate<TrustManagerParameters> validator) {
-            this.trustManagerParametersValidator = validator;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withConcealedTrustMaterial() {
-            this.shouldTrustedCertificatesBeConcealed = true;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public SSLFactory build() {
-            if (!isIdentityMaterialPresent() && !isTrustMaterialPresent()) {
-                throw new GenericSecurityException(IDENTITY_AND_TRUST_MATERIAL_VALIDATION_EXCEPTION_MESSAGE);
-            }
-
-            X509ExtendedKeyManager keyManager = isIdentityMaterialPresent() ? createKeyManager() : null;
-            X509ExtendedTrustManager trustManager = isTrustMaterialPresent() ? createTrustManager() : null;
-            SSLContext baseSslContext = SSLContextUtils.createSslContext(
-                    keyManager,
-                    trustManager,
-                    secureRandom,
-                    sslContextAlgorithm,
-                    securityProviderName,
-                    securityProvider
-            );
-
-            if (sessionTimeoutInSeconds >= 0) {
-                SSLSessionUtils.updateSessionTimeout(baseSslContext, sessionTimeoutInSeconds);
-            }
-
-            if (sessionCacheSizeInBytes >= 0) {
-                SSLSessionUtils.updateSessionCacheSize(baseSslContext, sessionCacheSizeInBytes);
-            }
-
-            SSLParameters baseSslParameters = createSslParameters(baseSslContext);
-            SSLContext sslContext = new FenixSSLContext(baseSslContext, baseSslParameters);
-
-            HostnameVerifier resolvedHostnameVerifier = Optional.ofNullable(hostnameVerifierEnhancer)
-                    .map(enhancer -> HostnameVerifierUtils.createEnhanceable(hostnameVerifier, enhancer))
-                    .orElse(hostnameVerifier);
-
-            SSLMaterial sslMaterial = new SSLMaterial.Builder()
-                    .withSslContext(sslContext)
-                    .withKeyManager(keyManager)
-                    .withTrustManager(trustManager)
-                    .withSslParameters(baseSslParameters)
-                    .withHostnameVerifier(resolvedHostnameVerifier)
-                    .build();
-
-            return new SSLFactory(sslMaterial);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         private boolean isTrustMaterialPresent() {
-            return !trustStores.isEmpty()
-                    || !trustManagers.isEmpty();
+            return !trustStores.isEmpty() || !trustManagers.isEmpty();
         }
 
         private boolean isIdentityMaterialPresent() {
-            return !identities.isEmpty()
-                    || !identityManagers.isEmpty();
+            return !identities.isEmpty() || !identityManagers.isEmpty();
         }
 
         private X509ExtendedKeyManager createKeyManager() {
-            return KeyManagerUtils.keyManagerBuilder()
-                    .withKeyManagers(identityManagers)
-                    .withIdentities(identities)
-                    .withSwappableKeyManager(swappableKeyManagerEnabled)
-                    .withLoggingKeyManager(loggingKeyManagerEnabled)
-                    .withInflatableKeyManager(inflatableKeyManagerEnabled)
-                    .withIdentityRoute(preferredAliasToHost)
-                    .build();
+            return KeyManagerUtils.keyManagerBuilder().withKeyManagers(identityManagers).withIdentities(identities).withSwappableKeyManager(swappableKeyManagerEnabled).withLoggingKeyManager(loggingKeyManagerEnabled).withInflatableKeyManager(inflatableKeyManagerEnabled).withIdentityRoute(preferredAliasToHost).build();
         }
 
         private X509ExtendedTrustManager createTrustManager() {
-            return TrustManagerUtils.trustManagerBuilder()
-                    .withTrustManagers(trustManagers)
-                    .withTrustStores(trustStores)
-                    .withSwappableTrustManager(swappableTrustManagerEnabled)
-                    .withLoggingTrustManager(loggingTrustManagerEnabled)
-                    .withTrustEnhancer(trustManagerParametersValidator)
-                    .withTrustEnhancer(shouldTrustedCertificatesBeConcealed)
-                    .build();
+            return TrustManagerUtils.trustManagerBuilder().withTrustManagers(trustManagers).withTrustStores(trustStores).withSwappableTrustManager(swappableTrustManagerEnabled).withLoggingTrustManager(loggingTrustManagerEnabled).withTrustEnhancer(trustManagerParametersValidator).withTrustEnhancer(shouldTrustedCertificatesBeConcealed).build();
         }
 
         private SSLParameters createSslParameters(SSLContext sslContext) {
             SSLParameters defaultSSLParameters = sslContext.getDefaultSSLParameters();
             List<String> defaultCiphers = Arrays.asList(defaultSSLParameters.getCipherSuites());
             List<String> defaultProtocols = Arrays.asList(defaultSSLParameters.getProtocols());
-
-            String[] preferredCiphers = ciphers.stream()
-                    .distinct()
-                    .filter(StringUtils::isNotBlank)
-                    .filter(defaultCiphers::contains)
-                    .collect(toStringArray());
-
-            String[] preferredProtocols = protocols.stream()
-                    .distinct()
-                    .filter(StringUtils::isNotBlank)
-                    .filter(defaultProtocols::contains)
-                    .collect(toStringArray());
-
+            String[] preferredCiphers = ciphers.stream().distinct().filter(StringUtils::isNotBlank).filter(defaultCiphers::contains).collect(toStringArray());
+            String[] preferredProtocols = protocols.stream().distinct().filter(StringUtils::isNotBlank).filter(defaultProtocols::contains).collect(toStringArray());
             sslParameters.setCipherSuites(preferredCiphers);
             sslParameters.setProtocols(preferredProtocols);
-
             SSLParameters mergedSslParameters = SSLParametersUtils.merge(sslParameters, defaultSSLParameters, excludedCiphers, excludedProtocols);
             return swappableSslParametersEnabled ? SSLParametersUtils.createSwappableSslParameters(mergedSslParameters) : mergedSslParameters;
         }
-
     }
 }

@@ -16,12 +16,10 @@
 package nl.altindag.ssl.hostnameverifier;
 
 import nl.altindag.ssl.exception.GenericHostnameVerifierException;
-
 import java.net.IDN;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Locale;
-
 import static nl.altindag.ssl.hostnameverifier.HostnameCommon.containsInvalidHostnameAsciiCodes;
 import static nl.altindag.ssl.hostnameverifier.HostnameCommon.containsInvalidLabelLengths;
 
@@ -31,7 +29,8 @@ import static nl.altindag.ssl.hostnameverifier.HostnameCommon.containsInvalidLab
  */
 final class Hostnames {
 
-    private Hostnames() {}
+    private Hostnames() {
+    }
 
     /**
      * If this is an IP address, this returns the IP address in canonical form.
@@ -42,40 +41,6 @@ final class Hostnames {
      * unsupported ASCII characters.
      */
     static String toCanonicalHost(String host) {
-        String result = host;
-        // If the input contains a :, it’s an IPv6 address.
-        if (host.contains(":")) {
-            // If the input is encased in square braces "[...]", drop 'em.
-            if (host.startsWith("[" ) && host.endsWith("]")) {
-                result = host.substring(1, host.length() - 1);
-            }
-
-            try {
-                InetAddress inetAddress = InetAddress.getByName(result);
-                return inetAddress.getHostAddress();
-            } catch (UnknownHostException e) {
-                throw new GenericHostnameVerifierException(e);
-            }
-        }
-
-        try {
-            result = IDN.toASCII(host).toLowerCase(Locale.US);
-            if (result.isEmpty()) {
-                return null;
-            }
-
-            if (containsInvalidHostnameAsciiCodes(result)) {
-                // The IDN ToASCII result contains illegal characters.
-                return null;
-            } else if (containsInvalidLabelLengths(result)) {
-                // The IDN ToASCII result contains invalid labels.
-                return null;
-            } else {
-                return result;
-            }
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

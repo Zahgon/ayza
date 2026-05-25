@@ -24,7 +24,6 @@ import nl.altindag.ssl.util.SSLParametersUtils;
 import nl.altindag.ssl.util.SSLSocketUtils;
 import nl.altindag.sude.Logger;
 import nl.altindag.sude.LoggerFactory;
-
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLContextSpi;
@@ -36,7 +35,6 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import java.security.SecureRandom;
 import java.util.Optional;
-
 import static java.util.Objects.nonNull;
 import static nl.altindag.laleler.ValidationUtils.GENERIC_EXCEPTION_MESSAGE;
 
@@ -48,6 +46,7 @@ public final class FenixSSLContextSpi extends SSLContextSpi {
     private static final Logger LOGGER = LoggerFactory.getLogger(FenixSSLContextSpi.class);
 
     private final SSLContext sslContext;
+
     private final SSLParameters sslParameters;
 
     FenixSSLContextSpi(SSLContext sslContext, SSLParameters sslParameters) {
@@ -62,34 +61,33 @@ public final class FenixSSLContextSpi extends SSLContextSpi {
             LOGGER.debug(message);
             throw new GenericSecurityException(message);
         }
-
         sslContext = sslFactory.get().getSslContext();
         sslParameters = sslFactory.get().getSslParameters();
     }
 
     @Override
     protected void engineInit(KeyManager[] km, TrustManager[] tm, SecureRandom sr) {
-        LOGGER.debug("The provided parameters are being ignored as the SSLContext has already been initialized");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected SSLSocketFactory engineGetSocketFactory() {
-        return SSLSocketUtils.createSslSocketFactory(sslContext, engineGetDefaultSSLParameters());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected SSLServerSocketFactory engineGetServerSocketFactory() {
-        return SSLSocketUtils.createSslServerSocketFactory(sslContext, engineGetDefaultSSLParameters());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected SSLEngine engineCreateSSLEngine() {
-        return getSSLEngine(null, 0);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected SSLEngine engineCreateSSLEngine(String host, int port) {
-        return getSSLEngine(host, port);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private SSLEngine getSSLEngine(String peerHost, int peerPort) {
@@ -99,29 +97,27 @@ public final class FenixSSLContextSpi extends SSLContextSpi {
         } else {
             sslEngine = sslContext.createSSLEngine();
         }
-
         sslEngine.setSSLParameters(engineGetDefaultSSLParameters());
         return sslParameters instanceof HotSwappableSSLParameters ? new FenixSSLEngine(sslEngine, sslParameters) : sslEngine;
     }
 
     @Override
     protected SSLSessionContext engineGetServerSessionContext() {
-        return sslContext.getServerSessionContext();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected SSLSessionContext engineGetClientSessionContext() {
-        return sslContext.getClientSessionContext();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected SSLParameters engineGetDefaultSSLParameters() {
-        return SSLParametersUtils.copy(sslParameters);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected SSLParameters engineGetSupportedSSLParameters() {
-        return SSLParametersUtils.copy(sslContext.getSupportedSSLParameters());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

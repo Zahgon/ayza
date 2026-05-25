@@ -18,7 +18,6 @@ package nl.altindag.ssl.util;
 import nl.altindag.ssl.SSLFactory;
 import nl.altindag.ssl.provider.FenixProvider;
 import nl.altindag.ssl.provider.SSLFactoryProvider;
-
 import java.security.Provider;
 import java.security.Security;
 
@@ -27,20 +26,18 @@ import java.security.Security;
  */
 public final class ProviderUtils {
 
-    private ProviderUtils() {}
+    private ProviderUtils() {
+    }
 
     public static Provider create(SSLFactory sslFactory) {
-        SSLFactoryProvider.set(sslFactory);
-        return new FenixProvider();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void configure(SSLFactory sslFactory) {
-        Provider provider = create(sslFactory);
-        Security.insertProviderAt(provider, 1);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static void remove() {
-        Security.removeProvider("Fenix");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

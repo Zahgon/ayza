@@ -24,15 +24,14 @@ import java.net.PasswordAuthentication;
 public final class AuthenticatorUtils {
 
     private AuthenticatorUtils() {
-
     }
 
     public static Authenticator create(String userName, char[] password) {
-        return create(new PasswordAuthentication(userName, password));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Authenticator create(PasswordAuthentication passwordAuthentication) {
-        return new FelixAuthenticator(passwordAuthentication);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static class FelixAuthenticator extends Authenticator {
@@ -45,8 +44,7 @@ public final class AuthenticatorUtils {
 
         @Override
         protected PasswordAuthentication getPasswordAuthentication() {
-            return passwordAuthentication;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
     }
-
 }

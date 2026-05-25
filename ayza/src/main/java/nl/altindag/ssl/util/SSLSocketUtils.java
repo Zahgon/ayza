@@ -18,7 +18,6 @@ package nl.altindag.ssl.util;
 import nl.altindag.ssl.SSLFactory;
 import nl.altindag.ssl.socket.FenixSSLServerSocketFactory;
 import nl.altindag.ssl.socket.FenixSSLSocketFactory;
-
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLParameters;
 import javax.net.ssl.SSLServerSocketFactory;
@@ -29,29 +28,26 @@ import javax.net.ssl.SSLSocketFactory;
  */
 public final class SSLSocketUtils {
 
-    private SSLSocketUtils() {}
+    private SSLSocketUtils() {
+    }
 
     public static SSLSocketFactory createSslSocketFactory(SSLContext sslContext, SSLParameters sslParameters) {
-        return new FenixSSLSocketFactory(sslContext.getSocketFactory(), sslParameters);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static SSLSocketFactory createSslSocketFactory(SSLSocketFactory sslSocketFactory, SSLParameters sslParameters) {
-        return new FenixSSLSocketFactory(sslSocketFactory, sslParameters);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static SSLSocketFactory createUnsafeSslSocketFactory() {
-        return SSLFactory.builder()
-                .withUnsafeTrustMaterial()
-                .build()
-                .getSslSocketFactory();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static SSLServerSocketFactory createSslServerSocketFactory(SSLContext sslContext, SSLParameters sslParameters) {
-        return new FenixSSLServerSocketFactory(sslContext.getServerSocketFactory(), sslParameters);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static SSLServerSocketFactory createSslServerSocketFactory(SSLServerSocketFactory sslServerSocketFactory, SSLParameters sslParameters) {
-        return new FenixSSLServerSocketFactory(sslServerSocketFactory, sslParameters);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

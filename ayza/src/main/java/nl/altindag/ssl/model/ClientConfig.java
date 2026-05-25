@@ -17,19 +17,20 @@ package nl.altindag.ssl.model;
 
 import nl.altindag.laleler.ValidationUtils;
 import nl.altindag.ssl.SSLFactory;
-
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.time.Duration;
 import java.util.Optional;
-
 import static nl.altindag.laleler.ValidationUtils.GENERIC_EXCEPTION_MESSAGE;
 
 public final class ClientConfig {
 
     private final SSLFactory sslFactory;
+
     private final Proxy proxy;
+
     private final PasswordAuthentication passwordAuthentication;
+
     private final Duration timeout;
 
     public ClientConfig(SSLFactory sslFactory, Proxy proxy, PasswordAuthentication passwordAuthentication, Duration timeout) {
@@ -40,19 +41,18 @@ public final class ClientConfig {
     }
 
     public SSLFactory getSslFactory() {
-        return sslFactory;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public Optional<Proxy> getProxy() {
-        return Optional.ofNullable(proxy);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public Optional<PasswordAuthentication> getPasswordAuthentication() {
-        return Optional.ofNullable(passwordAuthentication);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public Optional<Duration> getTimeout() {
-        return Optional.ofNullable(timeout);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

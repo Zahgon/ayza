@@ -21,7 +21,6 @@ import javax.net.ssl.SSLParameters;
 import javax.net.ssl.X509ExtendedKeyManager;
 import javax.net.ssl.X509ExtendedTrustManager;
 import java.util.List;
-
 import static nl.altindag.laleler.CollectionUtils.toUnmodifiableList;
 
 /**
@@ -35,83 +34,80 @@ import static nl.altindag.laleler.CollectionUtils.toUnmodifiableList;
 public final class SSLMaterial {
 
     private SSLContext sslContext;
+
     private X509ExtendedKeyManager keyManager;
+
     private X509ExtendedTrustManager trustManager;
+
     private HostnameVerifier hostnameVerifier;
+
     private SSLParameters sslParameters;
 
-    private SSLMaterial() {}
+    private SSLMaterial() {
+    }
 
     public SSLContext getSslContext() {
-        return sslContext;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public X509ExtendedKeyManager getKeyManager() {
-        return keyManager;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public X509ExtendedTrustManager getTrustManager() {
-        return trustManager;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public SSLParameters getSslParameters() {
-        return sslParameters;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public HostnameVerifier getHostnameVerifier() {
-        return hostnameVerifier;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<String> getCiphers() {
-        return toUnmodifiableList(sslParameters.getCipherSuites());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public List<String> getProtocols() {
-        return toUnmodifiableList(sslParameters.getProtocols());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static class Builder {
 
         private SSLContext sslContext;
+
         private X509ExtendedKeyManager keyManager;
+
         private X509ExtendedTrustManager trustManager;
+
         private HostnameVerifier hostnameVerifier;
+
         private SSLParameters sslParameters;
 
         public Builder withSslContext(SSLContext sslContext) {
-            this.sslContext = sslContext;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withHostnameVerifier(HostnameVerifier hostnameVerifier) {
-            this.hostnameVerifier = hostnameVerifier;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withSslParameters(SSLParameters sslParameters) {
-            this.sslParameters = sslParameters;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withKeyManager(X509ExtendedKeyManager keyManager) {
-            this.keyManager = keyManager;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Builder withTrustManager(X509ExtendedTrustManager trustManager) {
-            this.trustManager = trustManager;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public SSLMaterial build() {
-            SSLMaterial sslMaterial = new SSLMaterial();
-            sslMaterial.sslContext = sslContext;
-            sslMaterial.keyManager = keyManager;
-            sslMaterial.trustManager = trustManager;
-            sslMaterial.hostnameVerifier = hostnameVerifier;
-            sslMaterial.sslParameters = sslParameters;
-            return sslMaterial;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
     }
-
 }

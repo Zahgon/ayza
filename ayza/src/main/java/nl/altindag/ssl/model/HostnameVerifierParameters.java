@@ -23,6 +23,7 @@ import javax.net.ssl.SSLSession;
 public final class HostnameVerifierParameters {
 
     private final String hostname;
+
     private final SSLSession session;
 
     public HostnameVerifierParameters(String hostname, SSLSession session) {
@@ -31,11 +32,10 @@ public final class HostnameVerifierParameters {
     }
 
     public String getHostname() {
-        return hostname;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public SSLSession getSession() {
-        return session;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

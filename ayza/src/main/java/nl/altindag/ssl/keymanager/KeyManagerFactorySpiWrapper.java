@@ -17,12 +17,10 @@ package nl.altindag.ssl.keymanager;
 
 import nl.altindag.sude.Logger;
 import nl.altindag.sude.LoggerFactory;
-
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactorySpi;
 import javax.net.ssl.ManagerFactoryParameters;
 import java.security.KeyStore;
-
 import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 
 /**
@@ -34,28 +32,28 @@ import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 class KeyManagerFactorySpiWrapper extends KeyManagerFactorySpi {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KeyManagerFactorySpiWrapper.class);
+
     private static final String NO_KEY_MANAGER_EXCEPTION_MESSAGE = "No valid KeyManager has been provided. KeyManager must be present, but was absent.";
 
     private final KeyManager[] keyManagers;
 
     KeyManagerFactorySpiWrapper(KeyManager keyManager) {
         requireNotNull(keyManager, NO_KEY_MANAGER_EXCEPTION_MESSAGE);
-        this.keyManagers = new KeyManager[]{keyManager};
+        this.keyManagers = new KeyManager[] { keyManager };
     }
 
     @Override
     protected void engineInit(KeyStore keyStore, char[] keyStorePassword) {
-        LOGGER.info("Ignoring provided KeyStore");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected void engineInit(ManagerFactoryParameters managerFactoryParameters) {
-        LOGGER.info("Ignoring provided ManagerFactoryParameters");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected KeyManager[] engineGetKeyManagers() {
-        return keyManagers;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

@@ -33,12 +33,11 @@ public class DelegatingX509ExtendedKeyManager extends DelegatingKeyManager<X509E
 
     @Override
     public String chooseEngineClientAlias(String[] keyTypes, Principal[] issuers, SSLEngine sslEngine) {
-        return keyManager.chooseEngineClientAlias(keyTypes, issuers, sslEngine);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String chooseEngineServerAlias(String keyType, Principal[] issuers, SSLEngine sslEngine) {
-        return keyManager.chooseEngineServerAlias(keyType, issuers, sslEngine);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

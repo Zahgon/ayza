@@ -32,50 +32,50 @@ public final class DummyX509ExtendedKeyManager extends X509ExtendedKeyManager {
 
     private static final X509ExtendedKeyManager INSTANCE = new DummyX509ExtendedKeyManager();
 
-    private DummyX509ExtendedKeyManager() {}
+    private DummyX509ExtendedKeyManager() {
+    }
 
     public static X509ExtendedKeyManager getInstance() {
-        return INSTANCE;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getClientAliases(String keyType, Principal[] issuers) {
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String chooseClientAlias(String[] keyType, Principal[] issuers, Socket socket) {
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String chooseEngineClientAlias(String[] keyTypes, Principal[] issuers, SSLEngine sslEngine) {
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getServerAliases(String keyType, Principal[] issuers) {
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String chooseServerAlias(String keyType, Principal[] issuers, Socket socket) {
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String chooseEngineServerAlias(String keyType, Principal[] issuers, SSLEngine sslEngine) {
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public X509Certificate[] getCertificateChain(String alias) {
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public PrivateKey getPrivateKey(String alias) {
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

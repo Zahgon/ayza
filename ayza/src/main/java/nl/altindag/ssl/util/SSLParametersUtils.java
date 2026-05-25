@@ -16,7 +16,6 @@
 package nl.altindag.ssl.util;
 
 import nl.altindag.ssl.sslparameters.HotSwappableSSLParameters;
-
 import javax.net.ssl.SSLParameters;
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,75 +31,15 @@ public final class SSLParametersUtils {
     }
 
     public static SSLParameters copy(SSLParameters source) {
-        if (source instanceof HotSwappableSSLParameters) {
-            HotSwappableSSLParameters swappableSslParameters = (HotSwappableSSLParameters) source;
-            SSLParameters innerSslParameters = swappableSslParameters.getInnerSslParameters();
-            SSLParameters copiedSslParameters = copy(innerSslParameters);
-            swappableSslParameters.setSslParameters(copiedSslParameters);
-            return swappableSslParameters;
-        }
-
-        SSLParameters target = new SSLParameters();
-        target.setProtocols(source.getProtocols());
-        target.setCipherSuites(source.getCipherSuites());
-        if (source.getWantClientAuth()) {
-            target.setWantClientAuth(true);
-        }
-
-        if (source.getNeedClientAuth()) {
-            target.setNeedClientAuth(true);
-        }
-        return target;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static SSLParameters merge(SSLParameters baseSslParameters, SSLParameters alternativeSslParameters) {
-        return merge(baseSslParameters, alternativeSslParameters, Collections.emptyList(), Collections.emptyList());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static SSLParameters merge(SSLParameters baseSslParameters, SSLParameters alternativeSslParameters, List<String> excludedCiphers, List<String> excludedProtocols) {
-        SSLParameters target = new SSLParameters();
-
-        String[] ciphers = Optional.ofNullable(baseSslParameters.getCipherSuites())
-                .filter(array -> array.length != 0)
-                .orElseGet(alternativeSslParameters::getCipherSuites);
-        String[] protocols = Optional.ofNullable(baseSslParameters.getProtocols())
-                .filter(array -> array.length != 0)
-                .orElseGet(alternativeSslParameters::getProtocols);
-
-        if (!excludedCiphers.isEmpty()) {
-            ciphers = Arrays.stream(ciphers)
-                    .filter(cipher -> !excludedCiphers.contains(cipher))
-                    .toArray(String[]::new);
-
-            if (ciphers.length == 0) {
-                ciphers = alternativeSslParameters.getCipherSuites();
-            }
-        }
-
-        if (!excludedProtocols.isEmpty()) {
-            protocols = Arrays.stream(protocols)
-                    .filter(cipher -> !excludedProtocols.contains(cipher))
-                    .toArray(String[]::new);
-
-            if (protocols.length == 0) {
-                protocols = alternativeSslParameters.getProtocols();
-            }
-        }
-
-        target.setCipherSuites(ciphers);
-        target.setProtocols(protocols);
-
-        boolean wantClientAuth = baseSslParameters.getWantClientAuth() ? baseSslParameters.getWantClientAuth() : alternativeSslParameters.getWantClientAuth();
-        if (wantClientAuth) {
-            target.setWantClientAuth(true);
-        }
-
-        boolean needClientAuth = baseSslParameters.getNeedClientAuth() ? baseSslParameters.getNeedClientAuth() : alternativeSslParameters.getNeedClientAuth();
-        if (needClientAuth) {
-            target.setNeedClientAuth(true);
-        }
-
-        return target;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -111,7 +50,6 @@ public final class SSLParametersUtils {
      * @return Swappable SSLParameters
      */
     public static SSLParameters createSwappableSslParameters(SSLParameters sslParameters) {
-        return new HotSwappableSSLParameters(sslParameters);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

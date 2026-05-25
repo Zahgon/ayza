@@ -26,23 +26,18 @@ import org.apache.hc.core5.reactor.ssl.SSLBufferMode;
  */
 public final class Apache5SslUtils {
 
-    private Apache5SslUtils() {}
+    private Apache5SslUtils() {
+    }
 
     public static TlsStrategy toTlsStrategy(SSLFactory sslFactory) {
-        return createClientTlsStrategy(sslFactory);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static TlsSocketStrategy toTlsSocketStrategy(SSLFactory sslFactory) {
-        return createClientTlsStrategy(sslFactory);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static DefaultClientTlsStrategy createClientTlsStrategy(SSLFactory sslFactory) {
-        return new DefaultClientTlsStrategy(
-                sslFactory.getSslContext(),
-                sslFactory.getSslParameters().getProtocols(),
-                sslFactory.getSslParameters().getCipherSuites(),
-                SSLBufferMode.STATIC,
-                sslFactory.getHostnameVerifier()
-        );
+        return new DefaultClientTlsStrategy(sslFactory.getSslContext(), sslFactory.getSslParameters().getProtocols(), sslFactory.getSslParameters().getCipherSuites(), SSLBufferMode.STATIC, sslFactory.getHostnameVerifier());
     }
 }

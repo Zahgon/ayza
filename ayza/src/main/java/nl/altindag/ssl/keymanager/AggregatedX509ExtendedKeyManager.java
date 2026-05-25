@@ -16,7 +16,6 @@
 package nl.altindag.ssl.keymanager;
 
 import nl.altindag.laleler.HostUtils;
-
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.X509ExtendedKeyManager;
@@ -66,6 +65,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class AggregatedX509ExtendedKeyManager extends X509ExtendedKeyManager implements CombinableX509KeyManager, RoutableX509KeyManager {
 
     final Map<String, X509ExtendedKeyManager> keyManagers;
+
     private final Map<String, List<URI>> preferredAliasToHost;
 
     /**
@@ -83,8 +83,7 @@ public final class AggregatedX509ExtendedKeyManager extends X509ExtendedKeyManag
      * @param keyManagers          the {@link X509ExtendedKeyManager}, ordered with the most-preferred managers first.
      * @param preferredAliasToHost the preferred client alias to be used for the given host
      */
-    public AggregatedX509ExtendedKeyManager(Map<String, ? extends X509ExtendedKeyManager> keyManagers,
-                                            Map<String, List<URI>> preferredAliasToHost) {
+    public AggregatedX509ExtendedKeyManager(Map<String, ? extends X509ExtendedKeyManager> keyManagers, Map<String, List<URI>> preferredAliasToHost) {
         this.keyManagers = Collections.synchronizedMap(new LinkedHashMap<>(keyManagers));
         this.preferredAliasToHost = new ConcurrentHashMap<>(preferredAliasToHost);
     }
@@ -95,12 +94,7 @@ public final class AggregatedX509ExtendedKeyManager extends X509ExtendedKeyManag
      */
     @Override
     public String chooseClientAlias(String[] keyType, Principal[] issuers, Socket socket) {
-        return chooseClientAlias(
-                socket,
-                this::containsInetSocketAddress,
-                HostUtils::extractHostAndPort,
-                keyManager -> keyManager.chooseClientAlias(keyType, issuers, socket)
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -109,12 +103,7 @@ public final class AggregatedX509ExtendedKeyManager extends X509ExtendedKeyManag
      */
     @Override
     public String chooseEngineClientAlias(String[] keyTypes, Principal[] issuers, SSLEngine sslEngine) {
-        return chooseClientAlias(
-                sslEngine,
-                Objects::nonNull,
-                HostUtils::extractHostAndPort,
-                keyManager -> keyManager.chooseEngineClientAlias(keyTypes, issuers, sslEngine)
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -123,12 +112,7 @@ public final class AggregatedX509ExtendedKeyManager extends X509ExtendedKeyManag
      */
     @Override
     public String chooseServerAlias(String keyType, Principal[] issuers, Socket socket) {
-        return chooseServerAlias(
-                socket,
-                SSLSocket.class::isInstance,
-                aSocket -> ((SSLSocket) aSocket).getHandshakeSession(),
-                keyManager -> keyManager.chooseServerAlias(keyType, issuers, socket)
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -137,12 +121,7 @@ public final class AggregatedX509ExtendedKeyManager extends X509ExtendedKeyManag
      */
     @Override
     public String chooseEngineServerAlias(String keyType, Principal[] issuers, SSLEngine sslEngine) {
-        return chooseServerAlias(
-                sslEngine,
-                Objects::nonNull,
-                SSLEngine::getHandshakeSession,
-                keyManager -> keyManager.chooseEngineServerAlias(keyType, issuers, sslEngine)
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -151,10 +130,7 @@ public final class AggregatedX509ExtendedKeyManager extends X509ExtendedKeyManag
      */
     @Override
     public PrivateKey getPrivateKey(String alias) {
-        return extractInnerField(
-                keyManager -> keyManager.getPrivateKey(alias),
-                Objects::nonNull
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -163,10 +139,7 @@ public final class AggregatedX509ExtendedKeyManager extends X509ExtendedKeyManag
      */
     @Override
     public X509Certificate[] getCertificateChain(String alias) {
-        return extractInnerField(
-                keyManager -> keyManager.getCertificateChain(alias),
-                chain -> chain != null && chain.length > 0
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -175,7 +148,7 @@ public final class AggregatedX509ExtendedKeyManager extends X509ExtendedKeyManag
      */
     @Override
     public String[] getClientAliases(String keyType, Principal[] issuers) {
-        return getAliases(keyManager -> keyManager.getClientAliases(keyType, issuers));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -184,17 +157,16 @@ public final class AggregatedX509ExtendedKeyManager extends X509ExtendedKeyManag
      */
     @Override
     public String[] getServerAliases(String keyType, Principal[] issuers) {
-        return getAliases(keyManager -> keyManager.getServerAliases(keyType, issuers));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Map<String, X509ExtendedKeyManager> getInnerKeyManagers() {
-        return Collections.unmodifiableMap(keyManagers);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Map<String, List<URI>> getIdentityRoute() {
-        return preferredAliasToHost;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

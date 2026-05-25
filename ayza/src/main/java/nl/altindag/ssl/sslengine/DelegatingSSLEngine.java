@@ -35,167 +35,166 @@ class DelegatingSSLEngine extends SSLEngine {
 
     @Override
     public SSLEngineResult wrap(ByteBuffer[] srcs, int offset, int length, ByteBuffer dst) throws SSLException {
-        return sslEngine.wrap(srcs, offset, length, dst);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public SSLEngineResult wrap(ByteBuffer src, ByteBuffer dst) throws SSLException {
-        return sslEngine.wrap(src, dst);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public SSLEngineResult wrap(ByteBuffer[] srcs, ByteBuffer dst) throws SSLException {
-        return sslEngine.wrap(srcs, dst);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public SSLEngineResult unwrap(ByteBuffer src, ByteBuffer[] dsts, int offset, int length) throws SSLException {
-        return sslEngine.unwrap(src, dsts, offset, length);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public SSLEngineResult unwrap(ByteBuffer src, ByteBuffer dst) throws SSLException {
-        return sslEngine.unwrap(src, dst);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public SSLEngineResult unwrap(ByteBuffer src, ByteBuffer[] dsts) throws SSLException {
-        return sslEngine.unwrap(src, dsts);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Runnable getDelegatedTask() {
-        return sslEngine.getDelegatedTask();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void closeInbound() throws SSLException {
-        sslEngine.closeInbound();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isInboundDone() {
-        return sslEngine.isInboundDone();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void closeOutbound() {
-        sslEngine.closeOutbound();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isOutboundDone() {
-        return sslEngine.isOutboundDone();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getSupportedCipherSuites() {
-        return sslEngine.getSupportedCipherSuites();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getEnabledCipherSuites() {
-        return sslEngine.getEnabledCipherSuites();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setEnabledCipherSuites(String[] suites) {
-        sslEngine.setEnabledCipherSuites(suites);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getSupportedProtocols() {
-        return sslEngine.getSupportedProtocols();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getEnabledProtocols() {
-        return sslEngine.getEnabledProtocols();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setEnabledProtocols(String[] protocols) {
-        sslEngine.setEnabledProtocols(protocols);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public SSLSession getSession() {
-        return sslEngine.getSession();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void beginHandshake() throws SSLException {
-        sslEngine.beginHandshake();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public SSLEngineResult.HandshakeStatus getHandshakeStatus() {
-        return sslEngine.getHandshakeStatus();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public SSLSession getHandshakeSession() {
-        return sslEngine.getHandshakeSession();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setUseClientMode(boolean mode) {
-        sslEngine.setUseClientMode(mode);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getUseClientMode() {
-        return sslEngine.getUseClientMode();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setNeedClientAuth(boolean need) {
-        sslEngine.setNeedClientAuth(need);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getNeedClientAuth() {
-        return sslEngine.getNeedClientAuth();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setWantClientAuth(boolean want) {
-        sslEngine.setWantClientAuth(want);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getWantClientAuth() {
-        return sslEngine.getWantClientAuth();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setEnableSessionCreation(boolean flag) {
-        sslEngine.setEnableSessionCreation(flag);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getEnableSessionCreation() {
-        return sslEngine.getEnableSessionCreation();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String getPeerHost() {
-        return sslEngine.getPeerHost();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public int getPeerPort() {
-        return sslEngine.getPeerPort();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public SSLParameters getSSLParameters() {
-        return sslEngine.getSSLParameters();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setSSLParameters(SSLParameters params) {
-        sslEngine.setSSLParameters(params);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

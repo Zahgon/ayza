@@ -30,48 +30,50 @@ import java.security.cert.X509Certificate;
 public final class DummyX509ExtendedTrustManager extends X509ExtendedTrustManager {
 
     private static final X509ExtendedTrustManager INSTANCE = new DummyX509ExtendedTrustManager();
+
     private static final X509Certificate[] EMPTY_CERTIFICATES = new X509Certificate[0];
+
     private static final String MISSING_IMPLEMENTATION = "No X509ExtendedTrustManager implementation available";
 
-    private DummyX509ExtendedTrustManager() {}
+    private DummyX509ExtendedTrustManager() {
+    }
 
     public static X509ExtendedTrustManager getInstance() {
-        return INSTANCE;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] certificates, String authType) throws CertificateException {
-        throw new CertificateException(MISSING_IMPLEMENTATION);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] certificates, String authType, Socket socket) throws CertificateException {
-        throw new CertificateException(MISSING_IMPLEMENTATION);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] certificates, String authType, SSLEngine sslEngine) throws CertificateException {
-        throw new CertificateException(MISSING_IMPLEMENTATION);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] certificates, String authType) throws CertificateException {
-        throw new CertificateException(MISSING_IMPLEMENTATION);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] certificates, String authType, Socket socket) throws CertificateException {
-        throw new CertificateException(MISSING_IMPLEMENTATION);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] certificates, String authType, SSLEngine sslEngine) throws CertificateException {
-        throw new CertificateException(MISSING_IMPLEMENTATION);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public X509Certificate[] getAcceptedIssuers() {
-        return EMPTY_CERTIFICATES;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

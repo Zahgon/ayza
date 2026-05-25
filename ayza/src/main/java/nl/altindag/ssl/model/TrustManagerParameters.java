@@ -28,8 +28,11 @@ import java.util.stream.Stream;
 public class TrustManagerParameters {
 
     private final X509Certificate[] chain;
+
     private final String authType;
+
     private final Socket socket;
+
     private final SSLEngine sslEngine;
 
     public TrustManagerParameters(X509Certificate[] chain, String authType, Socket socket, SSLEngine sslEngine) {
@@ -40,23 +43,23 @@ public class TrustManagerParameters {
     }
 
     public X509Certificate[] getChain() {
-        return chain;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public String getAuthType() {
-        return authType;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public Optional<Socket> getSocket() {
-        return Optional.ofNullable(socket);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public Optional<SSLEngine> getSslEngine() {
-        return Optional.ofNullable(sslEngine);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public Optional<String> getHostname() {
-        return findFirst(getHostnameFromSslEngine(), getHostnameFromSocket());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private Supplier<Optional<String>> getHostnameFromSslEngine() {
@@ -68,7 +71,7 @@ public class TrustManagerParameters {
     }
 
     public Optional<Integer> getPort() {
-        return findFirst(getPortFromSslEngine(), getPortFromSocket());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private Supplier<Optional<Integer>> getPortFromSslEngine() {
@@ -81,11 +84,6 @@ public class TrustManagerParameters {
 
     @SafeVarargs
     private static <T> Optional<T> findFirst(Supplier<Optional<T>>... suppliers) {
-        return Stream.of(suppliers)
-                .map(Supplier::get)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .findFirst();
+        return Stream.of(suppliers).map(Supplier::get).filter(Optional::isPresent).map(Optional::get).findFirst();
     }
-
 }

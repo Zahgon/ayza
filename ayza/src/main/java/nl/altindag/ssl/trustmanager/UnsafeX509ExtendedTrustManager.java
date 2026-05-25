@@ -46,47 +46,48 @@ import java.security.cert.X509Certificate;
 public final class UnsafeX509ExtendedTrustManager extends X509ExtendedTrustManager {
 
     private static final X509ExtendedTrustManager INSTANCE = new UnsafeX509ExtendedTrustManager();
+
     private static final X509Certificate[] EMPTY_CERTIFICATES = new X509Certificate[0];
 
-    private UnsafeX509ExtendedTrustManager() {}
+    private UnsafeX509ExtendedTrustManager() {
+    }
 
     public static X509ExtendedTrustManager getInstance() {
-        return INSTANCE;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] certificates, String authType) {
-        // ignore certificate validation
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] certificates, String authType, Socket socket) {
-        // ignore certificate validation
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] certificates, String authType, SSLEngine sslEngine) {
-        // ignore certificate validation
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] certificates, String authType) {
-        // ignore certificate validation
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] certificates, String authType, Socket socket) {
-        // ignore certificate validation
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] certificates, String authType, SSLEngine sslEngine) {
-        // ignore certificate validation
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public X509Certificate[] getAcceptedIssuers() {
-        return EMPTY_CERTIFICATES;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

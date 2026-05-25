@@ -24,15 +24,10 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
  */
 public final class Apache4SslUtils {
 
-    private Apache4SslUtils() {}
-
-    public static LayeredConnectionSocketFactory toSocketFactory(SSLFactory sslFactory) {
-        return new SSLConnectionSocketFactory(
-                sslFactory.getSslContext(),
-                sslFactory.getSslParameters().getProtocols(),
-                sslFactory.getSslParameters().getCipherSuites(),
-                sslFactory.getHostnameVerifier()
-        );
+    private Apache4SslUtils() {
     }
 
+    public static LayeredConnectionSocketFactory toSocketFactory(SSLFactory sslFactory) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 }

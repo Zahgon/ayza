@@ -18,7 +18,6 @@ package nl.altindag.ssl.util;
 import nl.altindag.laleler.IOUtils;
 import nl.altindag.ssl.exception.GenericCertificateException;
 import nl.altindag.ssl.exception.GenericIOException;
-
 import javax.net.ssl.X509TrustManager;
 import javax.security.auth.x500.X500Principal;
 import java.io.BufferedInputStream;
@@ -57,7 +56,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import static nl.altindag.laleler.CollectorsUtils.toModifiableList;
 import static nl.altindag.laleler.CollectorsUtils.toUnmodifiableList;
 import static nl.altindag.laleler.ValidationUtils.requireNotNull;
@@ -68,64 +66,44 @@ import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 public final class CertificateUtils {
 
     private static final String CERTIFICATE_TYPE = "X.509";
+
     private static final String P7B_HEADER = "-----BEGIN PKCS7-----";
+
     private static final String P7B_FOOTER = "-----END PKCS7-----";
+
     private static final String PEM_HEADER = "-----BEGIN CERTIFICATE-----";
+
     private static final String PEM_FOOTER = "-----END CERTIFICATE-----";
+
     private static final Pattern PEM_PATTERN = Pattern.compile(PEM_HEADER + "(.*?)" + PEM_FOOTER, Pattern.DOTALL);
+
     private static final Pattern P7B_PATTERN = Pattern.compile(P7B_HEADER + "(.*?)" + P7B_FOOTER, Pattern.DOTALL);
+
     private static final String EMPTY_INPUT_STREAM_EXCEPTION_MESSAGE = "Failed to load the certificate from the provided InputStream because it is null";
+
     private static final UnaryOperator<String> CERTIFICATE_NOT_FOUND_EXCEPTION_MESSAGE = certificatePath -> String.format("Failed to load the certificate from the classpath for the given path: [%s]", certificatePath);
+
     private static final String MAX_64_CHARACTER_LINE_SPLITTER = "(?<=\\G.{64})";
 
     private static final String EMPTY = "";
 
-    private CertificateUtils() {}
+    private CertificateUtils() {
+    }
 
     public static <T extends Certificate> String generateAlias(T certificate) {
-        if (certificate instanceof X509Certificate) {
-            return ((X509Certificate) certificate)
-                    .getSubjectX500Principal()
-                    .getName(X500Principal.CANONICAL)
-                    .replace(" ", "-")
-                    .replace(",", "_")
-                    .replace("'", "")
-                    .replaceAll("[.*\\\\/:()#]+", "")
-                    .replaceAll("(-)\\1+", "$1");
-        } else {
-            return UUID.randomUUID().toString().toLowerCase(Locale.US);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static <T extends Certificate> Map<String, T> generateAliases(List<T> certificates) {
-        Map<String, T> aliasToCertificate = new LinkedHashMap<>();
-        for (T certificate : certificates) {
-            String alias = generateUniqueAlias(certificate, aliasToCertificate::containsKey);
-            aliasToCertificate.put(alias, certificate);
-        }
-        return Collections.unmodifiableMap(aliasToCertificate);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static <T extends Certificate> String generateUniqueAlias(T certificate, Predicate<String> aliasPredicate) {
-        String initialAlias = generateAlias(certificate);
-        String alias = initialAlias;
-
-        int counter = 0;
-        while (aliasPredicate.test(alias)) {
-            alias = String.format("%s-%d", initialAlias, counter);
-            counter++;
-        }
-
-        return alias;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static <T extends Certificate> void write(Path destination, T certificate) {
-        try {
-            byte[] encodedCertificate = certificate.getEncoded();
-            IOUtils.write(destination, encodedCertificate, GenericIOException::new);
-        } catch (CertificateEncodingException e) {
-            throw new GenericCertificateException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -134,12 +112,7 @@ public final class CertificateUtils {
      * Supported input format: PEM, P7B and DER
      */
     public static List<Certificate> loadCertificate(String... certificatePaths) {
-        return loadCertificate(certificatePath ->
-                requireNotNull(
-                        IOUtils.getResourceAsStream(certificatePath),
-                        CERTIFICATE_NOT_FOUND_EXCEPTION_MESSAGE.apply(certificatePath)),
-                certificatePaths
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -148,13 +121,7 @@ public final class CertificateUtils {
      * Supported input format: PEM, P7B and DER
      */
     public static List<Certificate> loadCertificate(Path... certificatePaths) {
-        return loadCertificate(certificatePath -> {
-            try {
-                return Files.newInputStream(certificatePath, StandardOpenOption.READ);
-            } catch (IOException exception) {
-                throw new GenericIOException(exception);
-            }
-        }, certificatePaths);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -163,10 +130,7 @@ public final class CertificateUtils {
      * Supported input format: PEM, P7B and DER
      */
     public static List<Certificate> loadCertificate(InputStream... certificateStreams) {
-        return loadCertificate(certificateStream ->
-                requireNotNull(certificateStream, EMPTY_INPUT_STREAM_EXCEPTION_MESSAGE),
-                certificateStreams
-        );
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static <T> List<Certificate> loadCertificate(Function<T, InputStream> resourceMapper, T[] resources) {
@@ -178,7 +142,6 @@ public final class CertificateUtils {
                 throw new GenericIOException(e);
             }
         }
-
         return Collections.unmodifiableList(certificates);
     }
 
@@ -191,15 +154,13 @@ public final class CertificateUtils {
         List<Certificate> certificates;
         byte[] certificateData = IOUtils.copyToByteArray(certificateStream, GenericIOException::new);
         String certificateContent = new String(certificateData, StandardCharsets.UTF_8);
-
         if (isPemFormatted(certificateContent)) {
             certificates = parsePemCertificate(certificateContent);
-        } else if(isP7bFormatted(certificateContent)) {
+        } else if (isP7bFormatted(certificateContent)) {
             certificates = parseP7bCertificate(certificateContent);
         } else {
             certificates = parseDerCertificate(new ByteArrayInputStream(certificateData));
         }
-
         return certificates;
     }
 
@@ -218,8 +179,7 @@ public final class CertificateUtils {
      * with a base64 encoded data between the header and footer.
      */
     public static List<Certificate> parsePemCertificate(String certificateContent) {
-        Matcher pemMatcher = PEM_PATTERN.matcher(certificateContent);
-        return parseCertificate(pemMatcher);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -228,8 +188,7 @@ public final class CertificateUtils {
      * with a base64 encoded data between the header and footer.
      */
     public static List<Certificate> parseP7bCertificate(String certificateContent) {
-        Matcher p7bMatcher = P7B_PATTERN.matcher(certificateContent);
-        return parseCertificate(p7bMatcher);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static List<Certificate> parseCertificate(Matcher certificateMatcher) {
@@ -243,185 +202,102 @@ public final class CertificateUtils {
             certificates.addAll(parsedCertificates);
             IOUtils.closeSilently(certificateAsInputStream);
         }
-
         return Collections.unmodifiableList(certificates);
     }
 
     public static List<Certificate> parseDerCertificate(InputStream certificateStream) {
-        try(BufferedInputStream bufferedCertificateStream = new BufferedInputStream(certificateStream)) {
-            return CertificateFactory.getInstance(CERTIFICATE_TYPE)
-                    .generateCertificates(bufferedCertificateStream).stream()
-                    .collect(toUnmodifiableList());
-        } catch (CertificateException | IOException e) {
-            return Collections.emptyList();
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<X509Certificate> getJdkTrustedCertificates() {
-        return Stream.of(TrustManagerUtils.createTrustManagerWithJdkTrustedCertificates().getAcceptedIssuers())
-                .collect(toUnmodifiableList());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<X509Certificate> getSystemTrustedCertificates() {
-        return TrustManagerUtils.createTrustManagerWithSystemTrustedCertificates()
-                .map(X509TrustManager::getAcceptedIssuers)
-                .map(Arrays::asList)
-                .map(Collections::unmodifiableList)
-                .orElseGet(Collections::emptyList);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<X509Certificate> getCertificatesFromExternalSource(String url) {
-        return CertificateExtractingClient.getInstance().get(url);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<X509Certificate> getCertificatesFromExternalSource(Proxy proxy, String url) {
-        return CertificateExtractingClient.builder()
-                .withResolvedRootCa(true)
-                .withProxy(proxy)
-                .build()
-                .get(url);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<X509Certificate> getCertificatesFromExternalSource(Proxy proxy, PasswordAuthentication passwordAuthentication, String url) {
-        return CertificateExtractingClient.builder()
-                .withResolvedRootCa(true)
-                .withProxy(proxy)
-                .withPasswordAuthentication(passwordAuthentication)
-                .build()
-                .get(url);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<String> getCertificatesFromExternalSourceAsPem(String url) {
-        return getCertificatesFromExternalSource(url).stream()
-                .map(CertificateUtils::convertToPem)
-                .collect(toUnmodifiableList());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<String> getCertificatesFromExternalSourceAsPem(Proxy proxy, String url) {
-        return getCertificatesFromExternalSource(proxy, url).stream()
-                .map(CertificateUtils::convertToPem)
-                .collect(toUnmodifiableList());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<String> getCertificatesFromExternalSourceAsPem(Proxy proxy, PasswordAuthentication passwordAuthentication, String url) {
-        return getCertificatesFromExternalSource(proxy, passwordAuthentication, url).stream()
-                .map(CertificateUtils::convertToPem)
-                .collect(toUnmodifiableList());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Map<String, List<X509Certificate>> getCertificatesFromExternalSources(String... urls) {
-        return getCertificatesFromExternalSources(Arrays.asList(urls));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Map<String, List<X509Certificate>> getCertificatesFromExternalSources(Proxy proxy, String... urls) {
-        return getCertificatesFromExternalSources(proxy, Arrays.asList(urls));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Map<String, List<X509Certificate>> getCertificatesFromExternalSources(Proxy proxy, PasswordAuthentication passwordAuthentication, String... urls) {
-        return getCertificatesFromExternalSources(proxy, passwordAuthentication, Arrays.asList(urls));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Map<String, List<X509Certificate>> getCertificatesFromExternalSources(List<String> urls) {
-        return urls.stream()
-                .distinct()
-                .map(url -> new AbstractMap.SimpleEntry<>(url, getCertificatesFromExternalSource(url)))
-                .collect(Collectors.collectingAndThen(Collectors.toMap(AbstractMap.SimpleEntry::getKey, AbstractMap.SimpleEntry::getValue, (key1, key2) -> key1, LinkedHashMap::new), Collections::unmodifiableMap));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Map<String, List<X509Certificate>> getCertificatesFromExternalSources(Proxy proxy, List<String> urls) {
-        CertificateExtractingClient client = CertificateExtractingClient.builder()
-                .withResolvedRootCa(true)
-                .withProxy(proxy)
-                .build();
-
-        return urls.stream()
-                .distinct()
-                .map(url -> new AbstractMap.SimpleEntry<>(url, client.get(url)))
-                .collect(Collectors.collectingAndThen(Collectors.toMap(AbstractMap.SimpleEntry::getKey, AbstractMap.SimpleEntry::getValue, (key1, key2) -> key1, LinkedHashMap::new), Collections::unmodifiableMap));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Map<String, List<X509Certificate>> getCertificatesFromExternalSources(Proxy proxy, PasswordAuthentication passwordAuthentication, List<String> urls) {
-        CertificateExtractingClient client = CertificateExtractingClient.builder()
-                .withResolvedRootCa(true)
-                .withPasswordAuthentication(passwordAuthentication)
-                .withProxy(proxy)
-                .build();
-
-        return urls.stream()
-                .distinct()
-                .map(url -> new AbstractMap.SimpleEntry<>(url, client.get(url)))
-                .collect(Collectors.collectingAndThen(Collectors.toMap(AbstractMap.SimpleEntry::getKey, AbstractMap.SimpleEntry::getValue, (key1, key2) -> key1, LinkedHashMap::new), Collections::unmodifiableMap));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Map<String, List<String>> getCertificatesFromExternalSourcesAsPem(String... urls) {
-        return getCertificatesFromExternalSourcesAsPem(Arrays.asList(urls));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Map<String, List<String>> getCertificatesFromExternalSourcesAsPem(Proxy proxy, String... urls) {
-        return getCertificatesFromExternalSourcesAsPem(proxy, Arrays.asList(urls));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Map<String, List<String>> getCertificatesFromExternalSourcesAsPem(Proxy proxy, PasswordAuthentication passwordAuthentication, String... urls) {
-        return getCertificatesFromExternalSourcesAsPem(proxy, passwordAuthentication, Arrays.asList(urls));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Map<String, List<String>> getCertificatesFromExternalSourcesAsPem(List<String> urls) {
-        return CertificateUtils.getCertificatesFromExternalSources(urls).entrySet().stream()
-                .collect(Collectors.collectingAndThen(Collectors.toMap(Map.Entry::getKey, entry -> CertificateUtils.convertToPem(entry.getValue()), (key1, key2) -> key1, LinkedHashMap::new), Collections::unmodifiableMap));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Map<String, List<String>> getCertificatesFromExternalSourcesAsPem(Proxy proxy, List<String> urls) {
-        Map<String, List<String>> certificates = CertificateUtils.getCertificatesFromExternalSources(proxy, urls).entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, entry -> CertificateUtils.convertToPem(entry.getValue())));
-
-        return Collections.unmodifiableMap(certificates);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static Map<String, List<String>> getCertificatesFromExternalSourcesAsPem(Proxy proxy, PasswordAuthentication passwordAuthentication, List<String> urls) {
-        return CertificateUtils.getCertificatesFromExternalSources(proxy, passwordAuthentication, urls).entrySet().stream()
-                .collect(Collectors.collectingAndThen(Collectors.toMap(Map.Entry::getKey, entry -> CertificateUtils.convertToPem(entry.getValue()), (key1, key2) -> key1, LinkedHashMap::new), Collections::unmodifiableMap));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static List<String> convertToPem(List<X509Certificate> certificates) {
-        return certificates.stream()
-                .map(CertificateUtils::convertToPem)
-                .collect(toUnmodifiableList());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static String convertToPem(Certificate certificate) {
-        try {
-            byte[] encodedCertificate = certificate.getEncoded();
-            byte[] base64EncodedCertificate = Base64.getEncoder().encode(encodedCertificate);
-            String parsedCertificate = new String(base64EncodedCertificate);
-
-            List<String> certificateContainer = Stream.of(parsedCertificate.split(MAX_64_CHARACTER_LINE_SPLITTER))
-                    .collect(toModifiableList());
-            certificateContainer.add(0, PEM_HEADER);
-            certificateContainer.add(PEM_FOOTER);
-
-            if (certificate instanceof X509Certificate) {
-                X509Certificate x509Certificate = (X509Certificate) certificate;
-                X500Principal issuer = x509Certificate.getIssuerX500Principal();
-                certificateContainer.add(0, String.format("issuer=%s", issuer.getName()));
-                X500Principal subject = x509Certificate.getSubjectX500Principal();
-                certificateContainer.add(0, String.format("subject=%s", subject.getName()));
-            }
-
-            return String.join(System.lineSeparator(), certificateContainer);
-        } catch (CertificateEncodingException e) {
-            throw new GenericCertificateException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public static <T extends Certificate> boolean isSelfSigned(T certificate) {
-        try {
-            certificate.verify(certificate.getPublicKey());
-            return true;
-        } catch (SignatureException e) {
-            return false;
-        } catch (CertificateException | NoSuchAlgorithmException | InvalidKeyException | NoSuchProviderException e) {
-            throw new GenericCertificateException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

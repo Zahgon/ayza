@@ -21,14 +21,15 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Supplier;
-
 import static nl.altindag.laleler.ValidationUtils.GENERIC_EXCEPTION_MESSAGE;
 import static nl.altindag.laleler.ValidationUtils.requireNotNull;
 
 public final class HotSwappableSSLParameters extends DelegatingSSLParameters {
 
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+
     private final Lock readLock = readWriteLock.readLock();
+
     private final Lock writeLock = readWriteLock.writeLock();
 
     public HotSwappableSSLParameters(SSLParameters sslParameters) {
@@ -37,72 +38,72 @@ public final class HotSwappableSSLParameters extends DelegatingSSLParameters {
 
     @Override
     public void setSslParameters(SSLParameters sslParameters) {
-        setSafely(() -> super.setSslParameters(requireNotNull(sslParameters, GENERIC_EXCEPTION_MESSAGE.apply("SSLParameters"))));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public SSLParameters getInnerSslParameters() {
-        return getSafely(super::getInnerSslParameters);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getCipherSuites() {
-        return getSafely(super::getCipherSuites);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String[] getProtocols() {
-        return getSafely(super::getProtocols);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getWantClientAuth() {
-        return getSafely(super::getWantClientAuth);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean getNeedClientAuth() {
-        return getSafely(super::getNeedClientAuth);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public AlgorithmConstraints getAlgorithmConstraints() {
-        return getSafely(super::getAlgorithmConstraints);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String getEndpointIdentificationAlgorithm() {
-        return getSafely(super::getEndpointIdentificationAlgorithm);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setCipherSuites(String[] cipherSuites) {
-        setSafely(() -> super.setCipherSuites(cipherSuites));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setProtocols(String[] protocols) {
-        setSafely(() -> super.setProtocols(protocols));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setWantClientAuth(boolean wantClientAuth) {
-        setSafely(() -> super.setWantClientAuth(wantClientAuth));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setNeedClientAuth(boolean needClientAuth) {
-        setSafely(() -> super.setNeedClientAuth(needClientAuth));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setAlgorithmConstraints(AlgorithmConstraints constraints) {
-        setSafely(() -> super.setAlgorithmConstraints(constraints));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void setEndpointIdentificationAlgorithm(String algorithm) {
-        setSafely(() -> super.setEndpointIdentificationAlgorithm(algorithm));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private <V> V getSafely(Supplier<V> supplier) {
@@ -116,12 +117,10 @@ public final class HotSwappableSSLParameters extends DelegatingSSLParameters {
 
     private void setSafely(SSLParametersRunnable sslParametersRunnable) {
         writeLock.lock();
-
         try {
             sslParametersRunnable.run();
         } finally {
             writeLock.unlock();
         }
     }
-
 }

@@ -16,7 +16,6 @@
 package nl.altindag.ssl.util;
 
 import nl.altindag.ssl.exception.GenericException;
-
 import java.util.function.Supplier;
 
 /**
@@ -28,23 +27,15 @@ public interface Box<T> {
     ValueHolder<T> valueHolder();
 
     static <T> Box<T> of(T value) {
-        return () -> ValueHolder.wrap(() -> value);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     default <R> Box<R> map(Function<? super T, ? extends R> mapper) {
-        return () -> ValueHolder.wrap(() -> {
-            final T value = valueHolder().get();
-
-            try {
-                return mapper.apply(value);
-            } catch (Exception e) {
-                throw new GenericException(e);
-            }
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     default T get() {
-        return valueHolder().get();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @FunctionalInterface
@@ -53,12 +44,11 @@ public interface Box<T> {
         Supplier<T> valueSupplier();
 
         default T get() {
-            return valueSupplier().get();
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         static <U> ValueHolder<U> wrap(Supplier<U> supplier) {
-            return () -> supplier;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
     }
-
 }

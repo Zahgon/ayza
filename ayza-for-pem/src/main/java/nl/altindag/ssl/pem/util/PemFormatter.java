@@ -23,15 +23,18 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-
 import static nl.altindag.laleler.CollectorsUtils.toModifiableList;
 
 final class PemFormatter {
 
     private static final Pattern PEM_PATTERN = Pattern.compile("(-----BEGIN.*?-----)(.*?)(-----END.*?-----)");
+
     private static final String INNER_ENCRYPTED_HEADER = "Proc-Type: 4,ENCRYPTED";
+
     private static final Map<String, Integer> ENCRYPTION_ALGORITHMS_AND_SALT_TO_FIELD_LENGTH;
+
     private static final String MAX_64_CHARACTER_LINE_SPLITTER = "(?<=\\G.{64})";
+
     private static final String EMPTY = "";
 
     static {
@@ -41,33 +44,15 @@ final class PemFormatter {
         ENCRYPTION_ALGORITHMS_AND_SALT_TO_FIELD_LENGTH = Collections.unmodifiableMap(encryptionAlgorithmsAndSaltToFieldLength);
     }
 
-    private PemFormatter() {}
+    private PemFormatter() {
+    }
 
     /**
      * It will try to format the provided input if it is a one-liner pem formatted certificate,
      * or else it will return the original input
      */
     static String reformatIfNeeded(String value) {
-        Matcher certificateMatcher = PEM_PATTERN.matcher(value);
-
-        List<String> certificates = new ArrayList<>();
-        while (certificateMatcher.find()) {
-            String header = certificateMatcher.group(1);
-            String body = certificateMatcher.group(2);
-            String footer = certificateMatcher.group(3);
-
-            List<String> innerEncryptionHeader = extractInnerEncryptionHeaderIfPossible(body);
-            String certificateContent = body.substring(String.join(EMPTY, innerEncryptionHeader).length());
-
-            List<String> certificateContainer = Stream.of(certificateContent.split(MAX_64_CHARACTER_LINE_SPLITTER))
-                    .collect(toModifiableList());
-            certificateContainer.add(0, header);
-            certificateContainer.addAll(1, innerEncryptionHeader);
-            certificateContainer.add(footer);
-            certificates.addAll(certificateContainer);
-        }
-
-        return certificates.isEmpty() ? value : String.join(System.lineSeparator(), certificates);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -92,7 +77,6 @@ final class PemFormatter {
         if (!value.contains(INNER_ENCRYPTED_HEADER)) {
             return Collections.emptyList();
         }
-
         for (Map.Entry<String, Integer> encryptionAlgorithmAndSaltToFieldLength : ENCRYPTION_ALGORITHMS_AND_SALT_TO_FIELD_LENGTH.entrySet()) {
             if (value.contains(encryptionAlgorithmAndSaltToFieldLength.getKey())) {
                 String encryptionAlgorithmValue = value.substring(INNER_ENCRYPTED_HEADER.length(), INNER_ENCRYPTED_HEADER.length() + encryptionAlgorithmAndSaltToFieldLength.getValue());
@@ -103,11 +87,6 @@ final class PemFormatter {
                 return innerHeader;
             }
         }
-
-        throw new IllegalArgumentException(String.format(
-                "The provided encrypted private key is not supported. Supported formats are: [%s]",
-                String.join(",", ENCRYPTION_ALGORITHMS_AND_SALT_TO_FIELD_LENGTH.keySet())
-        ));
+        throw new IllegalArgumentException(String.format("The provided encrypted private key is not supported. Supported formats are: [%s]", String.join(",", ENCRYPTION_ALGORITHMS_AND_SALT_TO_FIELD_LENGTH.keySet())));
     }
-
 }

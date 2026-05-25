@@ -45,84 +45,35 @@ interface RoutableX509KeyManager extends CombinableX509KeyManager, X509KeyManage
 
     Map<String, List<URI>> getIdentityRoute();
 
-    default <T> String chooseClientAlias(T object,
-                                         Predicate<T> predicate,
-                                         Function<T, Entry<String, Integer>> hostToPortExtractor,
-                                         Function<X509ExtendedKeyManager, String> aliasExtractor) {
-
-        return chooseAlias(() -> getPreferredClientAlias(object, predicate, hostToPortExtractor), aliasExtractor);
+    default <T> String chooseClientAlias(T object, Predicate<T> predicate, Function<T, Entry<String, Integer>> hostToPortExtractor, Function<X509ExtendedKeyManager, String> aliasExtractor) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     default <T> String getPreferredClientAlias(T object, Predicate<T> predicate, Function<T, Entry<String, Integer>> hostToPortExtractor) {
-        if (getIdentityRoute().isEmpty()) {
-            return null;
-        }
-
-        if (predicate.test(object)) {
-            Entry<String, Integer> hostToPort = hostToPortExtractor.apply(object);
-            return getPreferredClientAlias(hostToPort.getKey(), hostToPort.getValue());
-        }
-
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     default String getPreferredClientAlias(String peerHost, int peerPort) {
-        return getIdentityRoute().entrySet().stream()
-                .filter(entry -> entry.getValue().stream().anyMatch(uri -> uri.getHost().contains(peerHost)))
-                .filter(entry -> entry.getValue().stream().anyMatch(uri -> uri.getPort() == peerPort))
-                .findFirst()
-                .map(Entry::getKey)
-                .orElse(null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-    default <T> String chooseServerAlias(T object,
-                                         Predicate<T> predicate,
-                                         Function<T, SSLSession> sslSessionExtractor,
-                                         Function<X509ExtendedKeyManager, String> aliasExtractor) {
-
-        return chooseAlias(() -> getPreferredServerAlias(object, predicate, sslSessionExtractor), aliasExtractor);
+    default <T> String chooseServerAlias(T object, Predicate<T> predicate, Function<T, SSLSession> sslSessionExtractor, Function<X509ExtendedKeyManager, String> aliasExtractor) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     default <T> String getPreferredServerAlias(T object, Predicate<T> predicate, Function<T, SSLSession> sslSessionExtractor) {
-        if (getIdentityRoute().isEmpty()) {
-            return null;
-        }
-
-        if (predicate.test(object)) {
-            SSLSession sslSession = sslSessionExtractor.apply(object);
-            if (sslSession instanceof ExtendedSSLSession) {
-                List<SNIServerName> requestedServerNames = ((ExtendedSSLSession) sslSession).getRequestedServerNames();
-                Set<String> hostnames = requestedServerNames.stream()
-                        .map(sniServerName -> new String(sniServerName.getEncoded()))
-                        .collect(Collectors.toSet());
-
-                return getPreferredServerAlias(hostnames);
-            }
-        }
-
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     default String getPreferredServerAlias(Set<String> hostnames) {
-        return getIdentityRoute().entrySet().stream()
-                .filter(entry -> entry.getValue().stream().anyMatch(uri -> hostnames.stream().anyMatch(hostname -> uri.getHost().contains(hostname))))
-                .findFirst()
-                .map(Entry::getKey)
-                .orElse(null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     default String chooseAlias(Supplier<String> preferredAliasSupplier, Function<X509ExtendedKeyManager, String> aliasExtractor) {
-        String preferredAlias = preferredAliasSupplier.get();
-
-        if (preferredAlias != null) {
-            return extractInnerField(aliasExtractor, NON_NULL.and(preferredAlias::equals));
-        } else {
-            return extractInnerField(aliasExtractor, NON_NULL);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     default boolean containsInetSocketAddress(Socket socket) {
-        return socket != null && socket.getRemoteSocketAddress() instanceof InetSocketAddress;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }
